@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Ingles pa' la Paz",
@@ -23,7 +24,10 @@ html {
 }
         `}</style>
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
