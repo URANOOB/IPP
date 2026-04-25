@@ -32,31 +32,31 @@ type Integrante = {
 const integrantes: Integrante[] = [
   {
     nombre: "Laura Vanessa Pe\u00f1a Toquica",
-    rol: "Lider",
-    foco: "Gestiona proyectos y convocatorias enfocadas en la cultura, la memoria y la construccion de paz.",
+    rol: "Líder",
+    foco: "Gestiona proyectos y convocatorias enfocadas en la cultura, la memoria y la construcción de paz.",
     icon: Users,
     accent: "var(--ipp-coral)",
     surface: "rgba(192, 96, 72, 0.12)",
   },
   {
     nombre: "Gimena Sosa",
-    rol: "Lider de redes",
-    foco: "Disena e impulsa estrategias de difusion para que la voz del colectivo llegue a mas personas.",
+    rol: "Líder de redes",
+    foco: "Diseña e impulsa estrategias de difusión para que la voz del colectivo llegue a más personas.",
     icon: Megaphone,
     accent: "var(--ipp-water)",
     surface: "rgba(144, 192, 192, 0.24)",
   },
   {
     nombre: "Daniel Bustos",
-    rol: "Lider suplente",
-    foco: "Acompana los procesos administrativos y de gestion para sostener el trabajo de la organizacion.",
+    rol: "Líder suplente",
+    foco: "Acompaña los procesos administrativos y de gestión para sostener el trabajo de la organización.",
     icon: PenSquare,
     accent: "var(--ipp-yellow)",
     surface: "rgba(255, 200, 74, 0.18)",
   },
   {
     nombre: "Santiago Agudelo",
-    rol: "Lider de alianzas",
+    rol: "Líder de alianzas",
     foco: "Construye alianzas y convenios con otras agrupaciones para ampliar el impacto comunitario.",
     icon: Handshake,
     accent: "var(--ipp-green)",
@@ -64,7 +64,7 @@ const integrantes: Integrante[] = [
   },
   {
     nombre: "Diego Guerrero",
-    rol: "Disenador",
+    rol: "Diseñador",
     foco: "Cuida la imagen del proyecto y traduce la identidad de la iniciativa en piezas visuales claras y cercanas.",
     icon: Sparkles,
     accent: "var(--ipp-earth)",
@@ -81,7 +81,7 @@ const integrantes: Integrante[] = [
   {
     nombre: "Andres Pabon",
     rol: "Docente",
-    foco: "Disena e implementa talleres que conectan el idioma con procesos de expresion y reflexion colectiva.",
+    foco: "Diseña e implementa talleres que conectan el idioma con procesos de expresión y reflexión colectiva.",
     icon: PenSquare,
     accent: "var(--ipp-coral)",
     surface: "rgba(192, 96, 72, 0.12)",
@@ -113,7 +113,7 @@ const integrantes: Integrante[] = [
   {
     nombre: "Johan Mellizo",
     rol: "Docente",
-    foco: "Disena clases, conversatorios y planeadores desde una mirada pedagogica situada y participativa.",
+    foco: "Diseña clases, conversatorios y planeadores desde una mirada pedagogica situada y participativa.",
     icon: BookOpen,
     accent: "var(--ipp-plum)",
     surface: "rgba(96, 48, 72, 0.1)",
@@ -181,7 +181,7 @@ export default function Integrantes() {
             Profes Pa&apos; la Paz.
           </h2>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
-            Descripcion aqui..
+            Un equipo que enseña, escucha y crea en comunidad desde el territorio.
           </p>
         </motion.div>
 
