@@ -31,10 +31,11 @@ type Integrante = {
 
 const integrantes: Integrante[] = [
   {
-    nombre: "Laura Vanessa Pe\u00f1a Toquica",
+    nombre: "Vanessa Pe\u00f1a",
     rol: "Líder",
     foco: "Gestiona proyectos y convocatorias enfocadas en la cultura, la memoria y la construcción de paz.",
     icon: Users,
+    photo: "",
     accent: "var(--ipp-coral)",
     surface: "rgba(192, 96, 72, 0.12)",
   },
@@ -43,6 +44,7 @@ const integrantes: Integrante[] = [
     rol: "Líder de redes",
     foco: "Diseña e impulsa estrategias de difusión para que la voz del colectivo llegue a más personas.",
     icon: Megaphone,
+    photo: "",
     accent: "var(--ipp-water)",
     surface: "rgba(144, 192, 192, 0.24)",
   },
@@ -51,6 +53,7 @@ const integrantes: Integrante[] = [
     rol: "Líder suplente",
     foco: "Acompaña los procesos administrativos y de gestión para sostener el trabajo de la organización.",
     icon: PenSquare,
+    photo: "",
     accent: "var(--ipp-yellow)",
     surface: "rgba(255, 200, 74, 0.18)",
   },
@@ -59,6 +62,7 @@ const integrantes: Integrante[] = [
     rol: "Líder de alianzas",
     foco: "Construye alianzas y convenios con otras agrupaciones para ampliar el impacto comunitario.",
     icon: Handshake,
+    photo: "",
     accent: "var(--ipp-green)",
     surface: "rgba(120, 168, 120, 0.2)",
   },
@@ -67,6 +71,7 @@ const integrantes: Integrante[] = [
     rol: "Diseñador",
     foco: "Cuida la imagen del proyecto y traduce la identidad de la iniciativa en piezas visuales claras y cercanas.",
     icon: Sparkles,
+    photo: "",
     accent: "var(--ipp-earth)",
     surface: "rgba(255, 240, 192, 0.95)",
   },
@@ -75,6 +80,7 @@ const integrantes: Integrante[] = [
     rol: "Docente",
     foco: "Lidera conversatorios y experiencias pedagogicas con enfoque en paz, memoria y escucha sensible.",
     icon: BookOpen,
+    photo: "",
     accent: "var(--ipp-plum)",
     surface: "rgba(96, 48, 72, 0.1)",
   },
@@ -83,38 +89,43 @@ const integrantes: Integrante[] = [
     rol: "Docente",
     foco: "Diseña e implementa talleres que conectan el idioma con procesos de expresión y reflexión colectiva.",
     icon: PenSquare,
+    photo: "",
     accent: "var(--ipp-coral)",
     surface: "rgba(192, 96, 72, 0.12)",
   },
   {
     nombre: "William Galeano",
     rol: "Ingeniero de software",
-    foco: "Desarrolla la pagina web y herramientas digitales que apoyan el trabajo comunitario del proyecto.",
+    foco: "Desarrolla herramientas web digitales que apoyan el trabajo comunitario del proyecto.",
     icon: Code2,
+    photo: "",
     accent: "var(--ipp-yellow)",
     surface: "rgba(255, 200, 74, 0.18)",
   },
   {
     nombre: "Walter Ardila",
-    rol: "Ingeniero de tecnologias",
-    foco: "Garantiza el uso y funcionamiento de los recursos tecnologicos en encuentros, talleres y eventos.",
+    rol: "Ingeniero de tecnologías y de software",
+    foco: "Desarrolla herramientas web y garantiza el uso y funcionamiento de los recursos tecnológicos en encuentros, talleres y eventos.",
     icon: MonitorCog,
+    photo: "",
     accent: "var(--ipp-water)",
     surface: "rgba(144, 192, 192, 0.24)",
   },
   {
     nombre: "Tatiana Martinez",
     rol: "Administradora",
-    foco: "Aporta en la gestion legal y administrativa para que los procesos del colectivo sigan avanzando.",
+    foco: "Aporta en la gestión legal y administrativa para que los procesos del colectivo sigan avanzando.",
     icon: ClipboardList,
+    photo: "",
     accent: "var(--ipp-green)",
     surface: "rgba(120, 168, 120, 0.2)",
   },
   {
     nombre: "Johan Mellizo",
     rol: "Docente",
-    foco: "Diseña clases, conversatorios y planeadores desde una mirada pedagogica situada y participativa.",
+    foco: "Diseña clases, conversatorios y planeadores desde una mirada pedagógica situada y participativa.",
     icon: BookOpen,
+    photo: "",
     accent: "var(--ipp-plum)",
     surface: "rgba(96, 48, 72, 0.1)",
   },
@@ -165,10 +176,9 @@ export default function Integrantes() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[var(--ipp-paper)] px-5 py-24 md:px-8">
-      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-mint)]" />
-
-      <div className="relative mx-auto max-w-7xl">
+    <section className="relative overflow-hidden bg-[var(--ipp-mint)] px-5 py-24 md:px-8">
+      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-paper)]" />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -181,11 +191,11 @@ export default function Integrantes() {
             Profes Pa&apos; la Paz.
           </h2>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
-            Un equipo que enseña, escucha y crea en comunidad desde el territorio.
+            Un parche popular de origen colombiano para el mundo.
           </p>
         </motion.div>
 
-        <div className="rounded-[2.4rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] px-4 py-8 shadow-[16px_18px_0_rgba(96,48,72,0.08)] md:px-8 md:py-10">
+        <div className="rounded-[2.4rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] px-4 py-8 shadow-[16px_18px_0_rgba(96,48,72,0.08)] md:px-8 md:py-10">
           <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-8">
             <div className="relative h-[430px] w-full overflow-hidden sm:h-[480px] lg:h-[510px]">
 
@@ -224,22 +234,18 @@ export default function Integrantes() {
                       aria-label={`Ver integrante ${integrante.nombre}`}
                     >
                     <article
-                      className={`relative h-full overflow-hidden border transition-all duration-300 ${
+                      className={`relative h-full overflow-hidden rounded-[2rem] border bg-[var(--ipp-cream)] text-[var(--ipp-plum)] transition-all duration-300 ${
                         isActive
-                          ? "border-[var(--ipp-plum)]/18 bg-[var(--ipp-plum)] text-[var(--ipp-paper)] shadow-[18px_20px_0_rgba(96,48,72,0.12)]"
-                          : "border-[var(--ipp-plum)]/10 bg-white/85 text-[var(--ipp-plum)] shadow-[10px_12px_0_rgba(96,48,72,0.08)]"
+                          ? "border-[var(--ipp-plum)]/18 shadow-[18px_20px_0_rgba(96,48,72,0.12)]"
+                          : "border-[var(--ipp-plum)]/10 shadow-[10px_12px_0_rgba(96,48,72,0.08)]"
                       }`}
-                      style={{
-                        clipPath: "polygon(0 0, calc(100% - 3.8rem) 0, 100% 3.8rem, 100% 100%, 0 100%)",
-                      }}
                     >
-                      <div className="absolute right-0 top-0 h-16 w-16 border-l border-b border-white/50 bg-white/80" />
 
                       <div className="relative flex h-full flex-col items-center p-5 text-center sm:p-6">
                         <div className="flex w-full justify-center">
                           <div
-                            className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-4 sm:h-32 sm:w-32 ${
-                              isActive ? "border-[var(--ipp-yellow)] bg-white/12" : "border-[var(--ipp-coral)]/40 bg-white"
+                            className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[2rem] border-4 sm:h-32 sm:w-32 ${
+                              isActive ? "border-[var(--ipp-earth)] bg-white/12" : "border-[var(--ipp-coral)]/40 bg-white"
                             }`}
                           >
                             {integrante.photo ? (
@@ -266,7 +272,7 @@ export default function Integrantes() {
                         <div className="mt-7">
                           <p
                             className={`text-xs font-black uppercase tracking-[0.22em] ${
-                              isActive ? "text-[var(--ipp-yellow)]" : "text-[var(--ipp-coral)]"
+                              isActive ? "text-[var(--ipp-coral)]" : "text-[var(--ipp-coral)]"
                             }`}
                           >
                             {integrante.rol}
@@ -278,7 +284,7 @@ export default function Integrantes() {
 
                         <p
                           className={`mt-6 text-base font-semibold leading-relaxed sm:text-[1.05rem] ${
-                            isActive ? "text-[var(--ipp-paper)]/86" : "text-[var(--ipp-plum)]/76"
+                            isActive ? "text-[var(--ipp-plum)]/82" : "text-[var(--ipp-plum)]/76"
                           }`}
                         >
                           &ldquo;{integrante.foco}&rdquo;
@@ -295,9 +301,6 @@ export default function Integrantes() {
 
             <div className="flex w-full flex-col items-center gap-5 text-center">
               <div className="max-w-2xl">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-[var(--ipp-coral)]">
-                  Integrante destacado
-                </p>
                 <h3 className="mt-2 font-display text-4xl font-black leading-none text-[var(--ipp-plum)] md:text-5xl">
                   {activeIntegrante.nombre}
                 </h3>

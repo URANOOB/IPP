@@ -1,7 +1,8 @@
 "use client"
 
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
-import { BookOpen, HandHeart, MapPin, Menu, Sparkles, X } from "lucide-react"
+import Image from "next/image"
+import { BookOpen, HandHeart, MapPin, Menu, X } from "lucide-react"
 import { useState } from "react"
 
 const navItems = [
@@ -49,9 +50,11 @@ export default function Header() {
             className="md:absolute md:left-1/2 md:-translate-x-1/2"
             aria-label="Ir al inicio"
           >
-            <img
+            <Image
               src="/images/ipp/logo_png3.png"
               alt="Logo de Ingles pa' la Paz"
+              width={874}
+              height={574}
               className="h-14 w-auto object-contain md:h-16"
             />
           </button>
@@ -71,7 +74,7 @@ export default function Header() {
               className="inline-flex items-center gap-3 rounded-2xl bg-[var(--ipp-coral)] px-5 py-3 text-sm 
               font-black text-white shadow-[0_12px_24px_rgba(120,168,120,0.28)] transition hover:brightness-105"
             >
-              Conócenos
+              Contáctanos
             </button>
           </div>
 
@@ -97,13 +100,9 @@ export default function Header() {
 
       <div className="relative z-20 mx-auto grid min-h-[calc(100vh-88px)] max-w-6xl items-center gap-12 px-5 pb-16 pt-8 md:grid-cols-[0.95fr_0.85fr] md:px-8">
         <div className="max-w-2xl">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[var(--ipp-cream)]/85 px-4 py-2 text-sm font-bold shadow-[4px_4px_0_rgba(144,96,48,0.18)]">
-            <Sparkles className="h-4 w-4 text-[var(--ipp-coral)]" />
-            Ingles, Paz, Colombia
-          </div>
 
           <h1 className="font-display text-5xl font-black leading-[0.96] text-[var(--ipp-coral)] sm:text-6xl lg:text-7xl">
-            Ingles
+            Inglés
             <span className="mt-1 block text-[var(--ipp-plum)]">Pa&apos; la Paz</span>
           </h1>
 
@@ -118,17 +117,11 @@ export default function Header() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <LiquidButton
               size="xxl"
-              className="rounded-full bg-[var(--ipp-coral)] px-9 font-black text-white shadow-[6px_6px_0_rgba(96,48,72,0.22)]"
+              className="rounded-full bg-[var(--ipp-olive)] px-9 font-black text-white shadow-[6px_6px_0_rgba(96,48,72,0.22)]"
               onClick={() => scrollToSection("#project")}
             >
               Conoce el proyecto
             </LiquidButton>
-            <button
-              onClick={() => scrollToSection("#method")}
-              className="rounded-full border-2 border-[var(--ipp-plum)]/20 bg-white/70 px-8 py-4 font-black text-[var(--ipp-plum)] shadow-[6px_6px_0_rgba(96,48,72,0.1)] transition hover:-translate-y-1 hover:bg-[var(--ipp-cream)]"
-            >
-              Ver metodología
-            </button>
           </div>
 
           <div className="mt-10 grid gap-3 text-sm font-bold sm:grid-cols-3">
@@ -149,9 +142,12 @@ export default function Header() {
 
         <div className="relative min-h-[250px]">
           <div className="absolute inset-x-10 top-12 h-72 rounded-full bg-white/28 blur-3xl" />
-          <img
+          <Image
             src="/images/ipp/logo_png3.png"
             alt="Elemento visual principal de Ingles pa' la Paz"
+            width={874}
+            height={574}
+            priority
             className="absolute bottom-0 left-1/2 z-10 w-[320px] max-w-none -translate-x-1/2 drop-shadow-[8px_8px_0_rgba(96,48,72,0.12)] md:w-[420px] lg:w-[470px]"
           />
         </div>

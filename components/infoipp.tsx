@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import type { CSSProperties } from "react"
 import { BookHeart, Cuboid, HeartHandshake, MapPinHouse } from "lucide-react"
 
@@ -55,9 +56,11 @@ export default function Info() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <img
+          <Image
             src="/images/ipp/banner-referencia.jpg"
             alt="Banner del proyecto Ingles pa' la Paz"
+            width={900}
+            height={1800}
             className="h-full w-full rounded-[2rem] object-cover object-center"
           />
         </motion.div>
@@ -113,13 +116,7 @@ export default function Info() {
                   </div>
 
                   <div className="relative flex h-full flex-col">
-                    <div className="flex items-start justify-between gap-4">
-                      <span
-                        className="rounded-full px-3 py-1 text-[0.75rem] font-black uppercase tracking-[0.24em] text-[color:var(--quote-card-ink)]"
-                        style={{ opacity: 0.72 }}
-                      >
-                      </span>
-
+                    <div className="flex items-start justify-end gap-4">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--quote-card-chip)] text-[color:var(--quote-card-ink)]">
                         <Icon className="h-5 w-5" />
                       </div>

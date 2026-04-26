@@ -11,7 +11,7 @@
   "dependencies": {
     "@radix-ui/react-scroll-area": "1.2.2",
     "@radix-ui/react-slot": "latest",
-    "@vercel/analytics": "^1.1.4",
+    "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "latest",
@@ -32,8 +32,11 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.25.1",
     "eslint-config-next": "^15.5.14",
-    "postcss": "^8.5",
+    "postcss": "8.5.10",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.10"
   }
 }

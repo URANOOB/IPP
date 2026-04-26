@@ -113,7 +113,7 @@ export default function Process() {
           </h2>
 
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
-            En Ingles Pa&apos; la Paz buscamos ensenar inglés desde la lectura,
+            En Inglés Pa&apos; la Paz buscamos ensenar inglés desde la lectura,
             la conversación y la creación de piezas bilingues desde experiencias
             reales del territorio y la participación comunitaria.
           </p>
@@ -126,7 +126,7 @@ export default function Process() {
           viewport={{ once: true }}
           className="overflow-hidden rounded-[2.4rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] shadow-[0_24px_55px_rgba(96,48,72,0.12)]"
         >
-          <div className="border-b border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] px-4 py-4 md:px-5">
+          <div className="border-b border-[var(--ipp-plum)]/10 bg-[var(--ipp-sky)] px-4 py-4 md:px-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export default function Process() {
 
                 <div className="flex items-center gap-2">
                   <div className="rounded-2xl border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] px-4 py-2">
-                    <span className="text-sm font-black tracking-[0.08em] text-[var(--ipp-plum)]">
+                    <span className="text-sm font-black tracking-[0.08em] text-[var(--ipp-black)]">
                       Métodos
                     </span>
                   </div>
@@ -155,8 +155,8 @@ export default function Process() {
                     <ArrowRight className="h-4 w-4 opacity-50" />
                   </div>
 
-                  <span className="truncate text-sm font-semibold text-[var(--ipp-coral)]">
-                    Ingles-Pa&apos;LaPaz.Metodología
+                  <span className="truncate text-sm font-semibold text-[var(--ipp-black)]">
+                    Inglés-Pa&apos;LaPaz.Metodología
                   </span>
                 </div>
               </div>
@@ -164,7 +164,7 @@ export default function Process() {
           </div>
 
           <div className="p-4 md:p-6">
-            <div className="mb-5 rounded-[1.7rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] px-4 py-5 sm:px-5">
+            <div className="mb-5 rounded-[1.7rem] px-4 py-5 sm:px-5">
               <h3 className="text-4xl font-black leading-tight text-[var(--ipp-plum)]">
                 Ruta de cada encuentro
               </h3>
