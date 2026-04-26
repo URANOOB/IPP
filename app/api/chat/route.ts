@@ -7,6 +7,8 @@ const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX_REQUESTS = 12
 const SESSION_ID_PATTERN = /^session_\d{10,20}_[a-z0-9]{4,24}$/
 
+// Rate limit simple para proteger el webhook de abuso accidental o spam básico.
+// En producción con varias instancias conviene reemplazarlo por Redis/KV.
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 
 function getClientIp(requestHeaders: Headers) {
@@ -29,6 +31,7 @@ function isRateLimited(clientIp: string) {
 
 export async function POST(req: Request) {
   try {
+    // El chatbot es público, así que validamos antes de hablar con el webhook externo.
     const requestHeaders = await headers()
     const clientIp = getClientIp(requestHeaders)
 
@@ -57,11 +60,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "N8N_WEBHOOK_URL is not configured." }, { status: 500 })
     }
 
+    // Evita enviar mensajes a un webhook sin cifrado cuando el sitio esté publicado.
     const parsedWebhookUrl = new URL(webhookUrl)
     if (parsedWebhookUrl.protocol !== "https:" && process.env.NODE_ENV === "production") {
       return NextResponse.json({ error: "Chatbot webhook must use HTTPS in production." }, { status: 500 })
     }
 
+    // AbortController evita que una ejecución lenta del webhook deje la request colgada.
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
 

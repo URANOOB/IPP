@@ -16,7 +16,7 @@ interface Message {
   content: string
 }
 
-// Function to generate a simple unique ID
+// ID sencillo para que el backend pueda agrupar mensajes de una misma conversación.
 const generateSessionId = () => `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
 
 export default function Chatbot() {
@@ -30,12 +30,11 @@ export default function Chatbot() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  // State to hold the session ID for the current chat
   const [sessionId, setSessionId] = useState<string | null>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Generate a session ID when the component mounts or when the chat is opened
+    // La sesión nace cuando el usuario abre el chat, no al cargar toda la página.
     if (isOpen && !sessionId) {
       setSessionId(generateSessionId())
     }
@@ -54,6 +53,7 @@ export default function Chatbot() {
     e.preventDefault()
     if (!input.trim() || isLoading) return
 
+    // Actualización optimista: mostramos el mensaje del usuario antes de esperar al servidor.
     const userMessage: Message = { role: "user", content: input }
     setMessages((prev) => [...prev, userMessage])
     setInput("")
@@ -135,6 +135,7 @@ export default function Chatbot() {
                             )}
                           >
                             <div className="text-sm leading-relaxed">
+                              {/* El bot puede responder con listas o enlaces; no se permite HTML crudo. */}
                               <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
                                 components={{

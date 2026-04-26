@@ -23,6 +23,7 @@ type MethodStep = {
 }
 
 const methodSteps: MethodStep[] = [
+  // Esta lista alimenta el menú lateral y el panel de detalle de la metodología.
   {
     title: "Welcome Time",
     icon: HandHeart,
@@ -183,6 +184,7 @@ export default function Process() {
                     const isActive = index === activeStep
 
                     return (
+                      // Cada botón cambia el paso activo; el contenido grande se renderiza desde currentStep.
                       <button
                         key={step.title}
                         type="button"

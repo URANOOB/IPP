@@ -15,6 +15,7 @@ const navItems = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  // Todas las opciones del nav viven en la misma landing; esto evita rutas extra.
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -26,6 +27,7 @@ export default function Header() {
   return (
     <header id="hero" className="relative min-h-screen overflow-hidden bg-[var(--ipp-sky)] text-[var(--ipp-plum)]">
       <div
+        // Imagen de fondo del hero. El overlay siguiente baja el contraste para que el texto respire.
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/ipp/butterflies_banner3.png')" }}
       />
@@ -89,6 +91,7 @@ export default function Header() {
       </nav>
 
       {isMenuOpen && (
+        // Menú móvil de pantalla completa: usa los mismos items del nav principal.
         <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-7 bg-[var(--ipp-paper)]/95 text-2xl font-black md:hidden">
           {navItems.map((item) => (
             <button key={item.name} onClick={() => scrollToSection(item.href)}>

@@ -10,6 +10,7 @@ import Process from "@/components/process"
 export default function Page() {
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--ipp-paper)] text-[var(--ipp-plum)]">
+      {/* Orden de lectura de la landing: presentación, proyecto, experiencias, método, equipo y contacto. */}
       <Header />
       <Info />
       <Experiences />

@@ -30,6 +30,8 @@ type Integrante = {
 }
 
 const integrantes: Integrante[] = [
+  // Para mostrar una foto, coloca una ruta pública en photo, por ejemplo:
+  // photo: "/images/ipp/integrantes/nombre.png". Si queda vacío, se usa el icono.
   {
     nombre: "Vanessa Pe\u00f1a",
     rol: "Líder",
@@ -132,6 +134,7 @@ const integrantes: Integrante[] = [
 ]
 
 function getRelativePosition(index: number, activeIndex: number, total: number) {
+  // Convierte el índice real en una posición circular alrededor de la card activa.
   let offset = index - activeIndex
 
   if (offset > total / 2) {
@@ -146,6 +149,7 @@ function getRelativePosition(index: number, activeIndex: number, total: number) 
 }
 
 const positionMap: Record<number, { x: string; y: number; rotate: number; scale: number; opacity: number }> = {
+  // Solo se muestran las cards cercanas para crear profundidad sin saturar la pantalla.
   [-2]: { x: "-96%", y: 40, rotate: -10, scale: 0.83, opacity: 0.2 },
   [-1]: { x: "-54%", y: 18, rotate: -6, scale: 0.91, opacity: 0.5 },
   [0]: { x: "0%", y: 0, rotate: 0, scale: 1, opacity: 1 },
@@ -249,6 +253,7 @@ export default function Integrantes() {
                             }`}
                           >
                             {integrante.photo ? (
+                              // La foto reemplaza el icono solo cuando photo tiene una ruta válida.
                               <Image
                                 src={integrante.photo}
                                 alt={`Foto de ${integrante.nombre}`}

@@ -6,6 +6,7 @@ import type { CSSProperties } from "react"
 import { BookHeart, Cuboid, HeartHandshake, MapPinHouse } from "lucide-react"
 
 const principles = [
+  // Cada principio controla su propio color para mantener la sección viva sin crear componentes extra.
   {
     icon: BookHeart,
     title: "Aprendemos desde lo que somos",
@@ -81,6 +82,7 @@ export default function Info() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
             {principles.map((item, index) => {
               const Icon = item.icon
+              // CSS variables por card: Tailwind mantiene la estructura y estas variables cambian la piel.
               const cardStyle = {
                 "--quote-card-surface": item.surface,
                 "--quote-card-ink": item.ink,

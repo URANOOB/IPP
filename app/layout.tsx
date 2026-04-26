@@ -3,6 +3,7 @@ import './globals.css'
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
+  // NEXT_PUBLIC_SITE_URL permite que canonical, Open Graph, robots y sitemap apunten al dominio real.
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://inglespalapaz.com/"),
   title: {
     default: "Ingles pa' la Paz",
@@ -78,6 +79,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        {/* Fuente base del sitio. Se mantiene aquí porque varias secciones usan las variables CSS globales. */}
         <style>{`
 html {
   font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;

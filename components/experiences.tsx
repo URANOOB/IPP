@@ -36,6 +36,7 @@ type ExperienceItem = {
 }
 
 const experiences: ExperienceItem[] = [
+  // resourceFolder apunta a public/images/ipp/<carpeta>; la API carga esas imágenes automáticamente.
   {
     id: "little-readers",
     title: "Little Readers Pa' la Paz",
@@ -114,6 +115,7 @@ export default function Experiences() {
     activeResources.find((resource) => resource.title === selectedResourceTitle) ?? activeResources[0]
 
   useEffect(() => {
+    // Carga perezosa de recursos: solo consultamos la carpeta cuando se abre una experiencia.
     if (!activeExperience.resourceFolder || autoResourcesById[activeExperience.id]) {
       return
     }

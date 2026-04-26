@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 
 const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif"])
 
+// Solo aceptamos nombres de carpetas simples para no permitir path traversal.
 function isSafeFolder(folder: string) {
   return /^[a-zA-Z0-9/_-]+$/.test(folder) && !folder.includes("..")
 }
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
   const absoluteFolder = path.join(process.cwd(), "public", "images", "ipp", folder)
 
   try {
+    // Esta ruta alimenta las galerías leyendo directamente las carpetas de public/images/ipp.
     const entries = await fs.readdir(absoluteFolder, { withFileTypes: true })
 
     const resources = entries

@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Instagram, Mail } from "lucide-react"
 
 const socialLinks = [
+  // Para sumar otra red, agrega aquí su nombre, URL e icono de lucide-react.
   {
     name: "Instagram",
     href: "https://www.instagram.com/ingles.pa.lapaz/",
@@ -12,6 +13,7 @@ const socialLinks = [
 ]
 
 function TikTokIcon({ className = "" }: { className?: string }) {
+  // TikTok no viene en lucide-react, por eso se mantiene como SVG local.
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
       <path d="M16.62 3c.28 2.38 1.62 3.8 4.02 3.96v3.22a7.14 7.14 0 0 1-4.02-1.23v5.96c0 3.02-2.03 5.09-5.12 5.09-2.8 0-5.14-1.77-5.14-4.72 0-3.34 2.92-5.22 6.15-4.55v3.37c-1.5-.49-2.85.18-2.85 1.5 0 1 .78 1.58 1.75 1.58 1.13 0 1.88-.66 1.88-2.12V3h3.33Z" />
@@ -66,6 +68,7 @@ export default function Footer() {
         </div>
 
         <div className="relative z-10 mt-1 grid grid-cols-1 items-end gap-2 md:mt-[-1.5rem] md:grid-cols-[minmax(12rem,22rem)_minmax(0,1fr)] md:gap-8 lg:grid-cols-[minmax(14rem,27rem)_minmax(0,1fr)] lg:gap-10">
+          {/* En escritorio el logo de manos vive junto al texto grande; en móvil baja a la franja inferior. */}
           <div className="relative hidden h-[10.5rem] w-full overflow-hidden sm:h-[13rem] md:block md:h-[18rem]">
             <div className="pointer-events-none absolute bottom-[-4.1rem] left-1/2 h-[17rem] w-[17rem] -translate-x-1/2 sm:h-[20rem] sm:w-[20rem] md:bottom-[-5.6rem] md:left-0 md:h-[24rem] md:w-[24rem] md:translate-x-0">
               <Image
@@ -90,6 +93,7 @@ export default function Footer() {
       </div>
 
       <div className="relative z-30 bg-[#321018] px-5 py-5 text-white sm:px-8">
+        {/* Barra de cierre: usa grid para que los logos no se monten sobre el copyright en móvil. */}
         <div className="mx-auto grid min-h-[8.5rem] max-w-7xl grid-cols-[1fr_auto] gap-x-4 gap-y-4 text-sm font-bold md:min-h-0 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
           <div className="col-start-1 row-start-1">
             <p>&copy; 2026</p>
