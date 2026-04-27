@@ -33,7 +33,7 @@ export default function Header() {
       />
       <div className="absolute inset-0 bg-[var(--ipp-sky)]/68" />
 
-      <nav className="relative z-30 mx-auto max-w-7xl px-2 py-2 md:px-16">
+      <nav className="relative z-50 mx-auto max-w-7xl px-2 py-2 md:px-16">
         <div className="relative flex items-center justify-between rounded-[3rem] border border-white/70 bg-white/88 px-2 py-4 shadow-[0_18px_40px_rgba(96,48,72,0.12)] backdrop-blur md:px-6">
           <div className="hidden items-center gap-8 text-[16px] font-black md:flex">
             {navItems.slice(0, 3).map((item) => (
@@ -84,22 +84,33 @@ export default function Header() {
             className="rounded-full border border-white/70 bg-white/70 p-3 backdrop-blur md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label="Abrir menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-header-menu"
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </nav>
 
-      {isMenuOpen && (
-        // Menú móvil de pantalla completa: usa los mismos items del nav principal.
-        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-7 bg-[var(--ipp-paper)]/95 text-2xl font-black md:hidden">
-          {navItems.map((item) => (
-            <button key={item.name} onClick={() => scrollToSection(item.href)}>
-              {item.name}
-            </button>
-          ))}
-        </div>
-      )}
+        {isMenuOpen ? (
+          // Menu movil compacto: queda bajo la barra y no deja ver el hero entre las opciones.
+          <div
+            id="mobile-header-menu"
+            className="absolute left-2 right-2 top-full mt-2 overflow-hidden rounded-[2rem] border border-white/80 bg-[#fff8e8] p-3 shadow-[0_22px_48px_rgba(96,48,72,0.22)] md:hidden"
+          >
+            <div className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="flex min-h-12 items-center justify-center rounded-full bg-white px-5 text-base font-black text-[var(--ipp-plum)] shadow-[4px_4px_0_rgba(96,48,72,0.08)] transition hover:bg-[var(--ipp-mint)]"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </nav>
 
       <div className="relative z-20 mx-auto grid min-h-[calc(100vh-88px)] max-w-6xl items-center gap-12 px-5 pb-16 pt-8 md:grid-cols-[0.95fr_0.85fr] md:px-8">
         <div className="max-w-2xl">
