@@ -1,145 +1,54 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { Analytics } from "@vercel/analytics/next"
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inglespalapaz.com"
+import type { Metadata } from "next"
+import Header from "@/components/header"
+import Footer from "@/components/footer"
+import Info from "@/components/infoipp"
+import Experiences from "@/components/experiences"
+import Integrantes from "@/components/Integrantes"
+import Process from "@/components/process"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-
-  title: {
-    default: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
-    template: "%s | Inglés pa' la Paz",
-  },
-
+  title: "Inglés pa' la Paz | Educación, territorio y construcción de paz en Colombia",
   description:
-    "Inglés pa' la Paz es un proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
-
-  keywords: [
-    "inglés para la paz",
-    "educación para la paz",
-    "aprendizaje del inglés",
-    "inglés comunitario",
-    "lectura y territorio",
-    "construcción de paz",
-    "proyecto educativo en Colombia",
-    "aprendizaje intercultural",
-    "impacto social",
-    "comunidad y educación"
-  ],
-
-  authors: [{ name: "Inglés pa' la Paz" }],
-  creator: "Inglés pa' la Paz",
-  publisher: "Inglés pa' la Paz",
-  category: "education",
-
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-
+    "Conoce Inglés pa' la Paz, un proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
   alternates: {
     canonical: "/",
   },
-
-  icons: {
-    icon: [
-      {
-        url: "/favicon.png",
-        type: "image/png",
-        sizes: "512x512",
-      },
-    ],
-    apple: [
-      {
-        url: "/favicon.png",
-        type: "image/png",
-        sizes: "512x512",
-      },
-    ],
-    shortcut: ["/favicon.png"],
-  },
-
   openGraph: {
-    type: "website",
-    locale: "es_CO",
+    title: "Inglés pa' la Paz | Educación, territorio y construcción de paz en Colombia",
+    description:
+      "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
     url: "/",
-    siteName: "Inglés pa' la Paz",
-    title: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
-    description:
-      "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
-    images: [
-      {
-        url: "/images/ipp/logo-ingles-pa-la-paz.png",
-        width: 874,
-        height: 871,
-        alt: "Logo de Inglés pa' la Paz",
-      },
-    ],
+    type: "website",
   },
-
   twitter: {
-    card: "summary_large_image",
-    title: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
+    title: "Inglés pa' la Paz | Educación, territorio y construcción de paz en Colombia",
     description:
       "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
-    images: ["/images/ipp/logo-ingles-pa-la-paz.png"],
-    creator: "@inglespalapaz",
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        name: "Inglés pa' la Paz",
-        url: siteUrl,
-        logo: `${siteUrl}/images/ipp/logo-ingles-pa-la-paz.png`,
-        description:
-          "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
-      },
-      {
-        "@type": "WebSite",
-        name: "Inglés pa' la Paz",
-        url: siteUrl,
-        inLanguage: "es-CO",
-      },
-    ],
-  }
-
+export default function Page() {
   return (
-    <html lang="es">
-      <head>
-        <style>{`
-html {
-  font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
-  --font-sans: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
-  --font-mono: "Fira Code", Consolas, monospace;
-}
-        `}</style>
+    <main className="min-h-screen overflow-hidden bg-[var(--ipp-paper)] text-[var(--ipp-plum)]">
+      <Header />
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
-      <body>
-        {children}
-        <Analytics />
-      </body>
-    </html>
+      <section id="informacion-del-proyecto" aria-labelledby="info-heading">
+        <Info />
+      </section>
+
+      <section id="experiencias" aria-labelledby="experiencias-heading">
+        <Experiences />
+      </section>
+
+      <section id="metodologia" aria-labelledby="metodologia-heading">
+        <Process />
+      </section>
+
+      <section id="integrantes" aria-labelledby="integrantes-heading">
+        <Integrantes />
+      </section>
+
+      <Footer />
+    </main>
   )
 }
