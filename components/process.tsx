@@ -23,7 +23,6 @@ type MethodStep = {
 }
 
 const methodSteps: MethodStep[] = [
-  // Esta lista alimenta el menú lateral y el panel de detalle de la metodología.
   {
     title: "Welcome Time",
     icon: HandHeart,
@@ -33,10 +32,10 @@ const methodSteps: MethodStep[] = [
     items: [
       "Damos la bienvenida a quienes participan.",
       "Compartimos nombres y formas de presentarnos.",
-      "Reconocemos como llega el grupo al encuentro.",
-      "Activamos la escucha y la disposicion para aprender.",
+      "Reconocemos cómo llega el grupo al encuentro.",
+      "Activamos la escucha y la disposición para aprender.",
     ],
-    keywords: ["Bienvenida", "Confianza", "Escucha", "Participacion"],
+    keywords: ["Bienvenida", "Confianza", "Escucha", "Participación"],
   },
   {
     title: "Story Time",
@@ -101,21 +100,28 @@ export default function Process() {
   return (
     <section
       id="method"
+      aria-labelledby="method-heading"
       className="relative bg-[var(--ipp-paper)] px-5 py-24 md:px-8"
     >
-      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-mint)]" />
+      <div
+        className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-mint)]"
+        aria-hidden="true"
+      />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-14 max-w-3xl">
           <p className="section-kicker">Metodología</p>
 
-          <h2 className="font-display text-5xl font-black leading-tight text-[var(--ipp-coral)] md:text-7xl">
-            Así vivimos cada encuentro.
+          <h2
+            id="method-heading"
+            className="font-display text-5xl font-black leading-tight text-[var(--ipp-coral)] md:text-7xl"
+          >
+            Así vivimos cada encuentro de Inglés pa&apos; la Paz
           </h2>
 
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
-            En Inglés Pa&apos; la Paz buscamos ensenar inglés desde la lectura,
-            la conversación y la creación de piezas bilingues desde experiencias
+            En Inglés Pa&apos; la Paz buscamos enseñar inglés desde la lectura,
+            la conversación y la creación de piezas bilingües a partir de experiencias
             reales del territorio y la participación comunitaria.
           </p>
         </div>
@@ -130,7 +136,7 @@ export default function Process() {
           <div className="border-b border-[var(--ipp-plum)]/10 bg-[var(--ipp-sky)] px-4 py-4 md:px-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" aria-hidden="true">
                   <span className="h-3.5 w-3.5 rounded-full bg-[var(--ipp-coral)]" />
                   <span className="h-3.5 w-3.5 rounded-full bg-[var(--ipp-yellow)]" />
                   <span className="h-3.5 w-3.5 rounded-full bg-[var(--ipp-green)]" />
@@ -139,11 +145,14 @@ export default function Process() {
                 <div className="flex items-center gap-2">
                   <div className="rounded-2xl border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] px-4 py-2">
                     <span className="text-sm font-black tracking-[0.08em] text-[var(--ipp-black)]">
-                      Métodos
+                      Método
                     </span>
                   </div>
 
-                  <div className="flex h-9 w-9 items-center justify-center rounded-2xl border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] text-lg font-black leading-none text-[var(--ipp-coral)]">
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-2xl border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] text-lg font-black leading-none text-[var(--ipp-coral)]"
+                    aria-hidden="true"
+                  >
                     +
                   </div>
                 </div>
@@ -151,13 +160,13 @@ export default function Process() {
 
               <div className="flex min-w-0 items-center justify-end lg:flex-1">
                 <div className="flex w-full items-center gap-3 rounded-full border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] px-4 py-3 sm:px-5 lg:max-w-[620px]">
-                  <div className="flex items-center gap-2 text-[var(--ipp-plum)]/40">
+                  <div className="flex items-center gap-2 text-[var(--ipp-plum)]/40" aria-hidden="true">
                     <ArrowLeft className="h-4 w-4" />
                     <ArrowRight className="h-4 w-4 opacity-50" />
                   </div>
 
                   <span className="truncate text-sm font-semibold text-[var(--ipp-black)]">
-                    Inglés-Pa&apos;LaPaz.Metodología
+                    Ingles-Pa&apos;-la-Paz.Metodologia
                   </span>
                 </div>
               </div>
@@ -171,25 +180,30 @@ export default function Process() {
               </h3>
 
               <p className="mt-2 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/65">
-                Cada paso tiene su propio contenido, y la estructura queda lista
-                para completar cada momento con más detalle.
+                Cada momento del encuentro tiene una intención pedagógica clara y una forma distinta de acercarse al idioma, la emoción y la creación colectiva.
               </p>
             </div>
 
             <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
-              <aside className="rounded-[1.8rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] p-3">
+              <aside
+                className="rounded-[1.8rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] p-3"
+                role="tablist"
+                aria-label="Pasos de la metodología"
+              >
                 <div className="space-y-2">
                   {methodSteps.map((step, index) => {
                     const Icon = step.icon
                     const isActive = index === activeStep
 
                     return (
-                      // Cada botón cambia el paso activo; el contenido grande se renderiza desde currentStep.
                       <button
                         key={step.title}
+                        id={`method-tab-${index}`}
                         type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-controls={`method-panel-${index}`}
                         onClick={() => setActiveStep(index)}
-                        aria-pressed={isActive}
                         className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left border-[var(--ipp-plum)] transition hover:bg-[var(--ipp-paper)]"
                         style={{
                           backgroundColor: isActive
@@ -199,11 +213,9 @@ export default function Process() {
                       >
                         <span
                           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-                          style={{
-                            backgroundColor: step.color,
-                          }}
+                          style={{ backgroundColor: step.color }}
                         >
-                          <Icon className="h-4 w-4 text-[var(--ipp-black)]" />
+                          <Icon className="h-4 w-4 text-[var(--ipp-black)]" aria-hidden="true" />
                         </span>
 
                         <span className="min-w-0 flex-1 truncate text-lg font-black text-[var(--ipp-plum)]">
@@ -221,6 +233,9 @@ export default function Process() {
 
               <motion.article
                 key={currentStep.title}
+                id={`method-panel-${activeStep}`}
+                role="tabpanel"
+                aria-labelledby={`method-tab-${activeStep}`}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25 }}
@@ -228,20 +243,17 @@ export default function Process() {
               >
                 <div
                   className="h-3 w-full"
-                  style={{
-                    backgroundColor: currentStep.color,
-                  }}
+                  style={{ backgroundColor: currentStep.color }}
+                  aria-hidden="true"
                 />
 
                 <div className="p-5 md:p-6">
                   <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
                     <div
                       className="flex h-12 w-12 items-center justify-center rounded-full"
-                      style={{
-                        backgroundColor: currentStep.color,
-                      }}
+                      style={{ backgroundColor: currentStep.color }}
                     >
-                      <CurrentIcon className="h-5 w-5 text-[var(--ipp-black)]" />
+                      <CurrentIcon className="h-5 w-5 text-[var(--ipp-black)]" aria-hidden="true" />
                     </div>
 
                     <div className="rounded-2xl border border-[var(--ipp-plum)]/10 bg-[var(--ipp-cream)] px-3 py-2 text-right">
@@ -265,7 +277,7 @@ export default function Process() {
 
                   <div className="mt-8">
                     <h4 className="text-lg font-black text-[var(--ipp-plum)] md:text-2xl">
-                      ¿Qué sucede aqui?
+                      ¿Qué sucede aquí?
                     </h4>
 
                     <ul className="mt-3 space-y-2 pl-5 text-sm font-semibold leading-relaxed text-[var(--ipp-plum)]/80 md:text-xl">
