@@ -186,7 +186,7 @@ export default function Integrantes() {
             id="integrantes-heading"
             className="font-display text-5xl font-black leading-tight text-[var(--ipp-coral)] md:text-7xl"
           >
-            Quienes hacen posible Inglés Pa&apos; la Paz
+            Quiénes hacen posible Inglés Pa&apos; la Paz
           </h2>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
             Un equipo colombiano que une pedagogía, memoria, tecnología, cultura y trabajo comunitario.

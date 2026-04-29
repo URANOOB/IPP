@@ -137,7 +137,7 @@ export default function Header() {
       </nav>
 
       <div className="relative z-20 mx-auto grid min-h-[calc(100vh-88px)] max-w-6xl items-center gap-12 px-5 pb-16 pt-8 md:grid-cols-[0.95fr_0.85fr] md:px-8">
-        <div className="max-w-2xl">
+        <div className="w-full max-w-[350px] min-w-0 sm:max-w-2xl">
           <p className="text-sm font-black uppercase tracking-[0.18em] text-[var(--ipp-plum)]/70">
             Proyecto educativo y comunitario en Colombia
           </p>
@@ -147,7 +147,7 @@ export default function Header() {
             <span className="mt-1 block text-[var(--ipp-plum)]">Pa&apos; la Paz</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/84 md:text-xl">
+          <p className="mt-6 max-w-xl break-words text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/84 md:text-xl">
             Usamos relatos, diálogo y experiencias creativas para que niñas, niños y
             comunidades vivan el inglés como una herramienta cercana para aprender,
             expresarse y construir paz desde su historia y su territorio.
@@ -156,7 +156,7 @@ export default function Header() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <LiquidButton
               size="xxl"
-              className="rounded-full bg-[var(--ipp-olive)] px-9 font-black text-white shadow-[6px_6px_0_rgba(96,48,72,0.22)]"
+              className="w-full max-w-full rounded-full bg-[var(--ipp-olive)] px-6 font-black text-white shadow-[6px_6px_0_rgba(96,48,72,0.22)] sm:w-auto sm:px-9"
               onClick={() => {
                 const element = document.querySelector("#project")
                 if (element) {
@@ -184,7 +184,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="relative min-h-[250px]">
+        <div className="relative min-h-[250px] min-w-0">
           <div
             className="absolute inset-x-10 top-12 h-72 rounded-full bg-white/28 blur-3xl"
             aria-hidden="true"

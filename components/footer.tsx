@@ -89,37 +89,35 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="relative z-10 mb-[-0.01rem] flex min-w-0 flex-col items-end text-right font-sans font-black leading-[0.76] tracking-normal text-[#321018] md:leading-[0.78]">
-            <span className="block text-[clamp(5.4rem,23vw,9.8rem)] md:text-[clamp(4.2rem,10.2vw,9.4rem)]">
+          <div className="relative z-10 flex min-w-0 flex-col items-end text-right font-sans font-black tracking-normal text-[#321018]">
+            <span className="block leading-[0.9] text-[clamp(5.4rem,23vw,9.8rem)] md:leading-[1.08] md:text-[clamp(4.2rem,10.2vw,9.4rem)]">
               Inglés
             </span>
-            <span className="block whitespace-nowrap text-[clamp(3.95rem,17.4vw,8.4rem)] md:text-[clamp(2.9rem,6.8vw,7.1rem)]">
+            <span className="-mb-[0.3rem] block whitespace-nowrap leading-[0.78] text-[clamp(3.95rem,17.4vw,8.4rem)] md:-mt-[0.06em] md:-mb-[0.3rem] md:leading-[0.72] md:text-[clamp(2.9rem,6.8vw,7.1rem)]">
               Pa&apos; la Paz
             </span>
           </div>
         </div>
       </div>
 
-      <div className="relative z-30 bg-[#321018] px-5 py-5 text-white sm:px-8">
-        <div className="mx-auto grid min-h-[8.5rem] max-w-7xl grid-cols-[1fr_auto] gap-x-4 gap-y-4 text-sm font-bold md:min-h-0 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
-          <div className="col-start-1 row-start-1">
-            <p>&copy; 2026 Inglés pa&apos; la Paz</p>
-          </div>
+      <div className="relative z-30 border-t border-white/10 bg-[#321018] px-5 py-4 text-white sm:px-8 md:py-7">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm font-bold sm:text-base md:flex-row md:items-center md:justify-between md:gap-10">
+          <p className="leading-none tracking-[0.01em] md:text-lg">&copy; 2026 Inglés pa&apos; la Paz</p>
 
-          <div className="col-start-2 row-start-2 flex flex-col items-end gap-2 self-end justify-self-end md:col-start-2 md:row-start-1 md:self-center md:justify-self-start">
+          <div className="flex w-full items-end justify-between gap-6 md:w-auto md:justify-end md:gap-8">
             <Image
               src="/images/ipp/LOGOROJOIDPAC-p-500.png"
               alt="Logo de IDPAC"
               width={500}
               height={109}
-              className="h-auto w-40 brightness-0 invert sm:w-48"
+              className="h-auto w-28 brightness-0 invert sm:w-44 md:w-56"
             />
             <Image
               src="/images/ipp/logo_png3.png"
               alt=""
               width={874}
               height={574}
-              className="h-auto w-28 md:hidden"
+              className="h-auto w-20 sm:w-32 md:hidden"
             />
           </div>
         </div>

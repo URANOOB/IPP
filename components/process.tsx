@@ -109,7 +109,7 @@ export default function Process() {
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-14 max-w-3xl">
+        <div className="mx-auto mb-14 max-w-5xl text-center">
           <p className="section-kicker">Metodología</p>
 
           <h2
@@ -119,7 +119,7 @@ export default function Process() {
             Así vivimos cada encuentro de Inglés pa&apos; la Paz
           </h2>
 
-          <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
+          <p className="mx-auto mt-6 max-w-4xl text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
             En Inglés Pa&apos; la Paz buscamos enseñar inglés desde la lectura,
             la conversación y la creación de piezas bilingües a partir de experiencias
             reales del territorio y la participación comunitaria.
