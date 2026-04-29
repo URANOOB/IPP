@@ -2,35 +2,53 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from "@vercel/analytics/next"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inglespalapaz.com"
+
 export const metadata: Metadata = {
-  // NEXT_PUBLIC_SITE_URL permite que canonical, Open Graph, robots y sitemap apunten al dominio real.
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://inglespalapaz.com/"),
+  metadataBase: new URL(siteUrl),
+
   title: {
-    default: "Ingles pa' la Paz",
-    template: "%s | Ingles pa' la Paz",
+    default: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
+    template: "%s | Inglés pa' la Paz",
   },
-  description: "Lectura, territorio y construccion de paz a traves del ingles.",
+
+  description:
+    "Inglés pa' la Paz es un proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
+
   keywords: [
-    "Ingles",
-    "learning",
-    "education",
-    "peace",
-    "territorio",
-    "Colombia",
-    "Free english",
-    "Paz",
-    "Aprendizaje"
+    "inglés para la paz",
+    "educación para la paz",
+    "aprendizaje del inglés",
+    "inglés comunitario",
+    "lectura y territorio",
+    "construcción de paz",
+    "proyecto educativo en Colombia",
+    "aprendizaje intercultural",
+    "impacto social",
+    "comunidad y educación"
   ],
-  authors: [{ name: "Ingles pa' la Paz" }],
-  creator: "Ingles pa' la Paz",
-  publisher: "Ingles pa' la Paz",
+
+  authors: [{ name: "Inglés pa' la Paz" }],
+  creator: "Inglés pa' la Paz",
+  publisher: "Inglés pa' la Paz",
+  category: "education",
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+
   alternates: {
     canonical: "/",
   },
+
   icons: {
     icon: [
       {
@@ -46,28 +64,34 @@ export const metadata: Metadata = {
         sizes: "512x512",
       },
     ],
+    shortcut: ["/favicon.png"],
   },
+
   openGraph: {
     type: "website",
     locale: "es_CO",
     url: "/",
-    siteName: "Ingles pa' la Paz",
-    title: "Ingles pa' la Paz",
-    description: "Lectura, territorio y construccion de paz a traves del ingles.",
+    siteName: "Inglés pa' la Paz",
+    title: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
+    description:
+      "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
     images: [
       {
         url: "/images/ipp/logo-ingles-pa-la-paz.png",
         width: 874,
         height: 871,
-        alt: "Logo de Ingles pa' la Paz",
+        alt: "Logo de Inglés pa' la Paz",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Ingles pa' la Paz",
-    description: "Lectura, territorio y construccion de paz a traves del ingles.",
+    title: "Inglés pa' la Paz | Lectura, territorio y construcción de paz en Colombia",
+    description:
+      "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
     images: ["/images/ipp/logo-ingles-pa-la-paz.png"],
+    creator: "@inglespalapaz",
   },
 }
 
@@ -76,10 +100,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: "Inglés pa' la Paz",
+        url: siteUrl,
+        logo: `${siteUrl}/images/ipp/logo-ingles-pa-la-paz.png`,
+        description:
+          "Proyecto educativo y comunitario en Colombia que une lectura, territorio y construcción de paz a través del aprendizaje del inglés.",
+      },
+      {
+        "@type": "WebSite",
+        name: "Inglés pa' la Paz",
+        url: siteUrl,
+        inLanguage: "es-CO",
+      },
+    ],
+  }
+
   return (
     <html lang="es">
       <head>
-        {/* Fuente base del sitio. Se mantiene aquí porque varias secciones usan las variables CSS globales. */}
         <style>{`
 html {
   font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
@@ -87,6 +130,11 @@ html {
   --font-mono: "Fira Code", Consolas, monospace;
 }
         `}</style>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         {children}
