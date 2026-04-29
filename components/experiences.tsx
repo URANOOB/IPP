@@ -36,22 +36,22 @@ type ExperienceItem = {
 }
 
 const experiences: ExperienceItem[] = [
-  // resourceFolder apunta a public/images/ipp/<carpeta>; la API carga esas imágenes automáticamente.
   {
     id: "little-readers",
     title: "Little Readers Pa' la Paz",
     folder: "Lectura Viva",
-    eyebrow: "Niños de 7 a 13 años",
+    eyebrow: "Niñas y niños de 7 a 13 años",
     summary:
       "Círculos de lectura en inglés para niñas y niños, donde los cuentos, las emociones y la creación manual abren espacio para aprender en comunidad.",
-    description: "Este archivo lo pensamos para contarte nuestras experiencias.",
+    description:
+      "Experiencia de lectura en inglés para niñas y niños, donde los cuentos, las emociones y la creación manual fortalecen el aprendizaje en comunidad.",
     image: "/images/ipp/logo_png3.png",
     icon: BookOpen,
     resourceFolder: "Little-reader",
     resources: [
       {
-        title: "Default Img",
-        type: "PNG",
+        title: "Portada de la experiencia",
+        type: "Imagen",
         image: "/images/ipp/logo_png3.png",
       },
     ],
@@ -65,14 +65,15 @@ const experiences: ExperienceItem[] = [
     eyebrow: "Conversación crítica",
     summary:
       "Club conversacional en inglés para narrar memoria, paz territorial y procesos comunitarios desde una mirada crítica.",
-    description: "Este archivo lo pensamos para contarte nuestras experiencias.",
+    description:
+      "Espacio conversacional en inglés para explorar memoria, territorio y construcción de paz desde preguntas críticas y experiencias compartidas.",
     image: "/images/ipp/logo_png3.png",
     icon: Globe2,
     resourceFolder: "bridges",
     resources: [
       {
-        title: "Default Img",
-        type: "PNG",
+        title: "Portada de la experiencia",
+        type: "Imagen",
         image: "/images/ipp/logo_png3.png",
       },
     ],
@@ -85,15 +86,16 @@ const experiences: ExperienceItem[] = [
     folder: "Creación Colectiva",
     eyebrow: "Creación colectiva",
     summary:
-      "Galerias, relatos, audios y piezas bilingues creadas desde experiencias reales del territorio y la participación comunitaria.",
-    description: "Este archivo lo pensamos para contarte nuestras experiencias.",
+      "Galerías, relatos, audios y piezas bilingües creadas desde experiencias reales del territorio y la participación comunitaria.",
+    description:
+      "Proceso de creación colectiva donde relatos, imágenes y piezas bilingües nacen de las voces, emociones y vivencias del territorio.",
     image: "/images/ipp/logo_png3.png",
     icon: Mic,
     resourceFolder: "voices",
     resources: [
       {
-        title: "Default Img",
-        type: "PNG",
+        title: "Portada de la experiencia",
+        type: "Imagen",
         image: "/images/ipp/logo_png3.png",
       },
     ],
@@ -105,7 +107,9 @@ const experiences: ExperienceItem[] = [
 export default function Experiences() {
   const [activeId, setActiveId] = useState(experiences[0].id)
   const [expandedId, setExpandedId] = useState<string | null>(experiences[0].id)
-  const [selectedResourceTitle, setSelectedResourceTitle] = useState(experiences[0].resources[0]?.title ?? "")
+  const [selectedResourceTitle, setSelectedResourceTitle] = useState(
+    experiences[0].resources[0]?.title ?? ""
+  )
   const [autoResourcesById, setAutoResourcesById] = useState<Record<string, ExperienceResource[]>>({})
 
   const activeExperience = experiences.find((item) => item.id === activeId) ?? experiences[0]
@@ -115,7 +119,6 @@ export default function Experiences() {
     activeResources.find((resource) => resource.title === selectedResourceTitle) ?? activeResources[0]
 
   useEffect(() => {
-    // Carga perezosa de recursos: solo consultamos la carpeta cuando se abre una experiencia.
     if (!activeExperience.resourceFolder || autoResourcesById[activeExperience.id]) {
       return
     }
@@ -125,12 +128,10 @@ export default function Experiences() {
     const loadResources = async () => {
       try {
         const response = await fetch(
-          `/api/experience-resources?folder=${encodeURIComponent(activeExperience.resourceFolder ?? "")}`,
+          `/api/experience-resources?folder=${encodeURIComponent(activeExperience.resourceFolder ?? "")}`
         )
 
-        if (!response.ok) {
-          return
-        }
+        if (!response.ok) return
 
         const resources = (await response.json()) as ExperienceResource[]
 
@@ -156,18 +157,29 @@ export default function Experiences() {
     setSelectedResourceTitle(activeResources[0]?.title ?? "")
   }, [activeExperience.id, activeResources])
 
-  const getResourcesForExperience = (experience: ExperienceItem) => autoResourcesById[experience.id] ?? experience.resources
+  const getResourcesForExperience = (experience: ExperienceItem) =>
+    autoResourcesById[experience.id] ?? experience.resources
 
   return (
-    <section id="experiences" className="relative overflow-hidden bg-[var(--ipp-mint)] px-5 py-24 md:px-8">
-      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-paper)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.42),transparent_32%),linear-gradient(180deg,rgba(255,248,232,0.28),rgba(220,235,207,0.6))]" />
+    <section
+      id="experiences"
+      aria-labelledby="experiences-heading"
+      className="relative overflow-hidden bg-[var(--ipp-mint)] px-5 py-24 md:px-8"
+    >
+      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-paper)]" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.42),transparent_32%),linear-gradient(180deg,rgba(255,248,232,0.28),rgba(220,235,207,0.6))]"
+        aria-hidden="true"
+      />
 
       <div className="relative mx-auto max-w-7xl pt-8">
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <p className="section-kicker">Experiencias</p>
-          <h2 className="font-display text-5xl font-black leading-tight text-[var(--ipp-plum)] md:text-7xl">
-            Así se vive el inglés cuando nace desde el territorio.
+          <h2
+            id="experiences-heading"
+            className="font-display text-5xl font-black leading-tight text-[var(--ipp-plum)] md:text-7xl"
+          >
+            Así se vive el inglés cuando nace desde el territorio
           </h2>
         </div>
 
@@ -187,11 +199,13 @@ export default function Experiences() {
 
             <article className="rounded-[2rem] border border-white/70 bg-white/45 p-4 shadow-[14px_16px_0_rgba(96,48,72,0.08)] backdrop-blur xl:mt-1">
               <div className="mb-5 flex items-center justify-between px-3 pt-2">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-[var(--ipp-coral)]">Carpetas</p>
-                <FolderOpen className="h-5 w-5 text-[var(--ipp-plum)]/52" />
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-[var(--ipp-coral)]">
+                  Carpetas
+                </p>
+                <FolderOpen className="h-5 w-5 text-[var(--ipp-plum)]/52" aria-hidden="true" />
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4" role="tablist" aria-label="Experiencias del proyecto">
                 {experiences.map((item) => {
                   const Icon = item.icon
                   const isActive = item.id === activeId
@@ -199,7 +213,11 @@ export default function Experiences() {
                   return (
                     <button
                       key={item.id}
+                      id={`experience-tab-${item.id}`}
                       type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`experience-panel-${item.id}`}
                       onClick={() => {
                         setActiveId(item.id)
                         setExpandedId(item.id)
@@ -215,7 +233,7 @@ export default function Experiences() {
                           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl"
                           style={{ backgroundColor: item.accent }}
                         >
-                          <Icon className="h-5 w-5 text-[var(--ipp-plum)]" />
+                          <Icon className="h-5 w-5 text-[var(--ipp-plum)]" aria-hidden="true" />
                         </div>
 
                         <div className="min-w-0">
@@ -226,6 +244,7 @@ export default function Experiences() {
 
                       <ArrowUpRight
                         className={`h-4 w-4 shrink-0 ${isActive ? "text-[var(--ipp-coral)]" : "text-[var(--ipp-plum)]/38"}`}
+                        aria-hidden="true"
                       />
                     </button>
                   )
@@ -235,6 +254,9 @@ export default function Experiences() {
           </motion.div>
 
           <motion.article
+            id={`experience-panel-${activeExperience.id}`}
+            role="tabpanel"
+            aria-labelledby={`experience-tab-${activeExperience.id}`}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.06 }}
@@ -242,7 +264,7 @@ export default function Experiences() {
             className="h-full rounded-[2rem] border border-white/70 bg-white/50 p-3 shadow-[14px_16px_0_rgba(96,48,72,0.08)] backdrop-blur"
           >
             <div className="space-y-3">
-              {[activeExperience].map((item, index) => {
+              {[activeExperience].map((item) => {
                 const Icon = item.icon
                 const isExpanded = expandedId === item.id
                 const itemResources = getResourcesForExperience(item)
@@ -252,7 +274,7 @@ export default function Experiences() {
                     key={item.id}
                     initial={{ opacity: 0, x: 16 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.08 }}
+                    transition={{ duration: 0.4 }}
                     viewport={{ once: true }}
                     className="overflow-hidden rounded-[1.65rem] border border-[var(--ipp-coral)]/30 bg-[var(--ipp-paper)] shadow-[0_14px_28px_rgba(96,48,72,0.08)]"
                   >
@@ -263,18 +285,21 @@ export default function Experiences() {
                     >
                       <div className="flex justify-end gap-2">
                         <div className="flex items-center gap-2 rounded-full border border-[var(--ipp-coral)]/14 bg-white/84 px-3 py-2 text-[0.68rem] font-black uppercase tracking-[0.22em] text-[var(--ipp-plum)]/72 shadow-[0_8px_16px_rgba(96,48,72,0.06)] backdrop-blur">
-                          <Icon className="h-3.5 w-3.5 text-[var(--ipp-plum)]/68" />
-                          <span>{itemResources.length} imagenes</span>
+                          <Icon className="h-3.5 w-3.5 text-[var(--ipp-plum)]/68" aria-hidden="true" />
+                          <span>
+                            {itemResources.length} {itemResources.length === 1 ? "imagen" : "imágenes"}
+                          </span>
                         </div>
 
                         <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--ipp-coral)]/12 bg-white/72 text-[var(--ipp-plum)]/60 shadow-[0_8px_16px_rgba(96,48,72,0.05)]">
                           <ChevronDown
                             className={`h-4 w-4 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                            aria-hidden="true"
                           />
                         </div>
                       </div>
 
-                      <div className="mt-5 flex flex-col gap-4 sm:mt-6 sm:grid sm:grid-cols-[64px_minmax(0,1fr)] sm:items-start sm:gap-x-5 lg:flex lg:grid-cols-none lg:flex-row lg:items-start">
+                      <div className="mt-5 flex flex-col gap-4 sm:mt-6 sm:grid sm:grid-cols-[64px_minmax(0,1fr)] sm:items-start sm:gap-x-5 lg:flex lg:flex-row lg:items-start">
                         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[1rem] bg-[var(--ipp-paper)]">
                           <Image src={item.image} alt={item.title} fill className="object-contain p-2" sizes="64px" />
                         </div>
@@ -316,19 +341,21 @@ export default function Experiences() {
                                     src={resource.image}
                                     alt={resource.title}
                                     fill
-                                    className="object-cover p-0"
+                                    className="object-cover"
                                     sizes="64px"
                                   />
                                 </div>
 
                                 <div className="min-w-0 flex-1">
-                                  <p className="truncate text-lg font-semibold text-[var(--ipp-plum)]">{resource.title}</p>
+                                  <p className="truncate text-lg font-semibold text-[var(--ipp-plum)]">
+                                    {resource.title}
+                                  </p>
                                   <p className="mt-1 text-[0.68rem] font-black uppercase tracking-[0.2em] text-[var(--ipp-plum)]/48">
                                     {resource.type}
                                   </p>
                                 </div>
 
-                                <ImageIcon className="h-4 w-4 shrink-0 text-[var(--ipp-coral)]/72" />
+                                <ImageIcon className="h-4 w-4 shrink-0 text-[var(--ipp-coral)]/72" aria-hidden="true" />
                               </button>
                             ))}
                           </div>
@@ -354,7 +381,7 @@ export default function Experiences() {
                   src={selectedResource?.image ?? activeExperience.image}
                   alt={selectedResource?.title ?? activeExperience.title}
                   fill
-                  className="object-contain p-1 rounded-[2.5rem] sm:p-2"
+                  className="rounded-[2.5rem] object-contain p-1 sm:p-2"
                   sizes="(min-width: 1280px) 36vw, (min-width: 640px) 60vw, 100vw"
                 />
               </div>
@@ -366,7 +393,7 @@ export default function Experiences() {
                   className="flex h-12 w-12 items-center justify-center rounded-2xl"
                   style={{ backgroundColor: activeExperience.accent }}
                 >
-                  <ActiveIcon className="h-5 w-5 text-[var(--ipp-plum)]" />
+                  <ActiveIcon className="h-5 w-5 text-[var(--ipp-plum)]" aria-hidden="true" />
                 </div>
 
                 <div>
