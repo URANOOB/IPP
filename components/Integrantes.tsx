@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import {
   ArrowLeft,
@@ -30,10 +30,8 @@ type Integrante = {
 }
 
 const integrantes: Integrante[] = [
-  // Para mostrar una foto, coloca una ruta pública en photo, por ejemplo:
-  // photo: "/images/ipp/integrantes/nombre.png". Si queda vacío, se usa el icono.
   {
-    nombre: "Vanessa Pe\u00f1a",
+    nombre: "Vanessa Peña",
     rol: "Líder",
     foco: "Gestiona proyectos y convocatorias enfocadas en la cultura, la memoria y la construcción de paz.",
     icon: Users,
@@ -80,14 +78,14 @@ const integrantes: Integrante[] = [
   {
     nombre: "Lorena Ayala",
     rol: "Docente",
-    foco: "Lidera conversatorios y experiencias pedagogicas con enfoque en paz, memoria y escucha sensible.",
+    foco: "Lidera conversatorios y experiencias pedagógicas con enfoque en paz, memoria y escucha sensible.",
     icon: BookOpen,
     photo: "",
     accent: "var(--ipp-plum)",
     surface: "rgba(96, 48, 72, 0.1)",
   },
   {
-    nombre: "Andres Pabon",
+    nombre: "Andrés Pabón",
     rol: "Docente",
     foco: "Diseña e implementa talleres que conectan el idioma con procesos de expresión y reflexión colectiva.",
     icon: PenSquare,
@@ -114,7 +112,7 @@ const integrantes: Integrante[] = [
     surface: "rgba(144, 192, 192, 0.24)",
   },
   {
-    nombre: "Tatiana Martinez",
+    nombre: "Tatiana Martínez",
     rol: "Administradora",
     foco: "Aporta en la gestión legal y administrativa para que los procesos del colectivo sigan avanzando.",
     icon: ClipboardList,
@@ -134,22 +132,15 @@ const integrantes: Integrante[] = [
 ]
 
 function getRelativePosition(index: number, activeIndex: number, total: number) {
-  // Convierte el índice real en una posición circular alrededor de la card activa.
   let offset = index - activeIndex
 
-  if (offset > total / 2) {
-    offset -= total
-  }
-
-  if (offset < -total / 2) {
-    offset += total
-  }
+  if (offset > total / 2) offset -= total
+  if (offset < -total / 2) offset += total
 
   return offset
 }
 
 const positionMap: Record<number, { x: string; y: number; rotate: number; scale: number; opacity: number }> = {
-  // Solo se muestran las cards cercanas para crear profundidad sin saturar la pantalla.
   [-2]: { x: "-96%", y: 40, rotate: -10, scale: 0.83, opacity: 0.2 },
   [-1]: { x: "-54%", y: 18, rotate: -6, scale: 0.91, opacity: 0.5 },
   [0]: { x: "0%", y: 0, rotate: 0, scale: 1, opacity: 1 },
@@ -163,14 +154,6 @@ export default function Integrantes() {
   const activeIntegrante = integrantes[activeIndex]
   const ActiveIcon = activeIntegrante.icon
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % integrantes.length)
-    }, 3000)
-
-    return () => window.clearInterval(interval)
-  }, [])
-
   const goToPrevious = () => {
     setActiveIndex((current) => (current - 1 + integrantes.length) % integrantes.length)
   }
@@ -180,8 +163,16 @@ export default function Integrantes() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[var(--ipp-mint)] px-5 py-24 md:px-8">
-      <div className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-paper)]" />
+    <section
+      id="integrantes"
+      aria-labelledby="integrantes-heading"
+      className="relative overflow-hidden bg-[var(--ipp-mint)] px-5 py-24 md:px-8"
+    >
+      <div
+        className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-[var(--ipp-paper)]"
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -191,25 +182,29 @@ export default function Integrantes() {
           className="mx-auto mb-14 max-w-3xl text-center"
         >
           <p className="section-kicker">Integrantes</p>
-          <h2 className="font-display text-5xl font-black leading-tight text-[var(--ipp-coral)] md:text-7xl">
-            Profes Pa&apos; la Paz.
+          <h2
+            id="integrantes-heading"
+            className="font-display text-5xl font-black leading-tight text-[var(--ipp-coral)] md:text-7xl"
+          >
+            Quienes hacen posible Inglés Pa&apos; la Paz
           </h2>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-[var(--ipp-plum)]/75">
-            Un parche popular de origen colombiano para el mundo.
+            Un equipo colombiano que une pedagogía, memoria, tecnología, cultura y trabajo comunitario.
           </p>
         </motion.div>
 
         <div className="rounded-[2.4rem] border border-[var(--ipp-plum)]/10 bg-[var(--ipp-paper)] px-4 py-8 shadow-[16px_18px_0_rgba(96,48,72,0.08)] md:px-8 md:py-10">
-          <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-8">
+          <div
+            className="relative mx-auto flex max-w-6xl flex-col items-center gap-8"
+            aria-roledescription="carousel"
+            aria-label="Carrusel de integrantes"
+          >
             <div className="relative h-[430px] w-full overflow-hidden sm:h-[480px] lg:h-[510px]">
-
               {integrantes.map((integrante, index) => {
                 const offset = getRelativePosition(index, activeIndex, integrantes.length)
                 const placement = positionMap[offset]
 
-                if (!placement) {
-                  return null
-                }
+                if (!placement) return null
 
                 const isActive = offset === 0
                 const showOnMobile = Math.abs(offset) <= 1
@@ -237,68 +232,62 @@ export default function Integrantes() {
                       className="h-full w-full text-left"
                       aria-label={`Ver integrante ${integrante.nombre}`}
                     >
-                    <article
-                      className={`relative h-full overflow-hidden rounded-[2rem] border bg-[var(--ipp-cream)] text-[var(--ipp-plum)] transition-all duration-300 ${
-                        isActive
-                          ? "border-[var(--ipp-plum)]/18 shadow-[18px_20px_0_rgba(96,48,72,0.12)]"
-                          : "border-[var(--ipp-plum)]/10 shadow-[10px_12px_0_rgba(96,48,72,0.08)]"
-                      }`}
-                    >
-
-                      <div className="relative flex h-full flex-col items-center p-5 text-center sm:p-6">
-                        <div className="flex w-full justify-center">
-                          <div
-                            className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[2rem] border-4 sm:h-32 sm:w-32 ${
-                              isActive ? "border-[var(--ipp-earth)] bg-white/12" : "border-[var(--ipp-coral)]/40 bg-white"
-                            }`}
-                          >
-                            {integrante.photo ? (
-                              // La foto reemplaza el icono solo cuando photo tiene una ruta válida.
-                              <Image
-                                src={integrante.photo}
-                                alt={`Foto de ${integrante.nombre}`}
-                                fill
-                                className="object-cover"
-                                sizes="128px"
-                              />
-                            ) : (
-                              <div
-                                className={`flex h-full w-full items-center justify-center ${
-                                  isActive ? "text-[var(--ipp-paper)]" : "text-[var(--ipp-plum)]"
-                                }`}
-                                style={{ backgroundColor: isActive ? integrante.accent : integrante.surface }}
-                              >
-                                <UserRound className="h-12 w-12" />
-                              </div>
-                            )}
+                      <article
+                        className={`relative h-full overflow-hidden rounded-[2rem] border bg-[var(--ipp-cream)] text-[var(--ipp-plum)] transition-all duration-300 ${
+                          isActive
+                            ? "border-[var(--ipp-plum)]/18 shadow-[18px_20px_0_rgba(96,48,72,0.12)]"
+                            : "border-[var(--ipp-plum)]/10 shadow-[10px_12px_0_rgba(96,48,72,0.08)]"
+                        }`}
+                      >
+                        <div className="relative flex h-full flex-col items-center p-5 text-center sm:p-6">
+                          <div className="flex w-full justify-center">
+                            <div
+                              className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[2rem] border-4 sm:h-32 sm:w-32 ${
+                                isActive ? "border-[var(--ipp-earth)] bg-white/12" : "border-[var(--ipp-coral)]/40 bg-white"
+                              }`}
+                            >
+                              {integrante.photo ? (
+                                <Image
+                                  src={integrante.photo}
+                                  alt={`Foto de ${integrante.nombre}`}
+                                  fill
+                                  className="object-cover"
+                                  sizes="128px"
+                                />
+                              ) : (
+                                <div
+                                  className={`flex h-full w-full items-center justify-center ${
+                                    isActive ? "text-[var(--ipp-paper)]" : "text-[var(--ipp-plum)]"
+                                  }`}
+                                  style={{ backgroundColor: isActive ? integrante.accent : integrante.surface }}
+                                >
+                                  <UserRound className="h-12 w-12" aria-hidden="true" />
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
 
-                        <div className="mt-7">
+                          <div className="mt-7">
+                            <p className="text-xs font-black uppercase tracking-[0.22em] text-[var(--ipp-coral)]">
+                              {integrante.rol}
+                            </p>
+                            <h3 className="mt-3 font-display text-3xl font-black leading-[0.95] sm:text-[2.1rem]">
+                              {integrante.nombre}
+                            </h3>
+                          </div>
+
                           <p
-                            className={`text-xs font-black uppercase tracking-[0.22em] ${
-                              isActive ? "text-[var(--ipp-coral)]" : "text-[var(--ipp-coral)]"
+                            className={`mt-6 text-base font-semibold leading-relaxed sm:text-[1.05rem] ${
+                              isActive ? "text-[var(--ipp-plum)]/82" : "text-[var(--ipp-plum)]/76"
                             }`}
                           >
-                            {integrante.rol}
+                            {integrante.foco}
                           </p>
-                          <h3 className="mt-3 font-display text-3xl font-black leading-[0.95] sm:text-[2.1rem]">
-                            {integrante.nombre}
-                          </h3>
+
+                          <div className="mt-auto" />
                         </div>
-
-                        <p
-                          className={`mt-6 text-base font-semibold leading-relaxed sm:text-[1.05rem] ${
-                            isActive ? "text-[var(--ipp-plum)]/82" : "text-[var(--ipp-plum)]/76"
-                          }`}
-                        >
-                          &ldquo;{integrante.foco}&rdquo;
-                        </p>
-
-                        <div className="mt-auto" />
-                      </div>
-                    </article>
-                  </motion.button>
+                      </article>
+                    </motion.button>
                   </div>
                 )
               })}
@@ -309,12 +298,13 @@ export default function Integrantes() {
                 <h3 className="mt-2 font-display text-4xl font-black leading-none text-[var(--ipp-plum)] md:text-5xl">
                   {activeIntegrante.nombre}
                 </h3>
+
                 <div className="mt-4 flex items-center justify-center gap-3 text-lg font-semibold text-[var(--ipp-plum)]/72">
                   <span
                     className="flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--ipp-paper)] shadow-[4px_4px_0_rgba(96,48,72,0.08)]"
                     style={{ backgroundColor: activeIntegrante.accent }}
                   >
-                    <ActiveIcon className="h-5 w-5" />
+                    <ActiveIcon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <span>{activeIntegrante.rol}</span>
                 </div>
@@ -328,7 +318,7 @@ export default function Integrantes() {
                     className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] border border-[var(--ipp-plum)]/14 bg-white/75 text-[var(--ipp-plum)] shadow-[8px_8px_0_rgba(96,48,72,0.08)] transition hover:-translate-y-0.5"
                     aria-label="Mostrar integrante anterior"
                   >
-                    <ArrowLeft className="h-5 w-5" />
+                    <ArrowLeft className="h-5 w-5" aria-hidden="true" />
                   </button>
 
                   <button
@@ -337,7 +327,7 @@ export default function Integrantes() {
                     className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] border border-[var(--ipp-plum)]/14 bg-white/75 text-[var(--ipp-plum)] shadow-[8px_8px_0_rgba(96,48,72,0.08)] transition hover:-translate-y-0.5"
                     aria-label="Mostrar siguiente integrante"
                   >
-                    <ArrowRight className="h-5 w-5" />
+                    <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
 
@@ -351,9 +341,12 @@ export default function Integrantes() {
                         type="button"
                         onClick={() => setActiveIndex(index)}
                         className={`h-3 rounded-full transition-all ${
-                          isActive ? "w-10 bg-[var(--ipp-coral)]" : "w-3 bg-[var(--ipp-plum)]/20 hover:bg-[var(--ipp-plum)]/35"
+                          isActive
+                            ? "w-10 bg-[var(--ipp-coral)]"
+                            : "w-3 bg-[var(--ipp-plum)]/20 hover:bg-[var(--ipp-plum)]/35"
                         }`}
                         aria-label={`Ir a ${integrante.nombre}`}
+                        aria-current={isActive ? "true" : undefined}
                       />
                     )
                   })}
