@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ipp-sky: #a8c8d8;
+    --ipp-water: #90c0c0;
+    --ipp-green: #78a878;
+    --ipp-olive: #90a878;
+    --ipp-cream: #fff0c0;
+    --ipp-paper: #fff8e8;
+    --ipp-coral: #c06048;
+    --ipp-plum: #603048;
+    --ipp-earth: #906030;
+    --ipp-yellow: #ffc84a;
+    --ipp-mint: #dcebcf;
+    --ipp-white: #ffffff;
+    --ipp-black: #000000;
+
+    --background: 42 100% 95%;
+    --foreground: 326 33% 28%;
+    --card: 42 100% 97%;
+    --card-foreground: 326 33% 28%;
+    --popover: 42 100% 97%;
+    --popover-foreground: 326 33% 28%;
+    --primary: 11 48% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 79 27% 56%;
+    --secondary-foreground: 326 33% 28%;
+    --muted: 181 34% 76%;
+    --muted-foreground: 326 25% 38%;
+    --accent: 43 100% 65%;
+    --accent-foreground: 326 33% 28%;
+    --destructive: 356.0784 60.0000% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 326 25% 82%;
+    --input: 42 65% 89%;
+    --ring: 11 48% 52%;
+    --chart-1: 11 48% 52%;
+    --chart-2: 120 23% 56%;
+    --chart-3: 185 33% 66%;
+    --chart-4: 43 100% 65%;
+    --chart-5: 31 33% 38%;
+    --sidebar: 0 0% 91.7647%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 0 0% 37.6471%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 75.2941%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 81.5686%;
+    --sidebar-ring: 0 0% 37.6471%;
+    --font-sans: "Trebuchet MS", Nunito, Quicksand, system-ui, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: "Fira Code", monospace;
+    --radius: 1.4rem;
+    --shadow-2xs: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.16);
+    --shadow-xs: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.16);
+    --shadow-sm: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 1px 2px -1px hsl(0 0% 20% / 0.32);
+    --shadow: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 1px 2px -1px hsl(0 0% 20% / 0.32);
+    --shadow-md: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 2px 4px -1px hsl(0 0% 20% / 0.32);
+    --shadow-lg: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 4px 6px -1px hsl(0 0% 20% / 0.32);
+    --shadow-xl: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 8px 10px -1px hsl(0 0% 20% / 0.32);
+    --shadow-2xl: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.8);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: 0 0% 10.1961%;
+    --foreground: 0 0% 85.0980%;
+    --card: 0 0% 12.5490%;
+    --card-foreground: 0 0% 85.0980%;
+    --popover: 0 0% 12.5490%;
+    --popover-foreground: 0 0% 85.0980%;
+    --primary: 0 0% 62.7451%;
+    --primary-foreground: 0 0% 10.1961%;
+    --secondary: 0 0% 18.8235%;
+    --secondary-foreground: 0 0% 85.0980%;
+    --muted: 0 0% 16.4706%;
+    --muted-foreground: 0 0% 50.1961%;
+    --accent: 0 0% 25.0980%;
+    --accent-foreground: 0 0% 85.0980%;
+    --destructive: 356.0656 66.3043% 63.9216%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20.7843%;
+    --input: 0 0% 18.8235%;
+    --ring: 0 0% 62.7451%;
+    --chart-1: 0 0% 62.7451%;
+    --chart-2: 183.5294 15.1786% 56.0784%;
+    --chart-3: 0 0% 43.9216%;
+    --chart-4: 0 0% 34.5098%;
+    --chart-5: 0 0% 25.0980%;
+    --sidebar: 0 0% 12.1569%;
+    --sidebar-foreground: 0 0% 85.0980%;
+    --sidebar-primary: 0 0% 62.7451%;
+    --sidebar-primary-foreground: 0 0% 10.1961%;
+    --sidebar-accent: 0 0% 25.0980%;
+    --sidebar-accent-foreground: 0 0% 85.0980%;
+    --sidebar-border: 0 0% 20.7843%;
+    --sidebar-ring: 0 0% 62.7451%;
+    --font-sans: Inter, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: Fira Code, monospace;
+    --radius: 0.675rem;
+    --shadow-2xs: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.16);
+    --shadow-xs: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.16);
+    --shadow-sm: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 1px 2px -1px hsl(0 0% 20% / 0.32);
+    --shadow: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 1px 2px -1px hsl(0 0% 20% / 0.32);
+    --shadow-md: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 2px 4px -1px hsl(0 0% 20% / 0.32);
+    --shadow-lg: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 4px 6px -1px hsl(0 0% 20% / 0.32);
+    --shadow-xl: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.32), 4.5px 8px 10px -1px hsl(0 0% 20% / 0.32);
+    --shadow-2xl: 4.5px 4.5px 0px 0px hsl(0 0% 20% / 0.8);
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
+  letter-spacing: -0.045em;
+}
+
+.section-kicker {
+  color: var(--ipp-coral);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.bg-paper {
+  background-image:
+    radial-gradient(circle at 18px 22px, rgba(96, 48, 72, 0.055) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(144, 168, 120, 0.08));
+  background-size: 42px 42px, 100% 100%;
+}
+
+.mountain-range {
+  background:
+    linear-gradient(150deg, transparent 0 45%, rgba(120, 168, 120, 0.88) 46% 58%, transparent 59%) left 20% bottom /
+      34rem 22rem no-repeat,
+    linear-gradient(32deg, transparent 0 45%, rgba(66, 106, 86, 0.86) 46% 58%, transparent 59%) right 10% bottom /
+      40rem 24rem no-repeat,
+    linear-gradient(17deg, transparent 0 43%, rgba(144, 168, 120, 0.95) 44% 60%, transparent 61%) center bottom /
+      48rem 26rem no-repeat;
+}
+
+.organic-card {
+  border: 2px solid rgba(96, 48, 72, 0.1);
+  border-radius: 2rem 1.25rem 2.4rem 1.45rem;
+}
+
+.story-card-frame {
+  border: 1.5px solid rgba(208, 185, 156, 0.48);
+  border-radius: 2.15rem;
+  box-shadow:
+    14px 12px 0 rgba(96, 48, 72, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 0 0 1px rgba(255, 243, 224, 0.78);
+}
+
+.quote-story-card {
+  background: var(--quote-card-surface);
+  border: 1px solid rgba(96, 48, 72, 0.09);
+  border-radius: 2rem;
+  box-shadow:
+    16px 16px 0 rgba(96, 48, 72, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.paper-edge {
+  clip-path: polygon(
+    0 40%,
+    5% 58%,
+    10% 42%,
+    16% 62%,
+    23% 47%,
+    30% 60%,
+    38% 43%,
+    46% 58%,
+    55% 44%,
+    64% 61%,
+    72% 45%,
+    81% 59%,
+    90% 43%,
+    100% 58%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.method-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192, 96, 72, 0.78) rgba(96, 48, 72, 0.12);
+}
+
+.method-list-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.method-list-scroll::-webkit-scrollbar-track {
+  background: rgba(96, 48, 72, 0.1);
+  border-radius: 999px;
+}
+
+.method-list-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(192, 96, 72, 0.92), rgba(144, 168, 120, 0.82));
+  border: 2px solid rgba(255, 248, 232, 0.95);
+  border-radius: 999px;
+}
+
+.method-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(192, 96, 72, 1), rgba(144, 168, 120, 0.94));
+}
+
+@media (max-width: 1023px) {
+  .method-list-scroll {
+    position: relative;
+    mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  }
+}
+
+/* Subtle Grid Background Pattern */
+.bg-grid-subtle {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.09) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 0;
+}
+
+/* Add a subtle dot pattern overlay for extra depth */
+.bg-grid-subtle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 20px 20px, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
