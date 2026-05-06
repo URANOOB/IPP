@@ -49,3 +49,26 @@ npm run build
 ```
 
 Si el `build` falla, no subas los cambios hasta corregirlos.
+
+## 🚀 Paso a Producción (Deploy)
+
+Cuando las funcionalidades en `develop` estén terminadas y probadas, es hora de moverlas a `main`.
+
+### Opción A: Vía GitHub (Recomendado)
+1. Ve a [URANOOB/IPP](https://github.com/URANOOB/IPP).
+2. Abre un **Pull Request**: `base: main` ← `compare: develop`.
+3. Revisa los cambios visualmente.
+4. Si todo es correcto, confirma el **Merge**.
+
+### Opción B: Vía Terminal
+Solo si tienes total certeza de que el código es estable:
+```bash
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
+git checkout develop
+```
+
+---
+*Recuerda: `main` es sagrado. Solo llega código que ya funciona perfectamente en `develop`.*
