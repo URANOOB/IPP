@@ -1,141 +1,73 @@
-# Ingles pa' la Paz
+# Ingles pa' la Paz (IPP)
 
-Sitio web de Ingles pa' la Paz: una landing interactiva para presentar el proyecto, sus experiencias, metodologia, integrantes y canales de contacto.
+Bienvenido al repositorio oficial del proyecto **Ingles pa' la Paz**. Este proyecto es una plataforma web construida con **Next.js 15 (App Router)** que sirve como una landing page interactiva para presentar la metodología, experiencias, integrantes y canales de contacto del proyecto, además de sentar las bases para un sistema de administración interno.
 
-El proyecto esta construido con Next.js, React, Tailwind CSS y algunos componentes UI reutilizables. La pagina principal funciona como una experiencia de una sola pagina, con secciones conectadas por navegacion interna.
+---
 
-## Como correrlo
+## 🗺️ Mapa de Documentación (¡Léeme primero!)
 
-Requisitos recomendados:
+Para mantener el proyecto organizado, hemos dividido la documentación según tus necesidades:
 
-- Node.js 20 o superior
-- npm 10 o superior
+1. **[Guía de Contribución (CONTRIBUTING.md)](CONTRIBUTING.md):** 
+   - *¿Eres nuevo en el equipo?* Lee esto primero. Contiene las reglas de oro sobre cómo usar Git, cómo crear ramas (nunca tocar `main`), cómo manejar los entornos de base de datos (Supabase) y cómo pasar a producción de forma segura.
+2. **[Arquitectura del Proyecto (src/ARCHITECTURE.md)](src/ARCHITECTURE.md):** 
+   - *¿Quieres saber cómo funciona el código por dentro?* Esta es la biblia técnica. Explica la estructura de carpetas (`src/features`, `src/app`, etc.), el flujo de Server Actions, y la estrategia de autenticación.
 
-Instalacion:
+---
 
-```bash
-npm install
-```
+## 🚀 Cómo correr el proyecto localmente
 
-Desarrollo:
+### Requisitos recomendados
+- **Node.js** 20 o superior
+- **npm** 10 o superior
+- **Git**
 
-```bash
-npm run dev
-```
+### Instalación y Configuración
 
-Validacion:
+1. **Clona el repositorio y entra a la rama de desarrollo:**
+   ```bash
+   git clone https://github.com/URANOOB/IPP.git
+   cd IPP
+   git checkout develop
+   ```
 
-```bash
-npm run lint
-npm run build
-```
+2. **Instala las dependencias:**
+   ```bash
+   npm install
+   ```
 
-Produccion local:
+3. **Variables de Entorno (.env.local):**
+   Solicita al líder del proyecto el archivo `.env.local` con las credenciales del **entorno de desarrollo** de Supabase y cualquier otra API Key (ej. OpenAI para el chatbot). Ubícalo en la raíz del proyecto. **Nunca subas este archivo a GitHub.**
 
-```bash
-npm run start
-```
+4. **Inicia el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+   El sitio estará disponible en [http://localhost:3000](http://localhost:3000).
 
-## 🤝 Contribución y Desarrollo
+---
 
-Para colaborar en este proyecto, por favor lee nuestra [Guía de Contribución](CONTRIBUTING.md) para entender el flujo de trabajo con Git y la gestión de entornos.
+## ✅ Comandos Útiles
 
-**Resumen rápido:**
-- Trabaja siempre en ramas `feature/` que salgan de `develop`.
-- Nunca hagas push directo a `main`.
-- Asegúrate de que `npm run build` pase antes de integrar cambios.
+- `npm run dev`: Inicia el modo de desarrollo con Turbopack.
+- `npm run build`: Construye la aplicación para producción. **(Obligatorio ejecutar esto antes de hacer un Pull Request para asegurar que no hay errores).**
+- `npm run lint`: Revisa el código en busca de errores de sintaxis y buenas prácticas.
+- `npm run db:seed`: (Opcional) Ejecuta el script para poblar la base de datos de desarrollo de Supabase con datos iniciales (requiere configuración previa).
 
-## Estructura
+---
 
-```txt
-app/
-  api/
-    chat/route.ts                  Endpoint interno del chatbot.
-    experience-resources/route.ts  Lee imagenes desde public/images/ipp.
-  layout.tsx                       Metadata, favicon, SEO base y layout raiz.
-  page.tsx                         Orden de las secciones de la landing.
-  robots.ts                        Genera /robots.txt.
-  sitemap.ts                       Genera /sitemap.xml.
+## 🛠️ Tecnologías Principales
 
-components/
-  header.tsx                       Hero, navegacion y menu movil.
-  infoipp.tsx                      Seccion "Quienes somos" y principios.
-  experiences.tsx                  Experiencias y galeria dinamica.
-  process.tsx                      Metodologia paso a paso.
-  Integrantes.tsx                  Carrusel de integrantes.
-  footer.tsx                       Contacto, marca y logos institucionales.
-  chatbot.tsx                      Widget flotante del asistente.
-  ui/                              Componentes visuales reutilizables.
+- **Framework:** Next.js 15 (React 19)
+- **Lenguaje:** TypeScript
+- **Estilos:** Tailwind CSS
+- **Componentes:** Shadcn UI (Custom) + Framer Motion
+- **Backend & Auth:** Supabase (PostgreSQL)
 
-public/
-  favicon.png                      Icono de la pestana del navegador.
-  images/ipp/                      Logos, personajes, fotos y recursos visuales.
+---
 
-styles/
-  globals.css                      Hoja global adicional del proyecto.
+## 🔒 Seguridad y Buenas Prácticas
 
-lib/
-  utils.ts                         Utilidades compartidas.
-```
-
-## Donde editar contenido
-
-- Textos principales: `components/header.tsx`, `components/infoipp.tsx`, `components/process.tsx` y `components/footer.tsx`.
-- Experiencias: constante `experiences` en `components/experiences.tsx`.
-- Integrantes: constante `integrantes` en `components/Integrantes.tsx`.
-- Fotos de integrantes: llenar el campo `photo` con una ruta publica, por ejemplo:
-
-```ts
-photo: "/images/ipp/integrantes/nombre.png"
-```
-
-Si `photo` queda vacio, la card muestra el icono por defecto.
-
-## Imagenes y galerias
-
-Las imagenes publicas viven en `public/images/ipp`.
-
-La seccion de experiencias puede cargar imagenes automaticamente desde carpetas especificas:
-
-- `public/images/ipp/Little-reader`
-- `public/images/ipp/bridges`
-- `public/images/ipp/voices`
-
-El endpoint `app/api/experience-resources/route.ts` solo acepta carpetas con caracteres seguros y solo devuelve archivos de imagen. Esto evita que alguien use la ruta para leer archivos fuera de `public/images/ipp`.
-
-## SEO y favicon
-
-La configuracion SEO base esta en `app/layout.tsx`.
-
-Incluye:
-
-- title y description
-- canonical
-- Open Graph
-- Twitter card
-- favicon
-- robots
-- sitemap
-
-Para despliegues reales, revisa que `NEXT_PUBLIC_SITE_URL` apunte al dominio definitivo. Esa URL se usa para canonical, Open Graph, robots y sitemap.
-
-## Seguridad
-
-El endpoint del chatbot esta protegido con:
-
-- validacion de mensaje
-- limite de longitud
-- validacion de session id
-- rate limit simple por IP
-- timeout para evitar requests colgadas
-- exigencia de HTTPS en produccion para el webhook externo
-
-El rate limit actual vive en memoria. Sirve como proteccion basica, pero si el sitio recibe trafico real conviene moverlo a Redis, Vercel KV, Upstash o una solucion similar.
-
-## Consideraciones especiales
-
-- Este proyecto usa `npm` y `package-lock.json`. No mezclar con otro gestor de paquetes en el mismo repo.
-- `next.config.mjs` tiene `images.unoptimized = true`, util para despliegues donde no se quiere depender del optimizador de imagenes de Next.
-- Los textos y estilos estan bastante ligados a la identidad visual del proyecto. Antes de cambiar colores globales, revisar `app/globals.css`.
-- Las cards y secciones usan muchas clases Tailwind directamente en los componentes. Es intencional: el sitio es una landing visual, no una app con muchas pantallas repetidas.
-- Mantener `npm run lint` y `npm run build` como chequeo antes de publicar cambios.
+- **API Routes Seguras:** Endpoints como el del Chatbot (`/api/chat`) tienen protección básica (Rate limiting, validación de inputs) configurada.
+- **Acceso a Archivos:** El endpoint `/api/experience-resources` está estrictamente tipado para evitar lectura de archivos fuera de la carpeta `public/images/ipp`.
+- Si descubres una vulnerabilidad, por favor no la publiques en un issue abierto. Repórtala directamente a los administradores del repositorio.
