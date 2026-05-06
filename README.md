@@ -36,6 +36,15 @@ Produccion local:
 npm run start
 ```
 
+## 🤝 Contribución y Desarrollo
+
+Para colaborar en este proyecto, por favor lee nuestra [Guía de Contribución](CONTRIBUTING.md) para entender el flujo de trabajo con Git y la gestión de entornos.
+
+**Resumen rápido:**
+- Trabaja siempre en ramas `feature/` que salgan de `develop`.
+- Nunca hagas push directo a `main`.
+- Asegúrate de que `npm run build` pase antes de integrar cambios.
+
 ## Estructura
 
 ```txt
