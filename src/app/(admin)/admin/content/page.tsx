@@ -6,11 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Save, Loader2, ArrowLeft, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-interface ContentItem {
-  key: string
-  content: string
-}
-
 const DEFAULT_KEYS = [
   { key: 'hero_title', label: 'Título del Hero', placeholder: 'Ej: Inglés Pa\' la Paz' },
   { key: 'hero_subtitle', label: 'Subtítulo del Hero', placeholder: 'Proyecto educativo y comunitario...' },
@@ -21,13 +16,11 @@ const DEFAULT_KEYS = [
 
 export default function LandingEditorPage() {
   const [content, setContent] = useState<Record<string, string>>({})
-  const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     const fetchContent = async () => {
-      setIsLoading(true)
       const result = await getLandingContent()
       
       if (result.success) {
@@ -35,7 +28,6 @@ export default function LandingEditorPage() {
       } else {
         console.error(result.error)
       }
-      setIsLoading(false)
     }
 
     fetchContent()

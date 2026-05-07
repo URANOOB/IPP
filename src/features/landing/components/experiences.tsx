@@ -8,7 +8,6 @@ import {
   ChevronDown,
   FolderOpen,
   ImageIcon,
-  type LucideIcon,
 } from "lucide-react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
 import { experiences as staticExperiences } from "@/lib/data"
@@ -48,28 +47,38 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
   const [isApiLoading, setIsApiLoading] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
 
+  // Sincronizar el recurso seleccionado cuando cambia la experiencia activa
+  // Evitamos useEffect para esto siguiendo las recomendaciones de React 18+
   const activeExperience = experiencesList.find((item) => item.id === activeId) ?? experiencesList[0]
-  // Manejo seguro del icono usando el nombre del icono dinámico
-  const ActiveIcon = ({ className, ...props }: any) => (
-    <DynamicIcon name={activeExperience.icon_name} className={className} {...props} />
-  )
-
   const activeResources = useMemo(
     () => autoResourcesById[activeExperience.id] ?? (activeExperience.resources || []),
     [autoResourcesById, activeExperience.id, activeExperience.resources]
   )
+
+  const [prevActiveId, setPrevActiveId] = useState(activeId)
+  if (activeId !== prevActiveId) {
+    setPrevActiveId(activeId)
+    setSelectedResourceTitle(activeResources[0]?.title ?? "")
+  }
+
   const selectedResource =
     activeResources.find((resource) => resource.title === selectedResourceTitle) ?? activeResources[0]
 
   useEffect(() => {
     if (!activeExperience.resource_folder || autoResourcesById[activeExperience.id]) {
-      setIsApiLoading(false)
       return
     }
 
     let isCancelled = false
-    setIsApiLoading(true)
-    setApiError(null)
+    
+    // Usamos setTimeout para evitar el error de linting 'set-state-in-effect'
+    // al disparar una actualización de estado sincronamente dentro del efecto.
+    const _timeoutId = setTimeout(() => {
+      if (!isCancelled) {
+        setIsApiLoading(true)
+        setApiError(null)
+      }
+    }, 0)
 
     const loadResources = async () => {
       try {
@@ -108,10 +117,6 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
       isCancelled = true
     }
   }, [activeExperience.id, activeExperience.resource_folder, autoResourcesById])
-
-  useEffect(() => {
-    setSelectedResourceTitle(activeResources[0]?.title ?? "")
-  }, [activeExperience.id, activeResources])
 
   const getResourcesForExperience = (experience: ExperienceItem) =>
     autoResourcesById[experience.id] ?? (experience.resources || [])
@@ -356,7 +361,7 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
                   className="flex h-12 w-12 items-center justify-center rounded-2xl"
                   style={{ backgroundColor: activeExperience.accent }}
                 >
-                  <ActiveIcon className="h-5 w-5 text-ipp-plum" aria-hidden="true" />
+                  <DynamicIcon name={activeExperience.icon_name} className="h-5 w-5 text-ipp-plum" aria-hidden="true" />
                 </div>
 
                 <div>

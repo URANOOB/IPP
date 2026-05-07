@@ -4,10 +4,8 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { ImageUpload } from '@/features/admin/components/image-upload'
 import { ArrowLeft, Save, Loader2 } from 'lucide-react'
-import Link from 'next/navigation'
 
 export default function NewPostPage() {
   const [isLoading, setIsLoading] = useState(false)

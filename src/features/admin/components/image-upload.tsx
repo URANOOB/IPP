@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
-import { ImageIcon, Upload, X, Loader2 } from 'lucide-react'
+import { Upload, X, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 
 interface ImageUploadProps {
@@ -37,7 +37,7 @@ export function ImageUpload({ onUpload, defaultValue, label = "Imagen de portada
       const filePath = `uploads/${fileName}`
 
       // Subir a Supabase Storage
-      const { error: uploadError, data } = await supabase.storage
+      const { error: uploadError, data: _data } = await supabase.storage
         .from('media')
         .upload(filePath, file)
 

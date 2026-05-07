@@ -75,11 +75,11 @@ export default async function PostDetailPage({ params }: { params: Promise<{ slu
       <article className="max-w-4xl mx-auto px-6 py-24">
         <div className="prose prose-xl prose-ipp max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
-            p: ({node, ...props}) => <p className="text-xl md:text-2xl font-medium leading-relaxed text-ipp-plum/80 mb-10 first-letter:text-6xl first-letter:font-black first-letter:text-ipp-coral first-letter:mr-3 first-letter:float-left first-letter:leading-none" {...props} />,
-            h2: ({node, ...props}) => <h2 className="text-3xl md:text-5xl font-display font-black text-ipp-plum mt-20 mb-8 tracking-tight border-b-4 border-ipp-coral w-fit" {...props} />,
-            h3: ({node, ...props}) => <h3 className="text-2xl md:text-3xl font-display font-black text-ipp-plum mt-12 mb-6" {...props} />,
-            ul: ({node, ...props}) => <ul className="space-y-4 mb-12 border-l-2 border-ipp-sky/40 pl-8 text-lg font-semibold text-ipp-plum/70" {...props} />,
-            blockquote: ({node, ...props}) => (
+            p: ({node: _node, ...props}) => <p className="text-xl md:text-2xl font-medium leading-relaxed text-ipp-plum/80 mb-10 first-letter:text-6xl first-letter:font-black first-letter:text-ipp-coral first-letter:mr-3 first-letter:float-left first-letter:leading-none" {...props} />,
+            h2: ({node: _node, ...props}) => <h2 className="text-3xl md:text-5xl font-display font-black text-ipp-plum mt-20 mb-8 tracking-tight border-b-4 border-ipp-coral w-fit" {...props} />,
+            h3: ({node: _node, ...props}) => <h3 className="text-2xl md:text-3xl font-display font-black text-ipp-plum mt-12 mb-6" {...props} />,
+            ul: ({node: _node, ...props}) => <ul className="space-y-4 mb-12 border-l-2 border-ipp-sky/40 pl-8 text-lg font-semibold text-ipp-plum/70" {...props} />,
+            blockquote: ({node: _node, ...props}) => (
               <blockquote className="relative my-20 p-12 bg-ipp-cream/30 rounded-[3rem] text-center border-2 border-ipp-plum/5" {...props}>
                 <span className="absolute -top-6 left-1/2 -translate-x-1/2 bg-ipp-paper px-4 text-5xl text-ipp-coral font-display">“</span>
                 <p className="text-3xl md:text-4xl font-display font-black text-ipp-plum italic leading-tight mb-0" />

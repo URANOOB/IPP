@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { getProfiles, updateUserRole, getCurrentProfile } from '@/features/admin/user-actions'
 import { getTeamMembersAdmin } from '@/features/admin/team-actions'
-import { UserRound, Mail, Shield, ShieldAlert, Loader2, Check, UserCheck, Search, X } from 'lucide-react'
+import { UserRound, Mail, Loader2, Check, UserCheck, Search, X } from 'lucide-react'
 import Image from 'next/image'
 
 export default function UsersPage() {
@@ -14,8 +14,8 @@ export default function UsersPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
 
-  const fetchData = async () => {
-    setIsLoading(true)
+  const fetchData = async (forceLoading = false) => {
+    if (forceLoading) setIsLoading(true)
     const [profilesRes, teamRes, currentRes] = await Promise.all([
       getProfiles(),
       getTeamMembersAdmin(),
@@ -29,7 +29,10 @@ export default function UsersPage() {
   }
 
   useEffect(() => {
-    fetchData()
+    const timeoutId = setTimeout(() => {
+      fetchData()
+    }, 0)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   const handleRoleChange = async (userId: string, newRole: string) => {

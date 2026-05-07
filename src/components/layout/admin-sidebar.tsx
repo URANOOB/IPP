@@ -10,7 +10,6 @@ import {
   Users, 
   LogOut,
   Shield,
-  Image as ImageIcon,
   ChevronRight
 } from 'lucide-react'
 import Image from 'next/image'

@@ -33,12 +33,12 @@ export default function Chatbot() {
   const [sessionId, setSessionId] = useState<string | null>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    // La sesión nace cuando el usuario abre el chat, no al cargar toda la página.
-    if (isOpen && !sessionId) {
+  const toggleChat = () => {
+    if (!isOpen && !sessionId) {
       setSessionId(generateSessionId())
     }
-  }, [isOpen, sessionId])
+    setIsOpen(!isOpen)
+  }
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -139,14 +139,14 @@ export default function Chatbot() {
                               <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
                                 components={{
-                                  p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
-                                  ol: ({ node, ...props }) => (
+                                  p: ({ node: _node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                                  ol: ({ node: _node, ...props }) => (
                                     <ol className="list-decimal list-inside my-2 space-y-1" {...props} />
                                   ),
-                                  ul: ({ node, ...props }) => (
+                                  ul: ({ node: _node, ...props }) => (
                                     <ul className="list-disc list-inside my-2 space-y-1" {...props} />
                                   ),
-                                  a: ({ node, ...props }) => (
+                                  a: ({ node: _node, ...props }) => (
                                     <a
                                       className="underline hover:text-blue-500"
                                       target="_blank"
@@ -204,7 +204,7 @@ export default function Chatbot() {
         </AnimatePresence>
         <motion.div layout>
           <Button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleChat}
             className="rounded-full w-16 h-16 shadow-lg"
             aria-label="Toggle Chatbot"
           >

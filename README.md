@@ -4,39 +4,39 @@
 
 ---
 
-## 📍 ¿Por dónde empiezo?
+## ¿Por dónde empiezo?
 
-Si vas a empezar a programar con nosotros, échale un ojo a estos dos archivos, te van a salvar la vida:
+Para empezar a programar con nosotros, primero un ojo a estos dos archivos:
 
-1. **[Cómo trabajar en equipo (CONTRIBUTING.md)](CONTRIBUTING.md):** Aquí te explico cómo usamos Git (para no romper el sitio de producción) y cómo configurar todo en tu compu.
-2. **[Cómo está hecho el código (src/ARCHITECTURE.md)](src/ARCHITECTURE.md):** Un tour rápido por las carpetas del proyecto para que sepas dónde poner cada cosa.
+1. **[Cómo trabajar en equipo (CONTRIBUTING.md)](CONTRIBUTING.md):** Aquí hay una explicación de cómo usamos Git (para no romper el sitio de producción) y cómo configurar todo.
+2. **[Cómo está hecho el código (src/ARCHITECTURE.md)](src/ARCHITECTURE.md):** Un tour rápido por las carpetas del proyecto para saber dónde poner cada cosa.
 
 ---
 
-## 🚀 Para arrancar el proyecto en tu compu
+## Para arrancar el proyecto
 
 Es súper fácil:
 
-1. **Clona el código y pásate a la rama de desarrollo:**
+1. **Clonar el código y pasarse a la rama de desarrollo:**
    ```bash
    git clone https://github.com/URANOOB/IPP.git
    cd IPP
    git checkout develop
    ```
 
-2. **Instala todo lo necesario:**
+2. **Instalar todo lo necesario:**
    ```bash
    npm install
    ```
 
 3. **Las llaves mágicas (.env.local):**
-   Pídeme el archivo `.env.local`. Sin esto no va a funcionar la base de datos ni el chatbot. Ponlo en la carpeta raíz.
+   Pídeme el archivo `.env.local`. Sin esto no va a funcionar la base de datos ni el chatbot. Este se pone en la carpeta raíz.
 
-4. **¡A darle!:**
+4. **¡Para iniciarlo!:**
    ```bash
    npm run dev
    ```
-   Abre [http://localhost:3000](http://localhost:3000) y ahí deberías ver el sitio.
+   Abrir [http://localhost:3000](http://localhost:3000) y ahí se debería ver el sitio.
 
 ---
 
@@ -49,7 +49,7 @@ Es súper fácil:
 ---
 
 ## 💡 Un par de consejos
-- Antes de subir cualquier cambio, corre `npm run build` para estar seguros de que nada se rompió.
-- Si ves algo que se puede mejorar, ¡hazlo! Pero avísame para estar en la misma página.
+- Antes de subir cualquier cambio es importante correr `npm run lint` y `npm run build` para estar seguros de que nada se rompió.
+- Si hay algo para mejorar, entonces de una.
 
-¡Cualquier cosa me dices!
+Cualquier cosa estoy pendiente!

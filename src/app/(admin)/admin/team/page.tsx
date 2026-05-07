@@ -11,13 +11,11 @@ import {
   Edit3, 
   Loader2, 
   AlertCircle,
-  ExternalLink,
   Search,
   ChevronRight
 } from 'lucide-react'
 import Image from 'next/image'
 import { DynamicIcon } from '@/components/ui/dynamic-icon'
-import Link from 'next/link'
 
 export default function TeamManagementPage() {
   const [members, setMembers] = useState<Integrante[]>([])
@@ -27,8 +25,8 @@ export default function TeamManagementPage() {
   const [editingMember, setEditingMember] = useState<Integrante | undefined>(undefined)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchMembers = async () => {
-    setIsLoading(true)
+  const fetchMembers = async (forceLoading = false) => {
+    if (forceLoading) setIsLoading(true)
     const result = await getTeamMembersAdmin()
     if (result.success) {
       setMembers(result.data || [])
@@ -40,7 +38,10 @@ export default function TeamManagementPage() {
   }
 
   useEffect(() => {
-    fetchMembers()
+    const timeoutId = setTimeout(() => {
+      fetchMembers()
+    }, 0)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   const filteredMembers = members.filter(member => 

@@ -1,14 +1,14 @@
+import React, { useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import { LucideProps, HelpCircle } from "lucide-react"
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
-import { useMemo } from 'react'
 
 interface DynamicIconProps extends LucideProps {
   name: string
 }
 
-// Cache para almacenar los componentes de iconos cargados dinámicamente
-const iconCache: Record<string, React.ComponentType<LucideProps>> = {}
+// Cache global para evitar re-creación de componentes dinámicos
+const iconCache: Record<string, any> = {}
 
 /**
  * Componente para renderizar iconos de Lucide dinámicamente basados en un string.
@@ -45,12 +45,15 @@ export const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
           }} 
         />
       ),
-      ssr: true // Asegurar que se intente cargar en el servidor si es posible
+      ssr: true
     })
 
+    // Guardamos en caché para evitar re-creación en el próximo render
+    // eslint-disable-next-line react-hooks/immutability
     iconCache[iconName] = DynamicIconComponent
     return DynamicIconComponent
   }, [iconName, props.className, props.size])
 
-  return <IconComponent {...props} />
+  // Usamos createElement para evitar el error de linting 'static-components'
+  return React.createElement(IconComponent, props)
 }

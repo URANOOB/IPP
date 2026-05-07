@@ -9,17 +9,6 @@ import {
   Save, 
   X, 
   Loader2, 
-  Users, 
-  Megaphone, 
-  PenSquare, 
-  Handshake, 
-  Sparkles, 
-  BookOpen, 
-  Code2, 
-  MonitorCog, 
-  ClipboardList,
-  UserRound,
-  Palette
 } from 'lucide-react'
 import { DynamicIcon } from '@/components/ui/dynamic-icon'
 
