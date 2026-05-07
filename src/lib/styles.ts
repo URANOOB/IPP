@@ -5,26 +5,46 @@
  * de la base de datos para cambios de diseño (colores, iconos, etc).
  */
 
-export const principleStyles: Record<string, { icon_name: string, surface_color: string, ink_color: string }> = {
+export const landingStyles = {
+  hero: {
+    titleSize: "72px",
+    titleColor: "var(--ipp-coral)",
+    subtitleSize: "14px",
+    subtitleColor: "rgba(96, 48, 72, 0.7)",
+    descriptionSize: "20px",
+    descriptionColor: "rgba(96, 48, 72, 0.84)",
+    buttonColor: "var(--ipp-olive)",
+  }
+}
+
+export const principleStyles: Record<string, { icon_name: string, surface_color: string, ink_color: string, chip: string, glow: string }> = {
   "Aprendemos desde lo que somos": {
     icon_name: "BookHeart",
     surface_color: "var(--ipp-mint)",
     ink_color: "var(--ipp-plum)",
+    chip: "rgba(96, 48, 72, 0.11)",
+    glow: "rgba(255, 255, 255, 0.44)",
   },
   "El error también habla": {
     icon_name: "HeartHandshake",
     surface_color: "var(--ipp-cream)",
     ink_color: "var(--ipp-coral)",
+    chip: "rgba(192, 96, 72, 0.12)",
+    glow: "rgba(255, 255, 255, 0.36)",
   },
   "El idioma se vuelve puente": {
     icon_name: "MapPinHouse",
     surface_color: "var(--ipp-coral)",
     ink_color: "var(--ipp-paper)",
+    chip: "rgba(96, 48, 72, 0.1)",
+    glow: "rgba(255, 255, 255, 0.3)",
   },
   "Imaginamos otros mundos": {
     icon_name: "Cuboid",
     surface_color: "var(--ipp-earth)",
     ink_color: "var(--ipp-paper)",
+    chip: "rgba(255, 248, 232, 0.16)",
+    glow: "rgba(255, 255, 255, 0.14)",
   }
 }
 

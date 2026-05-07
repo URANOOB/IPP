@@ -7,7 +7,7 @@ import {
   ArrowRight,
 } from "lucide-react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { methodSteps as staticSteps } from "@/lib/data"
+import { methodSteps as staticSteps, landingDefaults } from "@/lib/data"
 import type { MethodStep } from "@/types/landing"
 
 interface ProcessProps {
@@ -23,6 +23,9 @@ export default function Process({ data: initialData }: ProcessProps) {
   if (!data || data.length === 0) return null
 
   const currentStep = data[activeStep]
+
+  // Atajos para mayor legibilidad
+  const d = landingDefaults.process
 
   return (
     <section
@@ -43,13 +46,11 @@ export default function Process({ data: initialData }: ProcessProps) {
             id="method-heading"
             className="font-display text-5xl font-black leading-tight text-ipp-coral md:text-7xl"
           >
-            Así vivimos cada encuentro de Inglés pa&apos; la Paz
+            {d.title}
           </h2>
 
           <p className="mx-auto mt-6 max-w-4xl text-xl font-semibold leading-relaxed text-ipp-plum/75">
-            En Inglés Pa&apos; la Paz buscamos enseñar inglés desde la lectura,
-            la conversación y la creación de piezas bilingües a partir de experiencias
-            reales del territorio y la participación comunitaria.
+            {d.description}
           </p>
         </div>
 
@@ -103,11 +104,11 @@ export default function Process({ data: initialData }: ProcessProps) {
           <div className="p-4 md:p-6">
             <div className="mb-5 rounded-[1.7rem] px-4 py-5 sm:px-5">
               <h3 className="text-4xl font-black leading-tight text-ipp-plum">
-                Ruta de cada encuentro
+                {d.subtitle}
               </h3>
 
               <p className="mt-2 text-xl font-semibold leading-relaxed text-ipp-plum/65">
-                Cada momento del encuentro tiene una intención pedagógica clara y una forma distinta de acercarse al idioma, la emoción y la creación colectiva.
+                {d.summary}
               </p>
             </div>
 

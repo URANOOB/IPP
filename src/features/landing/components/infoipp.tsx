@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import type { CSSProperties } from "react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { principles as staticPrinciples } from "@/lib/data"
+import { principles as staticPrinciples, landingDefaults } from "@/lib/data"
 import type { Principle } from "@/types/landing"
 
 interface InfoProps {
@@ -16,9 +16,12 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
   // Usar datos pasados o fallback a estáticos si no hay datos
   const principles = initialPrinciples && initialPrinciples.length > 0 ? initialPrinciples : staticPrinciples
 
+  // Atajos para mayor legibilidad
+  const d = landingDefaults.info
+
   // Valores dinámicos con fallback
-  const infoTitle = dynamicContent.info_title || "Inglés para la paz desde la lectura, la conversación y el territorio."
-  const infoDescription = dynamicContent.info_description || "En Inglés Pa' la Paz creamos experiencias de aprendizaje donde el inglés emerge desde la lectura, la conversación y la creación colectiva. Usamos relatos, preguntas, recursos emocionales y actividades artísticas para que niñas, niños y comunidades vivan el inglés como una herramienta cercana para expresar lo que son, lo que sienten y lo que imaginan."
+  const infoTitle = dynamicContent.info_title || d.title
+  const infoDescription = dynamicContent.info_description || d.description
 
   return (
     <section

@@ -93,7 +93,7 @@ export async function getPrinciples(): Promise<{ success: boolean; data?: Princi
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('principles')
-    .select('id, title, description, order_index')
+    .select('*')
     .order('order_index', { ascending: true })
 
   if (error) {
@@ -105,18 +105,20 @@ export async function getPrinciples(): Promise<{ success: boolean; data?: Princi
     const localStyle = principleStyles[p.title] || {
       icon_name: 'HelpCircle',
       surface_color: 'var(--ipp-mint)',
-      ink_color: 'var(--ipp-plum)'
+      ink_color: 'var(--ipp-plum)',
+      chip: 'rgba(96, 48, 72, 0.11)',
+      glow: 'rgba(255, 255, 255, 0.44)',
     }
 
     return {
       id: p.id,
       title: p.title,
       description: p.description,
-      icon_name: localStyle.icon_name,
-      surface_color: localStyle.surface_color,
-      ink_color: localStyle.ink_color,
-      chip: 'rgba(96, 48, 72, 0.11)',
-      glow: 'rgba(255, 255, 255, 0.44)',
+      icon_name: p.icon_name || localStyle.icon_name,
+      surface_color: p.surface_color || localStyle.surface_color,
+      ink_color: p.ink_color || localStyle.ink_color,
+      chip: localStyle.chip || 'rgba(96, 48, 72, 0.11)',
+      glow: localStyle.glow || 'rgba(255, 255, 255, 0.44)',
     }
   })
 
@@ -130,7 +132,7 @@ export async function getMethodology(): Promise<{ success: boolean; data?: Metho
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('methodology_steps')
-    .select('id, title, summary, items, keywords, order_index')
+    .select('*')
     .order('order_index', { ascending: true })
 
   if (error) {
@@ -150,8 +152,8 @@ export async function getMethodology(): Promise<{ success: boolean; data?: Metho
       summary: s.summary,
       items: s.items,
       keywords: s.keywords,
-      icon_name: localStyle.icon_name,
-      color: localStyle.color,
+      icon_name: s.icon_name || localStyle.icon_name,
+      color: s.color || localStyle.color,
       order_index: s.order_index
     }
   })
@@ -166,7 +168,7 @@ export async function getExperiences(): Promise<{ success: boolean; data?: Exper
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('experiences')
-    .select('id, title, folder, eyebrow, summary, description, image, resource_folder')
+    .select('*')
     .order('id', { ascending: true })
 
   if (error) {
@@ -175,7 +177,8 @@ export async function getExperiences(): Promise<{ success: boolean; data?: Exper
   }
 
   const experiences: ExperienceItem[] = (data || []).map(e => {
-    const localStyle = experienceStyles[e.id] || {
+    // Intentar buscar por ID o por nombre de carpeta
+    const localStyle = experienceStyles[e.id] || experienceStyles[e.folder] || {
       icon_name: 'BookOpen',
       accent: 'var(--ipp-cream)',
       tint: 'rgba(255, 255, 255, 0.1)'
@@ -190,9 +193,9 @@ export async function getExperiences(): Promise<{ success: boolean; data?: Exper
       description: e.description,
       image: e.image,
       resource_folder: e.resource_folder,
-      icon_name: localStyle.icon_name,
-      accent: localStyle.accent,
-      tint: localStyle.tint,
+      icon_name: e.icon_name || localStyle.icon_name,
+      accent: e.accent || localStyle.accent,
+      tint: e.tint || localStyle.tint,
       resources: []
     }
   })

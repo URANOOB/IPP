@@ -16,7 +16,13 @@ const iconCache: Record<string, any> = {}
  */
 export const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
   const iconName = useMemo(() => {
-    // Convertir PascalCase/camelCase a kebab-case para lucide-react/dynamicIconImports
+    // Seguridad: Si no hay nombre, devolvemos un icono de ayuda por defecto
+    if (!name) return 'help-circle' as keyof typeof dynamicIconImports;
+
+    const lowercase = name.toLowerCase() as keyof typeof dynamicIconImports
+    if (dynamicIconImports[lowercase]) return lowercase
+
+    // Convertir PascalCase/camelCase a kebab-case
     return name
       .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
       .toLowerCase() as keyof typeof dynamicIconImports

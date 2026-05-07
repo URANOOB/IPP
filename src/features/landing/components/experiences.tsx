@@ -10,7 +10,7 @@ import {
   ImageIcon,
 } from "lucide-react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { experiences as staticExperiences } from "@/lib/data"
+import { experiences as staticExperiences, landingDefaults } from "@/lib/data"
 import type { ExperienceResource, ExperienceItem } from "@/types/landing"
 
 // Componente para el estado de carga (Skeleton)
@@ -38,10 +38,13 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
   // Usar datos pasados o fallback a estáticos si no hay datos
   const experiencesList = initialData && initialData.length > 0 ? initialData : staticExperiences
   
-  const [activeId, setActiveId] = useState(experiencesList[0].id)
-  const [expandedId, setExpandedId] = useState<string | null>(experiencesList[0].id)
+  // Buscamos 'Memoria y Territorio' (bridges-memory) para que sea el inicio por defecto
+  const defaultExperience = experiencesList.find(e => e.id === "bridges-memory") || experiencesList[0]
+  
+  const [activeId, setActiveId] = useState(defaultExperience.id)
+  const [expandedId, setExpandedId] = useState<string | null>(defaultExperience.id)
   const [selectedResourceTitle, setSelectedResourceTitle] = useState(
-    experiencesList[0].resources?.[0]?.title ?? ""
+    defaultExperience.resources?.[0]?.title ?? ""
   )
   const [autoResourcesById, setAutoResourcesById] = useState<Record<string, ExperienceResource[]>>({})
   const [isApiLoading, setIsApiLoading] = useState(false)
@@ -121,6 +124,9 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
   const getResourcesForExperience = (experience: ExperienceItem) =>
     autoResourcesById[experience.id] ?? (experience.resources || [])
 
+  // Atajos para mayor legibilidad
+  const d = landingDefaults.experiences
+
   return (
     <section
       id="experiences"
@@ -140,7 +146,7 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
             id="experiences-heading"
             className="font-display text-5xl font-black leading-tight text-ipp-plum md:text-7xl"
           >
-            Así se vive el inglés cuando nace desde el territorio
+            {d.title}
           </h2>
         </div>
 
@@ -154,7 +160,7 @@ export default function Experiences({ data: initialData }: ExperiencesProps) {
           >
             <article className="rounded-[2rem] border border-white/70 bg-white/55 p-5 shadow-[14px_16px_0_rgba(96,48,72,0.08)] backdrop-blur">
               <p className="max-w-[14ch] font-display text-4xl font-black leading-[1.05] text-ipp-plum md:text-[2.5rem]">
-                Explora nuestras experiencias
+                {d.subtitle}
               </p>
             </article>
 

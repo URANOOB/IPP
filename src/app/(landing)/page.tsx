@@ -15,6 +15,7 @@ import Info from "@/features/landing/components/infoipp"
 import Experiences from "@/features/landing/components/experiences"
 import Integrantes from "@/features/landing/components/integrantes"
 import Process from "@/features/landing/components/process"
+import FloatingEditPanel from "@/components/admin/floating-edit-panel"
 import { 
   getLandingContent, 
   getTeamMembers, 
@@ -22,6 +23,7 @@ import {
   getMethodology,
   getExperiences
 } from "@/features/landing/actions"
+import { getCurrentProfile } from "@/features/admin/user-actions"
 
 /**
  * Componente principal de la Landing Page.
@@ -31,19 +33,21 @@ import {
  * @returns {Promise<JSX.Element>} La página de inicio renderizada con datos dinámicos.
  */
 export default async function Page() {
-  // Obtenemos todos los datos dinámicos en paralelo para mayor velocidad
+  // Obtenemos todos los datos dinámicos y el perfil del usuario en paralelo
   const [
     contentResult, 
     teamResult, 
     principlesResult, 
     methodologyResult,
-    experiencesResult
+    experiencesResult,
+    profileResult
   ] = await Promise.all([
     getLandingContent(),
     getTeamMembers(),
     getPrinciples(),
     getMethodology(),
-    getExperiences()
+    getExperiences(),
+    getCurrentProfile()
   ])
 
   // Extraemos los datos o usamos arrays/objetos vacíos como fallback si la consulta falla
@@ -53,13 +57,17 @@ export default async function Page() {
   const methodology = methodologyResult.success && methodologyResult.data ? methodologyResult.data : []
   const experiences = experiencesResult.success && experiencesResult.data ? experiencesResult.data : []
 
+  // Determinamos si el usuario actual tiene permisos de edición
+  const isEditable = profileResult.success && 
+    (profileResult.data?.role === 'admin' || profileResult.data?.role === 'editor')
+
   return (
     <main className="min-h-screen overflow-hidden bg-ipp-paper text-ipp-plum">
       {/* Navegación principal */}
       <Header />
       
       {/* Sección hero con mensaje principal */}
-      <Hero dynamicContent={content} />
+      <Hero dynamicContent={content} isEditable={isEditable} />
       
       {/* Información sobre el proyecto y sus principios */}
       <Info dynamicContent={content} principles={principles} />
@@ -75,6 +83,9 @@ export default async function Page() {
       
       {/* Pie de página con enlaces y contacto */}
       <Footer />
+
+      {/* Panel de administración en línea */}
+      <FloatingEditPanel isEditable={isEditable} />
     </main>
   )
 }

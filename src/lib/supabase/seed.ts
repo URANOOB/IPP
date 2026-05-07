@@ -76,6 +76,7 @@ async function seed() {
     summary: exp.summary,
     description: exp.description,
     image: exp.image,
+    icon_name: exp.icon_name,
     resource_folder: exp.resource_folder
   }))
 

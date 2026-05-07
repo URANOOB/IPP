@@ -9,7 +9,7 @@ import {
   UserRound,
 } from "lucide-react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { integrantes as staticIntegrantes } from "@/lib/data"
+import { integrantes as staticIntegrantes, landingDefaults } from "@/lib/data"
 import type { Integrante as TeamMember } from "@/types/landing"
 
 interface IntegrantesProps {
@@ -51,6 +51,9 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
     setActiveIndex((current) => (current + 1) % data.length)
   }
 
+  // Atajos para mayor legibilidad
+  const d = landingDefaults.integrantes
+
   return (
     <section
       id="integrantes"
@@ -75,10 +78,10 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
             id="integrantes-heading"
             className="font-display text-5xl font-black leading-tight text-ipp-coral md:text-7xl"
           >
-            Quiénes hacen posible Inglés Pa&apos; la Paz
+            {d.title}
           </h2>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-ipp-plum/75">
-            Un equipo colombiano que une pedagogía, memoria, tecnología, cultura y trabajo comunitario.
+            {d.description}
           </p>
         </motion.div>
 
