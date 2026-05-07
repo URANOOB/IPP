@@ -1,3 +1,9 @@
+/**
+ * @file liquid-glass-button.tsx
+ * @description Colección de componentes de botones con efectos visuales avanzados (cristal, metal, líquidos).
+ * Incluye variantes con filtros SVG y gradientes complejos para una interfaz moderna y atractiva.
+ */
+
 "use client"
 
 import * as React from "react"
@@ -5,6 +11,10 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
+/**
+ * Variantes para el botón estándar mejorado.
+ * Incluye la variante 'cool' con sombras internas y gradientes de alta calidad.
+ */
 const buttonVariants = cva(
   "inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
@@ -38,6 +48,9 @@ export interface ButtonProps
   asChild?: boolean
 }
 
+/**
+ * Componente de Botón base con soporte para variantes personalizadas.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
@@ -46,6 +59,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
+/**
+ * Variantes específicas para el LiquidButton.
+ */
 const liquidbuttonVariants = cva(
   "inline-flex items-center transition-colors justify-center cursor-pointer gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
@@ -75,6 +91,12 @@ const liquidbuttonVariants = cva(
   },
 )
 
+/**
+ * Componente LiquidButton.
+ * Un botón con un efecto de "cristal líquido" que utiliza filtros SVG para distorsión y desenfoque.
+ * 
+ * @param {Object} props - Propiedades del botón incluyendo niños y variantes.
+ */
 function LiquidButton({
   className,
   variant,
@@ -94,12 +116,14 @@ function LiquidButton({
         className={cn("relative", liquidbuttonVariants({ variant, size, className }))}
         {...props}
       >
+        {/* Efecto de sombra interna para el look de cristal */}
         <div
           className="absolute top-0 left-0 z-0 h-full w-full rounded-full
             shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)]
         transition-all
         dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]"
         />
+        {/* Capa que aplica el filtro de cristal mediante backdrop-filter */}
         <div
           className="absolute top-0 left-0 isolate -z-10 h-full w-full overflow-hidden rounded-md"
           style={{ backdropFilter: 'url("#container-glass")' }}
@@ -111,16 +135,20 @@ function LiquidButton({
   )
 }
 
+/**
+ * Componente que define el filtro SVG para el efecto de cristal.
+ * Utiliza turbulencia y desplazamiento para simular la refracción de la luz.
+ */
 function GlassFilter() {
   return (
     <svg className="hidden">
       <defs>
         <filter id="container-glass" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
-          {/* Generate turbulent noise for distortion */}
+          {/* Genera ruido fractal para la distorsión */}
           <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence" />
-          {/* Blur the turbulence pattern slightly */}
+          {/* Aplica un ligero desenfoque al ruido */}
           <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise" />
-          {/* Displace the source graphic with the noise */}
+          {/* Desplaza el contenido original usando el mapa de ruido */}
           <feDisplacementMap
             in="SourceGraphic"
             in2="blurredNoise"
@@ -129,9 +157,8 @@ function GlassFilter() {
             yChannelSelector="B"
             result="displaced"
           />
-          {/* Apply overall blur on the final result */}
+          {/* Desenfoque final para suavizar el efecto */}
           <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur" />
-          {/* Output the result */}
           <feComposite in="finalBlur" in2="finalBlur" operator="over" />
         </filter>
       </defs>
@@ -145,6 +172,10 @@ interface MetalButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   variant?: ColorVariant
 }
 
+/**
+ * Definición de colores y estilos para los botones metálicos.
+ * Cada variante define gradientes para las capas externa, interna y el botón mismo.
+ */
 const colorVariants: Record<
   ColorVariant,
   {
@@ -199,6 +230,14 @@ const colorVariants: Record<
   },
 }
 
+/**
+ * Función que calcula las clases y estilos dinámicos para el botón metálico basado en su estado.
+ * 
+ * @param {ColorVariant} variant - La variante de color.
+ * @param {boolean} isPressed - Si el botón está siendo presionado.
+ * @param {boolean} isHovered - Si el puntero está sobre el botón.
+ * @param {boolean} isTouchDevice - Si el dispositivo es táctil.
+ */
 const metalButtonVariants = (
   variant: ColorVariant = "default",
   isPressed: boolean,
@@ -241,6 +280,9 @@ const metalButtonVariants = (
   }
 }
 
+/**
+ * Componente que simula un efecto de brillo al presionar el botón.
+ */
 const ShineEffect = ({ isPressed }: { isPressed: boolean }) => {
   return (
     <div
@@ -254,6 +296,10 @@ const ShineEffect = ({ isPressed }: { isPressed: boolean }) => {
   )
 }
 
+/**
+ * Componente MetalButton.
+ * Un botón con apariencia metálica realista y animaciones de presión físicas.
+ */
 export const MetalButton = React.forwardRef<HTMLButtonElement, MetalButtonProps>(
   ({ children, className, variant = "default", ...props }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false)

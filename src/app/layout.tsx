@@ -1,8 +1,8 @@
 /**
- * ROOT LAYOUT - El archivo principal de la estructura HTML.
- * 
- * Este componente envuelve a todas las páginas de la aplicación.
- * Define el idioma, los metadatos globales (SEO), fuentes y scripts base.
+ * @file layout.tsx
+ * @description Layout raíz de la aplicación Next.js 15.
+ * Este archivo define la estructura base del HTML, incluyendo metadatos globales,
+ * configuración de SEO, integración de analíticas y fuentes.
  */
 
 import type { Metadata } from "next"
@@ -12,7 +12,9 @@ import { Analytics } from "@vercel/analytics/next"
 const defaultSiteUrl = "https://inglespalapaz.com"
 
 /**
- * Determina la URL base del sitio para metadatos y SEO.
+ * Obtiene la URL base del sitio de forma segura.
+ * 
+ * @returns {string} La URL de origen del sitio basada en variables de entorno o un valor por defecto.
  */
 function getSiteUrl() {
   const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? defaultSiteUrl
@@ -27,8 +29,8 @@ function getSiteUrl() {
 const siteUrl = getSiteUrl()
 
 /**
- * CONFIGURACIÓN DE SEO (Metadatos Globales)
- * Aquí se definen los títulos, descripciones y cómo aparecerá el sitio en redes sociales.
+ * Configuración de metadatos globales para SEO y redes sociales.
+ * Define títulos, descripciones, palabras clave y configuración de OpenGraph/Twitter.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -121,13 +123,20 @@ export const metadata: Metadata = {
   },
 }
 
+/**
+ * Componente RootLayout que envuelve todas las páginas del sitio.
+ * 
+ * @param {Object} props - Propiedades del componente.
+ * @param {React.ReactNode} props.children - El contenido dinámico de las páginas.
+ * @returns {JSX.Element} El esquema HTML base de la aplicación.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   /**
-   * JSON-LD: Datos estructurados para que Google entienda mejor de qué trata la organización.
+   * Genera los datos estructurados JSON-LD para mejorar el SEO y la visibilidad en motores de búsqueda.
    */
   const jsonLd = {
     "@context": "https://schema.org",
@@ -158,10 +167,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {/* 'children' representa el contenido de la página actual */}
         {children}
-        
-        {/* Vercel Analytics para métricas de tráfico */}
         <Analytics />
       </body>
     </html>

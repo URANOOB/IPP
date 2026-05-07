@@ -1,9 +1,19 @@
+/**
+ * @file button.tsx
+ * @description Componente de botón reutilizable basado en Radix UI Slot y Tailwind CSS.
+ * Utiliza `class-variance-authority` para gestionar diferentes estilos y tamaños de forma consistente.
+ */
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Definición de las variantes del botón utilizando CVA.
+ * Permite configurar el estilo visual (`variant`) y el tamaño (`size`).
+ */
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
@@ -33,12 +43,27 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * Propiedades del componente Button.
+ * Extiende las propiedades estándar de un botón de HTML y las variantes de CVA.
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /**
+   * Si es true, el botón renderizará su hijo directamente usando Radix UI Slot.
+   * Útil para cuando se quiere que el botón actúe como un enlace u otro componente.
+   */
   asChild?: boolean
 }
 
+/**
+ * Componente de Botón principal.
+ * 
+ * @param {ButtonProps} props - Propiedades del botón incluyendo variantes de estilo y tamaño.
+ * @param {React.Ref<HTMLButtonElement>} ref - Referencia al elemento del botón.
+ * @returns {JSX.Element} El componente de botón renderizado.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
