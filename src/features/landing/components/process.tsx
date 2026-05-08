@@ -7,25 +7,21 @@ import {
   ArrowRight,
 } from "lucide-react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { methodSteps as staticSteps, landingDefaults } from "@/lib/data"
-import type { MethodStep } from "@/types/landing"
+import { methodSteps, landingDefaults } from "@/lib/data"
 
-interface ProcessProps {
-  data: MethodStep[]
-}
-
-export default function Process({ data: initialData }: ProcessProps) {
+/**
+ * @section COMPONENTE PROCESS (ESTÁTICO)
+ * 
+ * Los datos se editan en:
+ * - Textos Sección: @/lib/data.ts -> landingDefaults.process
+ * - Pasos Metodología: @/lib/data.ts -> methodSteps
+ */
+export default function Process() {
   const [activeStep, setActiveStep] = useState(0)
-
-  // Usar datos pasados o fallback a estáticos si no hay datos
-  const data = initialData && initialData.length > 0 ? initialData : staticSteps
-
-  if (!data || data.length === 0) return null
-
-  const currentStep = data[activeStep]
-
-  // Atajos para mayor legibilidad
   const d = landingDefaults.process
+  const currentStep = methodSteps[activeStep]
+
+  if (!methodSteps || methodSteps.length === 0) return null
 
   return (
     <section
@@ -119,7 +115,7 @@ export default function Process({ data: initialData }: ProcessProps) {
                 aria-label="Pasos de la metodología"
               >
                 <div className="space-y-2">
-                  {data.map((step, index) => {
+                  {methodSteps.map((step, index) => {
                     const isActive = index === activeStep
 
                     return (
@@ -159,7 +155,7 @@ export default function Process({ data: initialData }: ProcessProps) {
               </aside>
 
               <motion.article
-                key={currentStep.id}
+                key={currentStep?.id}
                 id={`method-panel-${activeStep}`}
                 role="tabpanel"
                 aria-labelledby={`method-tab-${activeStep}`}
@@ -170,7 +166,7 @@ export default function Process({ data: initialData }: ProcessProps) {
               >
                 <div
                   className="h-3 w-full"
-                  style={{ backgroundColor: currentStep.color }}
+                  style={{ backgroundColor: currentStep?.color }}
                   aria-hidden="true"
                 />
 
@@ -178,9 +174,9 @@ export default function Process({ data: initialData }: ProcessProps) {
                   <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
                     <div
                       className="flex h-12 w-12 items-center justify-center rounded-full"
-                      style={{ backgroundColor: currentStep.color }}
+                      style={{ backgroundColor: currentStep?.color }}
                     >
-                      <DynamicIcon name={currentStep.icon_name} className="h-5 w-5 text-ipp-black" aria-hidden="true" />
+                      <DynamicIcon name={currentStep?.icon_name} className="h-5 w-5 text-ipp-black" aria-hidden="true" />
                     </div>
 
                     <div className="rounded-2xl border border-ipp-plum/10 bg-ipp-cream px-3 py-2 text-right">
@@ -189,17 +185,17 @@ export default function Process({ data: initialData }: ProcessProps) {
                       </span>
 
                       <span className="block text-lg font-black text-ipp-plum">
-                        0{activeStep + 1} / 0{data.length}
+                        0{activeStep + 1} / {methodSteps.length}
                       </span>
                     </div>
                   </div>
 
                   <h3 className="font-display text-[2rem] font-black leading-none text-ipp-plum md:text-5xl">
-                    {currentStep.title}
+                    {currentStep?.title}
                   </h3>
 
                   <p className="mt-5 max-w-[58ch] text-base font-semibold leading-relaxed text-ipp-plum/75 md:text-2xl">
-                    {currentStep.summary}
+                    {currentStep?.summary}
                   </p>
 
                   <div className="mt-8">
@@ -208,7 +204,7 @@ export default function Process({ data: initialData }: ProcessProps) {
                     </h4>
 
                     <ul className="mt-3 space-y-2 pl-5 text-sm font-semibold leading-relaxed text-ipp-plum/80 md:text-xl">
-                      {currentStep.items.map((item) => (
+                      {currentStep?.items?.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
@@ -220,7 +216,7 @@ export default function Process({ data: initialData }: ProcessProps) {
                     </h4>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {currentStep.keywords.map((keyword) => (
+                      {currentStep?.keywords?.map((keyword) => (
                         <span
                           key={keyword}
                           className="rounded-full border border-ipp-plum/10 bg-ipp-cream px-3 py-1.5 text-sm font-semibold text-ipp-plum md:text-lg"

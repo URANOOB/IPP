@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation'
 import { 
   LayoutDashboard, 
   BookOpen, 
-  Calendar, 
-  Settings, 
   Users, 
   LogOut,
   Shield,
@@ -19,8 +17,6 @@ const menuItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Historias (Blog)', href: '/admin/blog', icon: BookOpen },
   { name: 'Equipo', href: '/admin/team', icon: Users },
-  { name: 'Calendario', href: '/admin/events', icon: Calendar },
-  { name: 'Contenido Web', href: '/admin/content', icon: Settings },
   { name: 'Usuarios', href: '/admin/users', icon: Shield },
 ]
 

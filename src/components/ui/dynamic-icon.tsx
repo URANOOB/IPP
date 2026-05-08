@@ -4,7 +4,7 @@ import { LucideProps, HelpCircle } from "lucide-react"
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 
 interface DynamicIconProps extends LucideProps {
-  name: string
+  name?: string
 }
 
 // Cache global para evitar re-creación de componentes dinámicos
@@ -14,7 +14,7 @@ const iconCache: Record<string, any> = {}
  * Componente para renderizar iconos de Lucide dinámicamente basados en un string.
  * Utiliza dynamicIconImports para evitar cargar todos los iconos en el bundle inicial.
  */
-export const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
+export const DynamicIcon = ({ name = 'help-circle', ...props }: DynamicIconProps) => {
   const iconName = useMemo(() => {
     // Seguridad: Si no hay nombre, devolvemos un icono de ayuda por defecto
     if (!name) return 'help-circle' as keyof typeof dynamicIconImports;

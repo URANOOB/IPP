@@ -27,13 +27,17 @@ export const landingDefaults = {
     description: "Usamos relatos, diálogo y experiencias creativas para que niñas, niños y comunidades vivan el inglés como una herramienta cercana para aprender, expresarse y construir paz desde su historia y su territorio.",
     buttonText: "Conoce el proyecto",
     imageUrl: "/images/ipp/logo_png3.png",
-    card1Text: "Círculos de lectura",
-    card2Text: "Paz y emociones",
-    card3Text: "Comunidad y territorio",
+    bgImage: "/images/ipp/butterflies_banner3.png",
+    cards: [
+      { text: "Círculos de lectura", icon: "BookOpen" },
+      { text: "Paz y emociones", icon: "HandHeart" },
+      { text: "Comunidad y territorio", icon: "MapPin" },
+    ]
   },
   info: {
     title: "Inglés para la paz desde la lectura, la conversación y el territorio.",
     description: "En Inglés Pa' la Paz creamos experiencias de aprendizaje donde el inglés emerge desde la lectura, la conversación y la creación colectiva. Usamos relatos, preguntas, recursos emocionales y actividades artísticas para que niñas, niños y comunidades vivan el inglés como una herramienta cercana para expresar lo que son, lo que sienten y lo que imaginan.",
+    imageUrl: "/images/ipp/banner-referencia.jpg",
   },
   process: {
     title: "Así vivimos cada encuentro de Inglés pa' la Paz",

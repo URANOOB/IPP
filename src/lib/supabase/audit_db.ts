@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
@@ -12,18 +12,20 @@ async function mapEverything() {
   console.log('🔍 Auditoría de Base de Datos - Estado Actual\n')
 
   const tables = [
-    'principles',
-    'methodology_steps',
+    'profiles',
     'team_members',
-    'experiences',
-    'landing_content'
+    'posts',
+    'categories'
   ]
 
   for (const table of tables) {
-    const { data, error, count } = await supabase.from(table).select('*', { count: 'exact' })
-    
+    const { data, count, error } = await supabase
+      .from(table)
+      .select('*', { count: 'exact', head: false })
+      .limit(1)
+
     if (error) {
-      console.error(`❌ Tabla ${table}: ${error.message}`)
+      console.log(`❌ Tabla ${table}: ${error.message}`)
     } else {
       console.log(`✅ Tabla ${table}: ${count} registros.`)
       if (data && data.length > 0) {

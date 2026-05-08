@@ -14,6 +14,9 @@ export const landingStyles = {
     descriptionSize: "20px",
     descriptionColor: "rgba(96, 48, 72, 0.84)",
     buttonColor: "var(--ipp-olive)",
+    buttonShadow: "6px 6px 0 rgba(96, 48, 72, 0.22)",
+    cardShadow: "4px 4px 0 rgba(96, 48, 72, 0.08)",
+    logoShadow: "drop-shadow(8px 8px 0 rgba(96, 48, 72, 0.12))",
   }
 }
 
@@ -136,7 +139,7 @@ export const experienceStyles: Record<string, { icon_name: string, accent: strin
     tint: "rgba(255, 200, 74, 0.28)",
   },
   "bridges-memory": {
-    icon_name: "Globe2",
+    icon_name: "Map",
     accent: "var(--ipp-sky)",
     tint: "rgba(168, 200, 216, 0.34)",
   },

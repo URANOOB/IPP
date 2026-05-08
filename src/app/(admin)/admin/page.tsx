@@ -19,7 +19,7 @@ export default async function AdminDashboardPage() {
         <p className="text-ipp-plum/40 font-semibold mt-2 text-lg">Aquí tienes el estado actual del proyecto.</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-8 rounded-[2.5rem] border border-ipp-plum/5 shadow-sm space-y-4">
           <div className="h-12 w-12 bg-ipp-sky/10 rounded-2xl flex items-center justify-center text-ipp-sky">
             <span className="font-black text-xl">{blogCount || 0}</span>
@@ -27,16 +27,6 @@ export default async function AdminDashboardPage() {
           <div>
             <h3 className="font-black text-ipp-plum text-lg">Historias</h3>
             <p className="text-sm text-ipp-plum/40 font-semibold">Entradas publicadas en el blog.</p>
-          </div>
-        </div>
-
-        <div className="bg-white p-8 rounded-[2.5rem] border border-ipp-plum/5 shadow-sm space-y-4">
-          <div className="h-12 w-12 bg-ipp-coral/10 rounded-2xl flex items-center justify-center text-ipp-coral">
-            <span className="font-black text-xl">0</span>
-          </div>
-          <div>
-            <h3 className="font-black text-ipp-plum text-lg">Eventos</h3>
-            <p className="text-sm text-ipp-plum/40 font-semibold">Encuentros próximos agendados.</p>
           </div>
         </div>
 

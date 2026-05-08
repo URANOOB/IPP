@@ -2,10 +2,8 @@
  * @file page.tsx
  * @description Página de inicio (Landing Page) del proyecto Inglés pa' la Paz.
  * 
- * Este componente es un Server Component de Next.js que se encarga de:
- * 1. Obtener datos dinámicos desde Supabase (contenido, equipo, principios, metodología y experiencias).
- * 2. Orquestar la visualización de las diferentes secciones de la landing page.
- * 3. Proveer fallbacks seguros en caso de que la carga de datos falle.
+ * Versión Estática: Los datos se cargan desde archivos locales (data.ts, styles.ts)
+ * para máxima velocidad y simplicidad, manteniendo dinámicos solo el Equipo y Blog.
  */
 
 import Header from "@/components/layout/header"
@@ -15,77 +13,35 @@ import Info from "@/features/landing/components/infoipp"
 import Experiences from "@/features/landing/components/experiences"
 import Integrantes from "@/features/landing/components/integrantes"
 import Process from "@/features/landing/components/process"
-import FloatingEditPanel from "@/components/admin/floating-edit-panel"
-import { 
-  getLandingContent, 
-  getTeamMembers, 
-  getPrinciples, 
-  getMethodology,
-  getExperiences
-} from "@/features/landing/actions"
-import { getCurrentProfile } from "@/features/admin/user-actions"
+import { getTeamMembers } from "@/features/landing/actions"
 
-/**
- * Componente principal de la Landing Page.
- * Utiliza Promise.all para realizar múltiples consultas a la base de datos en paralelo,
- * optimizando el tiempo de carga del lado del servidor.
- * 
- * @returns {Promise<JSX.Element>} La página de inicio renderizada con datos dinámicos.
- */
 export default async function Page() {
-  // Obtenemos todos los datos dinámicos y el perfil del usuario en paralelo
-  const [
-    contentResult, 
-    teamResult, 
-    principlesResult, 
-    methodologyResult,
-    experiencesResult,
-    profileResult
-  ] = await Promise.all([
-    getLandingContent(),
-    getTeamMembers(),
-    getPrinciples(),
-    getMethodology(),
-    getExperiences(),
-    getCurrentProfile()
-  ])
-
-  // Extraemos los datos o usamos arrays/objetos vacíos como fallback si la consulta falla
-  const content = contentResult.success && contentResult.data ? contentResult.data : {}
+  // Solo cargamos el equipo de la DB, lo demás es estático
+  const teamResult = await getTeamMembers()
   const team = teamResult.success && teamResult.data ? teamResult.data : []
-  const principles = principlesResult.success && principlesResult.data ? principlesResult.data : []
-  const methodology = methodologyResult.success && methodologyResult.data ? methodologyResult.data : []
-  const experiences = experiencesResult.success && experiencesResult.data ? experiencesResult.data : []
-
-  // Determinamos si el usuario actual tiene permisos de edición
-  const isEditable = profileResult.success && 
-    (profileResult.data?.role === 'admin' || profileResult.data?.role === 'editor')
 
   return (
     <main className="min-h-screen overflow-hidden bg-ipp-paper text-ipp-plum">
       {/* Navegación principal */}
       <Header />
       
-      {/* Sección hero con mensaje principal */}
-      <Hero dynamicContent={content} isEditable={isEditable} />
+      {/* Sección hero */}
+      <Hero />
       
-      {/* Información sobre el proyecto y sus principios */}
-      <Info dynamicContent={content} principles={principles} />
+      {/* Información sobre el proyecto */}
+      <Info />
       
-      {/* Sección de experiencias destacadas */}
-      <Experiences data={experiences} />
+      {/* Sección de experiencias */}
+      <Experiences />
       
-      {/* Explicación de la metodología o proceso */}
-      <Process data={methodology} />
+      {/* Explicación de la metodología */}
+      <Process />
       
-      {/* Presentación del equipo de trabajo */}
+      {/* Presentación del equipo (Única sección dinámica) */}
       <Integrantes data={team} />
       
-      {/* Pie de página con enlaces y contacto */}
+      {/* Pie de página */}
       <Footer />
-
-      {/* Panel de administración en línea */}
-      <FloatingEditPanel isEditable={isEditable} />
     </main>
   )
 }

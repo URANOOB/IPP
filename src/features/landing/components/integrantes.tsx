@@ -33,6 +33,14 @@ const positionMap: Record<number, { x: string; y: number; rotate: number; scale:
   [2]: { x: "96%", y: 40, rotate: 10, scale: 0.83, opacity: 0.2 },
 }
 
+/**
+ * @section GUÍA DE EDICIÓN RÁPIDA
+ * 
+ * 1. TEXTOS DE SECCIÓN: El título y descripción se editan en 'landingDefaults.integrantes' en @/lib/data.ts.
+ * 2. DATOS DE INTEGRANTES: Se editan en la tabla 'team_members' de Supabase (Nombre, Rol, Focus).
+ * 3. ESTILOS DE INTEGRANTE: Los colores e iconos se editan en 'teamStyles' en @/lib/styles.ts (mapeados por el nombre exacto del integrante).
+ * 4. FOTOS: Si un integrante tiene 'photo_url' en la DB, se usa esa imagen. Si no, se usa el icono y colores definidos en styles.ts.
+ */
 export default function Integrantes({ data: initialData }: IntegrantesProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 

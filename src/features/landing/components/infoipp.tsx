@@ -4,24 +4,23 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import type { CSSProperties } from "react"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
-import { principles as staticPrinciples, landingDefaults } from "@/lib/data"
-import type { Principle } from "@/types/landing"
+import { principles, landingDefaults } from "@/lib/data"
+import { principleStyles } from "@/lib/styles"
 
-interface InfoProps {
-  dynamicContent?: Record<string, string>
-  principles: Principle[]
-}
-
-export default function Info({ dynamicContent = {}, principles: initialPrinciples }: InfoProps) {
-  // Usar datos pasados o fallback a estáticos si no hay datos
-  const principles = initialPrinciples && initialPrinciples.length > 0 ? initialPrinciples : staticPrinciples
-
-  // Atajos para mayor legibilidad
+/**
+ * @section COMPONENTE INFO - QUIÉNES SOMOS
+ * 
+ * Este componente es un híbrido entre contenido estático y estilos configurables.
+ * 
+ * ESTRUCTURA DE DATOS:
+ * - Textos de la sección (Título/Desc): Se editan en @/lib/data.ts -> landingDefaults.info
+ * - Imagen principal: Se configura en @/lib/data.ts -> landingDefaults.info.imageUrl
+ * - Contenido de tarjetas: Se edita en @/lib/data.ts -> principles
+ * - Estilos de tarjetas: Se configuran en @/lib/styles.ts -> principleStyles (mapeados por título)
+ */
+export default function Info() {
+  // Extraemos los textos y la imagen base desde data.ts
   const d = landingDefaults.info
-
-  // Valores dinámicos con fallback
-  const infoTitle = dynamicContent.info_title || d.title
-  const infoDescription = dynamicContent.info_description || d.description
 
   return (
     <section
@@ -32,6 +31,8 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
       <div className="absolute inset-0 bg-paper opacity-0" aria-hidden="true" />
 
       <div className="relative mx-auto grid max-w-7xl gap-12 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] md:items-stretch">
+        
+        {/* COLUMNA IZQUIERDA: Imagen de referencia (Configurable en data.ts) */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,8 +41,8 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
           className="relative min-h-[400px] md:min-h-full"
         >
           <Image
-            src="/images/ipp/banner-referencia.jpg"
-            alt="Banner del proyecto Inglés pa' la Paz con enfoque en lectura, comunidad y territorio"
+            src={d.imageUrl}
+            alt="Banner del proyecto Inglés pa' la Paz"
             fill
             priority
             className="rounded-[2rem] object-cover object-center"
@@ -49,6 +50,7 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
           />
         </motion.div>
 
+        {/* COLUMNA DERECHA: Textos y Principios */}
         <div className="flex flex-col justify-center">
           <p className="section-kicker">Quiénes somos</p>
 
@@ -56,20 +58,29 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
             id="project-heading"
             className="font-display text-4xl font-black leading-[0.94] text-ipp-coral md:text-5xl lg:text-6xl"
           >
-            {infoTitle}
+            {d.title}
           </h2>
 
           <p className="mt-7 max-w-2xl text-lg font-semibold leading-relaxed text-ipp-plum/80 md:text-2xl">
-            {infoDescription}
+            {d.description}
           </p>
 
+          {/* GRID DE TARJETAS (Principios) */}
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
             {principles.map((item, index) => {
+              /**
+               * LÓGICA DE ESTILOS DINÁMICOS:
+               * Buscamos en @/lib/styles.ts la configuración visual que coincida con el título del principio.
+               * Si no existe, aplicamos un fallback al primer estilo disponible.
+               */
+              const s = principleStyles[item.title!] || principleStyles["Aprendemos desde lo que somos"]
+              
+              // Inyectamos los estilos como variables CSS para mantener el componente limpio
               const cardStyle = {
-                "--quote-card-surface": item.surface_color,
-                "--quote-card-ink": item.ink_color,
-                "--quote-card-chip": "rgba(96, 48, 72, 0.11)",
-                "--quote-card-glow": "rgba(255, 255, 255, 0.44)",
+                "--quote-card-surface": s.surface_color,
+                "--quote-card-ink": s.ink_color,
+                "--quote-card-chip": s.chip,
+                "--quote-card-glow": s.glow,
               } as CSSProperties
 
               return (
@@ -83,11 +94,13 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
                   className="quote-story-card group relative min-h-[280px] overflow-hidden px-6 py-7 md:min-h-[320px] md:px-7 md:py-8"
                   style={cardStyle}
                 >
+                  {/* Decoraciones de fondo (Glows) */}
                   <div className="absolute inset-0 opacity-90" aria-hidden="true">
                     <div className="absolute left-[-10%] top-[-18%] h-32 w-32 rounded-full bg-[var(--quote-card-glow)] blur-2xl" />
                     <div className="absolute bottom-[-16%] right-[-10%] h-28 w-28 rounded-full bg-black/5 blur-2xl" />
                   </div>
 
+                  {/* Icono de fondo decorativo (SVG de Comillas) */}
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center text-[color:var(--quote-card-ink)] transition-transform duration-500 group-hover:scale-105"
                     style={{ opacity: 0.10 }}
@@ -99,12 +112,14 @@ export default function Info({ dynamicContent = {}, principles: initialPrinciple
                   </div>
 
                   <div className="relative flex h-full flex-col">
+                    {/* Contenedor del Icono (Configurado en styles.ts) */}
                     <div className="flex items-start justify-end gap-4">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--quote-card-chip)] text-[color:var(--quote-card-ink)]">
-                        <DynamicIcon name={item.icon_name} className="h-5 w-5" aria-hidden="true" />
+                        <DynamicIcon name={s.icon_name} className="h-5 w-5" aria-hidden="true" />
                       </div>
                     </div>
 
+                    {/* Título y Descripción (Configurados en data.ts) */}
                     <h3 className="mt-2 max-w-[14ch] font-display text-3xl font-black leading-[0.96] text-[color:var(--quote-card-ink)] md:text-[2.15rem]">
                       {item.title}
                     </h3>
