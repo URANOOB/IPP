@@ -1,3 +1,9 @@
+/**
+ * @file image-upload.tsx
+ * @description Componente de carga de imágenes para el panel de administración.
+ * Permite seleccionar archivos, subirlos a Supabase Storage y previsualizarlos.
+ */
+
 'use client'
 
 import { useState, useRef } from 'react'
@@ -6,44 +12,62 @@ import { Button } from '@/components/ui/button'
 import { Upload, X, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 
+/**
+ * Propiedades del componente ImageUpload.
+ */
 interface ImageUploadProps {
+  /** Callback ejecutado cuando la imagen se sube con éxito, devuelve la URL pública. */
   onUpload: (url: string) => void
+  /** URL de la imagen cargada por defecto (para edición). */
   defaultValue?: string
+  /** Etiqueta descriptiva del campo. */
   label?: string
 }
 
+/**
+ * Componente que gestiona la carga de archivos multimedia a Supabase.
+ * 
+ * @param {ImageUploadProps} props - Propiedades del componente.
+ * @returns {JSX.Element} Un selector de archivos con previsualización y estado de carga.
+ */
 export function ImageUpload({ onUpload, defaultValue, label = "Imagen de portada" }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(defaultValue || null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const supabase = createClient()
 
+  /**
+   * Maneja la selección y subida del archivo.
+   * Valida que sea una imagen y genera un nombre único antes de subirlo al bucket 'media'.
+   * 
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio del input file.
+   */
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    // Validar tipo de archivo
+    // Validación básica del tipo MIME
     if (!file.type.startsWith('image/')) {
       alert('Por favor, selecciona un archivo de imagen válido.')
       return
     }
 
     setIsUploading(true)
+    const supabase = createClient()
 
     try {
-      // Crear un nombre único para el archivo
+      // Generación de un nombre de archivo único para evitar colisiones en Storage
       const fileExt = file.name.split('.').pop()
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`
       const filePath = `uploads/${fileName}`
 
-      // Subir a Supabase Storage
-      const { error: uploadError, data: _data } = await supabase.storage
+      // Proceso de subida al bucket configurado en Supabase
+      const { error: uploadError } = await supabase.storage
         .from('media')
         .upload(filePath, file)
 
       if (uploadError) throw uploadError
 
-      // Obtener URL pública
+      // Obtención de la URL de acceso público
       const { data: { publicUrl } } = supabase.storage
         .from('media')
         .getPublicUrl(filePath)
@@ -51,13 +75,14 @@ export function ImageUpload({ onUpload, defaultValue, label = "Imagen de portada
       setPreviewUrl(publicUrl)
       onUpload(publicUrl)
     } catch (error) {
-      console.error('Error uploading image:', error)
+      console.error('Error al subir imagen:', error)
       alert('Error al subir la imagen. Inténtalo de nuevo.')
     } finally {
       setIsUploading(false)
     }
   }
 
+  /** Limpia la imagen seleccionada y resetea el input. */
   const removeImage = () => {
     setPreviewUrl(null)
     onUpload('')
@@ -74,6 +99,7 @@ export function ImageUpload({ onUpload, defaultValue, label = "Imagen de portada
       
       <div className="relative group">
         {previewUrl ? (
+          /* Vista de previsualización de la imagen cargada */
           <div className="relative aspect-video w-full overflow-hidden rounded-[2rem] border-2 border-ipp-plum/10 bg-white">
             <Image
               src={previewUrl}
@@ -94,6 +120,7 @@ export function ImageUpload({ onUpload, defaultValue, label = "Imagen de portada
             </div>
           </div>
         ) : (
+          /* Zona de carga (Dropzone/Click) */
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}

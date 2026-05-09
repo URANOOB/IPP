@@ -1,3 +1,9 @@
+/**
+ * @file team-member-form.tsx
+ * @description Formulario para la creación y edición de integrantes del equipo.
+ * Permite configurar datos personales, roles, iconos representativos y colores de identidad.
+ */
+
 'use client'
 
 import { useState } from 'react'
@@ -12,18 +18,26 @@ import {
 } from 'lucide-react'
 import { DynamicIcon } from '@/components/ui/dynamic-icon'
 
+/**
+ * Propiedades del componente TeamMemberForm.
+ */
 interface TeamMemberFormProps {
+  /** Datos iniciales del integrante (si es edición). */
   member?: Partial<Integrante>
+  /** Función asíncrona para guardar los datos. */
   onSave: (data: Partial<Integrante>) => Promise<void>
+  /** Callback para cancelar la operación. */
   onCancel: () => void
 }
 
+/** Iconos recomendados para representar roles en el equipo. */
 const RECOMMENDED_ICONS = [
   'Users', 'Megaphone', 'PenSquare', 'Handshake', 'Sparkles', 
   'BookOpen', 'Code2', 'MonitorCog', 'ClipboardList', 'UserRound',
   'Heart', 'Star', 'MessageCircle', 'Globe', 'Library'
 ]
 
+/** Colores predefinidos de la marca IPP para la identidad de los integrantes. */
 const COMMON_COLORS = [
   { label: 'Coral', value: 'var(--ipp-coral)' },
   { label: 'Sky', value: 'var(--ipp-sky)' },
@@ -34,7 +48,15 @@ const COMMON_COLORS = [
   { label: 'Mint', value: 'var(--ipp-mint)' },
 ]
 
+/**
+ * Componente que renderiza el formulario de gestión de equipo.
+ * Maneja internamente el estado de los campos y la validación básica.
+ * 
+ * @param {TeamMemberFormProps} props - Propiedades del componente.
+ * @returns {JSX.Element} El formulario de administración de integrantes.
+ */
 export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps) {
+  // Inicialización del estado del formulario con valores por defecto o del miembro a editar
   const [formData, setFormData] = useState<Partial<Integrante>>({
     id: member?.id,
     name: member?.name || '',
@@ -48,6 +70,12 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  /**
+   * Procesa el envío del formulario.
+   * Activa el estado de carga y delega el guardado a la función onSave.
+   * 
+   * @param {React.FormEvent} e - Evento de envío del formulario.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -57,6 +85,7 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 md:p-10 rounded-[2.5rem] border border-ipp-plum/10 shadow-xl">
+      {/* Cabecera del Formulario */}
       <div className="flex items-center justify-between border-b border-ipp-plum/5 pb-6">
         <h2 className="text-2xl font-black text-ipp-plum">
           {member?.id ? 'Editar Integrante' : 'Nuevo Integrante'}
@@ -67,6 +96,7 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Sección de Datos Personales y Rol */}
         <div className="space-y-6">
           <div className="space-y-2">
             <label className="text-xs font-black text-ipp-plum/40 uppercase tracking-widest px-1">Nombre Completo</label>
@@ -113,6 +143,7 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
           </div>
         </div>
 
+        {/* Sección de Carga de Fotografía */}
         <div className="space-y-6">
           <ImageUpload 
             label="Foto de perfil"
@@ -122,6 +153,7 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
         </div>
       </div>
 
+      {/* Configuración Visual (Iconos y Colores) */}
       <div className="space-y-6 pt-6 border-t border-ipp-plum/5">
         <div className="space-y-3">
           <div className="flex items-center justify-between px-1">
@@ -183,6 +215,7 @@ export function TeamMemberForm({ member, onSave, onCancel }: TeamMemberFormProps
         </div>
       </div>
 
+      {/* Botones de Acción */}
       <div className="flex justify-end gap-4 pt-4">
         <Button 
           type="button" 

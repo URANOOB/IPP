@@ -9,16 +9,33 @@ import { cookies } from 'next/headers'
 
 /**
  * Crea una instancia del cliente de Supabase optimizada para el servidor.
- * Esta función es asíncrona ya que necesita acceder a las cookies de la solicitud.
  * 
- * @returns {Promise<ReturnType<typeof createServerClient>>} El cliente de Supabase para el backend.
+ * @returns {Promise<ReturnType<typeof createServerClient>>} El cliente de Supabase configurado.
  */
 export async function createClient() {
   const cookieStore = await cookies()
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Evitar que el build falle por falta de variables si no se está ejecutando en runtime real.
+    // Durante el build (static generation), permitimos un fallback silencioso.
+    return createServerClient(
+      supabaseUrl || 'http://placeholder',
+      supabaseAnonKey || 'placeholder',
+      {
+        cookies: {
+          getAll() { return [] },
+          setAll() { }
+        }
+      }
+    )
+  }
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         /**
@@ -29,8 +46,8 @@ export async function createClient() {
         },
         /**
          * Establece las cookies necesarias para la sesión.
-         * En Server Components, este método puede fallar si la respuesta ya se ha empezado a enviar,
-         * lo cual es normal y suele gestionarse mediante middleware.
+         * 
+         * @param {Array} cookiesToSet - Lista de cookies a establecer.
          */
         setAll(cookiesToSet) {
           try {
@@ -39,7 +56,6 @@ export async function createClient() {
             )
           } catch {
             // Este método fue llamado desde un Server Component.
-            // Se puede ignorar si se tiene un middleware que refresque las sesiones.
           }
         },
       },

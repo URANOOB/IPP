@@ -1,3 +1,9 @@
+/**
+ * @file blog/new/page.tsx
+ * @description Editor de nuevas historias para el blog.
+ * Permite a los editores redactar contenido, subir imágenes de portada y publicar entradas directamente a Supabase.
+ */
+
 'use client'
 
 import { useState } from 'react'
@@ -7,29 +13,53 @@ import { Button } from '@/components/ui/button'
 import { ImageUpload } from '@/features/admin/components/image-upload'
 import { ArrowLeft, Save, Loader2 } from 'lucide-react'
 
+/**
+ * Componente de la página de creación de Post.
+ * 
+ * @returns {JSX.Element} Un editor minimalista con previsualización de imagen y campos de texto.
+ */
 export default function NewPostPage() {
+  // --- Estados del Formulario ---
   const [isLoading, setIsLoading] = useState(false)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [coverImage, setCoverImage] = useState('')
-  const supabase = createClient()
-  const useRouterNavigation = useRouter()
+  
+  const router = useRouter()
 
+  /**
+   * Genera una versión amigable para URL (slug) basada en el título.
+   * Elimina caracteres especiales y espacios.
+   * 
+   * @param {string} text - El título de la entrada.
+   * @returns {string} El slug generado.
+   */
   const generateSlug = (text: string) => {
     return text
       .toLowerCase()
-      .replace(/[^\w ]+/g, '')
-      .replace(/ +/g, '-')
+      .trim()
+      .replace(/[^\w ]+/g, '') // Elimina caracteres no alfanuméricos
+      .replace(/ +/g, '-')     // Sustituye espacios por guiones
   }
 
+  /**
+   * Maneja el guardado de la nueva historia.
+   * Obtiene el ID del autor desde la sesión actual y realiza la inserción en la base de datos.
+   * 
+   * @param {React.FormEvent} e - Evento de envío del formulario.
+   */
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!title) return alert('El título es obligatorio')
 
     setIsLoading(true)
+    const supabase = createClient()
+
     try {
+      // Verificación de la identidad del autor
       const { data: { user } } = await supabase.auth.getUser()
       
+      // Inserción en la tabla de publicaciones
       const { error } = await supabase.from('blog_posts').insert({
         title,
         slug: generateSlug(title),
@@ -42,9 +72,9 @@ export default function NewPostPage() {
       if (error) throw error
 
       alert('¡Entrada guardada con éxito!')
-      useRouterNavigation.push('/admin')
+      router.push('/admin') // Redirección al panel principal tras el éxito
     } catch (error) {
-      console.error('Error saving post:', error)
+      console.error('Error al guardar post:', error)
       alert('Error al guardar la entrada')
     } finally {
       setIsLoading(false)
@@ -54,9 +84,10 @@ export default function NewPostPage() {
   return (
     <div className="min-h-screen bg-ipp-paper p-6 md:p-12">
       <div className="max-w-4xl mx-auto">
+        {/* Barra de Herramientas Superior */}
         <header className="flex items-center justify-between mb-10">
           <button 
-            onClick={() => useRouterNavigation.back()}
+            onClick={() => router.back()}
             className="flex items-center gap-2 text-ipp-plum font-black hover:text-ipp-coral transition-colors"
           >
             <ArrowLeft size={20} />
@@ -73,7 +104,9 @@ export default function NewPostPage() {
           </Button>
         </header>
 
+        {/* Lienzo del Editor */}
         <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-ipp-plum/10 shadow-sm space-y-8">
+          {/* Campo de Título con tipografía de exhibición */}
           <div className="space-y-2">
             <label className="text-sm font-black text-ipp-plum uppercase tracking-wider">Título de la Historia</label>
             <input
@@ -85,8 +118,10 @@ export default function NewPostPage() {
             />
           </div>
 
+          {/* Componente de Carga de Imagen de Portada */}
           <ImageUpload onUpload={(url) => setCoverImage(url)} />
 
+          {/* Área de Texto Principal */}
           <div className="space-y-2">
             <label className="text-sm font-black text-ipp-plum uppercase tracking-wider">Contenido (Escribe tu historia)</label>
             <textarea

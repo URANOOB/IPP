@@ -1,3 +1,9 @@
+/**
+ * @file users/page.tsx
+ * @description Panel de gestión de usuarios y roles de acceso.
+ * Permite a los administradores visualizar los perfiles registrados y asignar permisos (Admin, Editor, Lector).
+ */
+
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -6,14 +12,28 @@ import { getTeamMembersAdmin } from '@/features/admin/team-actions'
 import { UserRound, Mail, Loader2, Check, UserCheck, Search, X } from 'lucide-react'
 import Image from 'next/image'
 
+/**
+ * Componente de la página de Usuarios (Admin).
+ * Realiza la orquestación de datos entre perfiles de autenticación e integrantes del equipo.
+ * 
+ * @returns {JSX.Element} Vista de tabla con gestión de permisos.
+ */
 export default function UsersPage() {
+  // --- Estados de Datos ---
   const [profiles, setProfiles] = useState<any[]>([])
   const [teamMembers, setTeamMembers] = useState<any[]>([])
   const [currentUser, setCurrentUser] = useState<any>(null)
+  
+  // --- Estados de UI ---
   const [isLoading, setIsLoading] = useState(true)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
 
+  /**
+   * Carga masiva de datos necesarios para la gestión de usuarios.
+   * 
+   * @param {boolean} [forceLoading=false] - Indica si se debe mostrar el estado de carga inicial.
+   */
   const fetchData = async (forceLoading = false) => {
     if (forceLoading) setIsLoading(true)
     const [profilesRes, teamRes, currentRes] = await Promise.all([
@@ -28,13 +48,21 @@ export default function UsersPage() {
     setIsLoading(false)
   }
 
+  /** Inicialización de la página */
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      fetchData()
-    }, 0)
-    return () => clearTimeout(timeoutId)
+    const initFetch = async () => {
+      await fetchData()
+    }
+    initFetch()
   }, [])
 
+  /**
+   * Cambia el rol de acceso de un usuario.
+   * Solo los usuarios con rol 'admin' tienen permiso para realizar esta acción.
+   * 
+   * @param {string} userId - UUID del usuario a modificar.
+   * @param {string} newRole - El nuevo identificador de rol.
+   */
   const handleRoleChange = async (userId: string, newRole: string) => {
     if (currentUser?.role !== 'admin') {
       alert('Solo los administradores pueden cambiar roles.')
@@ -44,6 +72,7 @@ export default function UsersPage() {
     setUpdatingId(userId)
     const result = await updateUserRole(userId, newRole)
     if (result.success) {
+      // Actualización local para feedback inmediato en la tabla
       setProfiles(profiles.map(p => p.id === userId ? { ...p, role: newRole } : p))
     } else {
       alert('Error al actualizar rol: ' + result.error)
@@ -53,6 +82,7 @@ export default function UsersPage() {
 
   const isAdmin = currentUser?.role === 'admin'
 
+  /** Filtrado reactivo de perfiles por nombre o correo */
   const filteredProfiles = profiles.filter(profile => {
     const fullName = (profile.full_name || '').toLowerCase()
     const email = (profile.email || '').toLowerCase()
@@ -60,6 +90,7 @@ export default function UsersPage() {
     return fullName.includes(search) || email.includes(search)
   })
 
+  // Pantalla de carga inicial
   if (isLoading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
@@ -70,6 +101,7 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-10">
+      {/* Cabecera del Panel de Seguridad */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <p className="text-ipp-coral font-black uppercase tracking-widest text-xs mb-2">Seguridad y Equipo</p>
@@ -77,6 +109,7 @@ export default function UsersPage() {
           <p className="text-ipp-plum/40 font-semibold mt-2 text-lg">Controla quiénes tienen acceso al panel de administración.</p>
         </div>
 
+        {/* Buscador de Usuarios */}
         <div className="relative group w-full md:w-80">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ipp-plum/20 group-focus-within:text-ipp-coral transition-colors" size={18} />
           <input 
@@ -97,6 +130,7 @@ export default function UsersPage() {
         </div>
       </header>
 
+      {/* Tabla de Usuarios Registrados */}
       <div className="bg-white rounded-[3rem] border border-ipp-plum/5 shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -110,7 +144,11 @@ export default function UsersPage() {
           <tbody className="divide-y divide-ipp-plum/5">
             {filteredProfiles.length > 0 ? (
               filteredProfiles.map((profile) => {
-                // Buscar coincidencia por correo electrónico (más preciso) o por nombre como fallback
+                /**
+                 * LÓGICA DE VINCULACIÓN:
+                 * Se marca un usuario como "Integrante" si su correo o nombre coincide con 
+                 * algún registro en la tabla de 'team_members'.
+                 */
                 const isTeamMember = teamMembers.some(m => 
                   (m.email && profile.email && m.email.toLowerCase() === profile.email.toLowerCase()) ||
                   (m.name.toLowerCase() === profile.full_name?.toLowerCase())
@@ -118,6 +156,7 @@ export default function UsersPage() {
 
                 return (
                   <tr key={profile.id} className="group hover:bg-ipp-cream/20 transition-colors">
+                    {/* Celda de Usuario */}
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
                         <div className="relative h-12 w-12 rounded-full overflow-hidden bg-ipp-paper border-2 border-white shadow-sm">
@@ -137,6 +176,8 @@ export default function UsersPage() {
                         </div>
                       </div>
                     </td>
+
+                    {/* Indicador de Pertenencia al Equipo */}
                     <td className="px-8 py-6">
                       {isTeamMember ? (
                         <div className="flex items-center gap-2 text-ipp-green font-bold text-xs uppercase tracking-wider">
@@ -147,6 +188,8 @@ export default function UsersPage() {
                         <span className="text-ipp-plum/20 text-xs font-bold uppercase tracking-wider italic">Externo</span>
                       )}
                     </td>
+
+                    {/* Selector de Roles (Solo editable por Admins) */}
                     <td className="px-8 py-6">
                       <select
                         value={profile.role || 'editor'}
@@ -160,6 +203,8 @@ export default function UsersPage() {
                         <option value="viewer">Lector</option>
                       </select>
                     </td>
+
+                    {/* Columna de Feedback / Guardado */}
                     <td className="px-8 py-6 text-right">
                       {updatingId === profile.id ? (
                         <Loader2 className="h-4 w-4 animate-spin text-ipp-coral ml-auto" />
@@ -176,6 +221,7 @@ export default function UsersPage() {
                 )
               })
             ) : (
+              /* Estado sin resultados en la búsqueda */
               <tr>
                 <td colSpan={4} className="px-8 py-20 text-center">
                   <div className="flex flex-col items-center gap-3 text-ipp-plum/30">
@@ -189,6 +235,7 @@ export default function UsersPage() {
         </table>
       </div>
 
+      {/* Información Complementaria */}
       <div className="bg-ipp-yellow/10 border-2 border-dashed border-ipp-yellow/30 p-8 rounded-[2.5rem] space-y-4">
         <h3 className="text-ipp-plum font-black text-lg">💡 Notas importantes</h3>
         <ul className="text-ipp-plum/70 font-semibold text-sm space-y-2">

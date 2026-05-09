@@ -1,9 +1,21 @@
+/**
+ * @file footer.tsx
+ * @description Componente de pie de página (Footer).
+ * Contiene información de contacto, redes sociales y logotipos institucionales.
+ */
+
 "use client"
 
 import Image from "next/image"
 import { Mail } from "lucide-react"
 import { socialLinks, contactInfo } from "@/lib/data"
 
+/**
+ * Icono personalizado de TikTok.
+ * 
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} [props.className] - Clases de CSS adicionales.
+ */
 function TikTokIcon({ className = "" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
@@ -12,6 +24,14 @@ function TikTokIcon({ className = "" }: { className?: string }) {
   )
 }
 
+/**
+ * Componente Footer.
+ * 
+ * Muestra el manifiesto del proyecto, enlaces a redes sociales y créditos institucionales.
+ * Utiliza un diseño de varias capas con efectos de borde de papel.
+ * 
+ * @returns {JSX.Element} El pie de página completo.
+ */
 export default function Footer() {
   return (
     <footer
@@ -23,6 +43,7 @@ export default function Footer() {
         Contacto y redes de Inglés pa&apos; la Paz
       </h2>
 
+      {/* Efecto decorativo de borde de papel superior */}
       <div
         className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-ipp-cream"
         aria-hidden="true"
@@ -34,6 +55,7 @@ export default function Footer() {
             El inglés no es el fin, sino el medio para honrar nuestra identidad.
           </p>
 
+          {/* Información de Contacto y Redes */}
           <div className="flex flex-col items-start gap-4 md:items-end md:text-right">
             <a
               href={`mailto:${contactInfo.email}`}
@@ -69,6 +91,7 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Branding Gigante (Tipografía Decorativa) */}
         <div className="relative z-10 mt-1 grid grid-cols-1 items-end gap-2 md:mt-[-1.5rem] md:grid-cols-[minmax(12rem,22rem)_minmax(0,1fr)] md:gap-8 lg:grid-cols-[minmax(14rem,27rem)_minmax(0,1fr)] lg:gap-10">
           <div className="relative hidden h-[10.5rem] w-full overflow-hidden sm:h-[13rem] md:block md:h-[18rem]">
             <div className="pointer-events-none absolute bottom-[-4.1rem] left-1/2 h-[17rem] w-[17rem] -translate-x-1/2 sm:h-[20rem] sm:w-[20rem] md:bottom-[-5.6rem] md:left-0 md:h-[24rem] md:w-[24rem] md:translate-x-0">
@@ -93,6 +116,7 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Barra de Créditos e Instituciones */}
       <div className="relative z-30 border-t border-white/10 bg-[#321018] px-5 py-4 text-white sm:px-8 md:py-7">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm font-bold sm:text-base md:flex-row md:items-center md:justify-between md:gap-10">
           <p className="leading-none tracking-[0.01em] md:text-lg">&copy; 2026 Inglés pa&apos; la Paz</p>

@@ -1,3 +1,10 @@
+/**
+ * @file data.ts
+ * @description Almacén central de datos estáticos y configuraciones de contenido.
+ * Contiene los textos, rutas e identificadores que estructuran la landing page y el blog.
+ * Actúa como respaldo (fallback) cuando no hay datos dinámicos disponibles.
+ */
+
 import {
   BookOpen,
   Sprout,
@@ -14,13 +21,10 @@ import type {
 } from "@/types/landing"
 
 /**
- * DATOS ESTATICOS Y DE RESPALDO (FALLBACK)
- * 
- * Este archivo contiene exclusivamente CONTENIDO (textos, IDs, rutas).
- * Las propiedades de diseño (iconos, colores) están en 'styles.ts'.
+ * Textos y configuraciones predeterminadas para las secciones de la landing page.
  */
-
 export const landingDefaults = {
+  /** Sección Hero: Cabecera principal. */
   hero: {
     title: "Inglés Pa' la Paz",
     subtitle: "Proyecto educativo y comunitario en Colombia",
@@ -34,27 +38,34 @@ export const landingDefaults = {
       { text: "Comunidad y territorio", icon: "MapPin" },
     ]
   },
+  /** Sección Info: "Quiénes Somos" y Misión. */
   info: {
     title: "Inglés para la paz desde la lectura, la conversación y el territorio.",
     description: "En Inglés Pa' la Paz creamos experiencias de aprendizaje donde el inglés emerge desde la lectura, la conversación y la creación colectiva. Usamos relatos, preguntas, recursos emocionales y actividades artísticas para que niñas, niños y comunidades vivan el inglés como una herramienta cercana para expresar lo que son, lo que sienten y lo que imaginan.",
     imageUrl: "/images/ipp/banner-referencia.jpg",
   },
+  /** Sección Process: Metodología y pasos del encuentro. */
   process: {
     title: "Así vivimos cada encuentro de Inglés pa' la Paz",
     description: "En Inglés Pa' la Paz buscamos enseñar inglés desde la lectura, la conversación y la creación de piezas bilingües a partir de experiencias reales del territorio y la participación comunitaria.",
     subtitle: "Ruta de cada encuentro",
     summary: "Cada momento del encuentro tiene una intención pedagógica clara y una forma distinta de acercarse al idioma, la emoción y la creación colectiva.",
   },
+  /** Sección Integrantes: Equipo de trabajo. */
   integrantes: {
     title: "Quiénes hacen posible Inglés Pa' la Paz",
     description: "Un equipo colombiano que une pedagogía, memoria, tecnología, cultura y trabajo comunitario.",
   },
+  /** Sección Experiences: Galerías y proyectos específicos. */
   experiences: {
     title: "Así se vive el inglés cuando nace desde el territorio",
     subtitle: "Explora nuestras experiencias",
   }
 }
 
+/**
+ * Elementos de navegación global utilizados en el Header y Sidebar.
+ */
 export const navItems: NavItem[] = [
   { 
     name: "Inicio", 
@@ -88,6 +99,9 @@ export const navItems: NavItem[] = [
   },
 ]
 
+/**
+ * Principios fundamentales del proyecto que se muestran en la sección Info.
+ */
 export const principles: Partial<Principle>[] = [
   {
     id: "1",
@@ -111,6 +125,10 @@ export const principles: Partial<Principle>[] = [
   },
 ]
 
+/**
+ * Definición de las experiencias (proyectos) del colectivo.
+ * Cada una vincula una carpeta de recursos en el sistema de archivos.
+ */
 export const experiences: Partial<ExperienceItem>[] = [
   {
     id: "little-readers",
@@ -150,6 +168,9 @@ export const experiences: Partial<ExperienceItem>[] = [
   },
 ]
 
+/**
+ * Pasos detallados de la metodología pedagógica.
+ */
 export const methodSteps: Partial<MethodStep>[] = [
   {
     id: "1",
@@ -160,7 +181,7 @@ export const methodSteps: Partial<MethodStep>[] = [
       "Damos la bienvenida a quienes participan.",
       "Compartimos nombres y formas de presentarnos.",
       "Reconocemos cómo llega el grupo al encuentro.",
-      "Activamos la escucha and la disposición para aprender.",
+      "Activamos la escucha y la disposición para aprender.",
     ],
     keywords: ["Bienvenida", "Confianza", "Escucha", "Participación"],
   },
@@ -214,6 +235,9 @@ export const methodSteps: Partial<MethodStep>[] = [
   },
 ]
 
+/**
+ * Datos del equipo de trabajo utilizados como fallback.
+ */
 export const integrantes: Partial<Integrante>[] = [
   {
     id: "1",
@@ -294,6 +318,9 @@ export const integrantes: Partial<Integrante>[] = [
   },
 ]
 
+/**
+ * Enlaces a redes sociales oficiales.
+ */
 export const socialLinks = [
   {
     name: "Instagram",
@@ -302,6 +329,9 @@ export const socialLinks = [
   },
 ]
 
+/**
+ * Información de contacto general.
+ */
 export const contactInfo = {
   email: "inglespalapaz@gmail.com",
   tiktok: "https://www.tiktok.com/@ingles.pa.lapaz",

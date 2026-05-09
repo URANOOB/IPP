@@ -1,11 +1,15 @@
 /**
- * CONFIGURACIÓN DE ESTILOS LOCALES
- * 
- * Aquí definimos la identidad visual de cada entidad para no depender
- * de la base de datos para cambios de diseño (colores, iconos, etc).
+ * @file styles.ts
+ * @description Configuración centralizada de la identidad visual del proyecto.
+ * Define los estilos, colores e iconos asociados a cada entidad (principios, metodología, equipo).
+ * Esto permite cambios de diseño rápidos sin necesidad de modificar la lógica de los componentes.
  */
 
+/**
+ * Estilos específicos para las secciones de la landing page.
+ */
 export const landingStyles = {
+  /** Estilos de la cabecera principal (Hero). */
   hero: {
     titleSize: "72px",
     titleColor: "var(--ipp-coral)",
@@ -20,6 +24,10 @@ export const landingStyles = {
   }
 }
 
+/**
+ * Mapeo de identidad visual para los principios del proyecto.
+ * Cada clave corresponde al título exacto del principio.
+ */
 export const principleStyles: Record<string, { icon_name: string, surface_color: string, ink_color: string, chip: string, glow: string }> = {
   "Aprendemos desde lo que somos": {
     icon_name: "BookHeart",
@@ -51,6 +59,9 @@ export const principleStyles: Record<string, { icon_name: string, surface_color:
   }
 }
 
+/**
+ * Estilos visuales para los pasos de la metodología.
+ */
 export const methodologyStyles: Record<string, { icon_name: string, color: string }> = {
   "Welcome Time": {
     icon_name: "HandHeart",
@@ -74,6 +85,10 @@ export const methodologyStyles: Record<string, { icon_name: string, color: strin
   }
 }
 
+/**
+ * Configuración de identidad personalizada para cada integrante del equipo.
+ * Se utiliza el nombre como clave para vincular datos dinámicos con estilos fijos.
+ */
 export const teamStyles: Record<string, { icon_name: string, accent_color: string, surface_color: string }> = {
   "Vanessa Peña": {
     icon_name: "Users",
@@ -132,6 +147,9 @@ export const teamStyles: Record<string, { icon_name: string, accent_color: strin
   }
 }
 
+/**
+ * Estilos para las tarjetas de experiencias (Bento Grid).
+ */
 export const experienceStyles: Record<string, { icon_name: string, accent: string, tint: string }> = {
   "little-readers": {
     icon_name: "BookOpen",

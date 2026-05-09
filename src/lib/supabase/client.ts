@@ -12,8 +12,18 @@ import { createBrowserClient } from '@supabase/ssr'
  * @returns {ReturnType<typeof createBrowserClient>} El cliente de Supabase para el frontend.
  */
 export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    // Durante el build de Next.js (prerendering), estas variables pueden no estar presentes.
+    // Retornamos un objeto que imite la interfaz o simplemente dejamos que falle en runtime
+    // pero evitamos el crash inmediato si no se usa.
+    if (typeof window === 'undefined') {
+      return {} as ReturnType<typeof createBrowserClient>
+    }
+    throw new Error('Las variables de entorno de Supabase son obligatorias en el cliente.')
+  }
+
+  return createBrowserClient(supabaseUrl, supabaseAnonKey)
 }

@@ -1,3 +1,10 @@
+/**
+ * @file team/page.tsx
+ * @description Panel de gestión del equipo de trabajo.
+ * Permite listar los integrantes que aparecen en la landing page, editarlos,
+ * eliminarlos y gestionar su orden de visualización.
+ */
+
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -17,6 +24,12 @@ import {
 import Image from 'next/image'
 import { DynamicIcon } from '@/components/ui/dynamic-icon'
 
+/**
+ * Componente de la página de gestión de Equipo (Admin).
+ * Gestiona el estado de los integrantes, el buscador y la visibilidad del formulario de edición.
+ * 
+ * @returns {JSX.Element} Vista administrativa del equipo.
+ */
 export default function TeamManagementPage() {
   const [members, setMembers] = useState<Integrante[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -25,6 +38,11 @@ export default function TeamManagementPage() {
   const [editingMember, setEditingMember] = useState<Integrante | undefined>(undefined)
   const [error, setError] = useState<string | null>(null)
 
+  /**
+   * Recupera la lista de integrantes del servidor.
+   * 
+   * @param {boolean} [forceLoading=false] - Indica si se debe mostrar el spinner de carga.
+   */
   const fetchMembers = async (forceLoading = false) => {
     if (forceLoading) setIsLoading(true)
     const result = await getTeamMembersAdmin()
@@ -37,29 +55,41 @@ export default function TeamManagementPage() {
     setIsLoading(false)
   }
 
+  /** Efecto de carga inicial */
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      fetchMembers()
-    }, 0)
-    return () => clearTimeout(timeoutId)
+    const initFetch = async () => {
+      await fetchMembers()
+    }
+    initFetch()
   }, [])
 
+  /** Lógica de filtrado en cliente para búsqueda reactiva */
   const filteredMembers = members.filter(member => 
     member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     member.role.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  /**
+   * Maneja el guardado (creación/actualización) desde el formulario.
+   * 
+   * @param {Partial<Integrante>} data - Datos del integrante a persistir.
+   */
   const handleSave = async (data: Partial<Integrante>) => {
     const result = await upsertTeamMember(data)
     if (result.success) {
       setIsFormOpen(false)
       setEditingMember(undefined)
-      fetchMembers()
+      fetchMembers() // Recarga los datos tras el éxito
     } else {
       alert('Error al guardar: ' + result.error)
     }
   }
 
+  /**
+   * Maneja la eliminación definitiva de un integrante.
+   * 
+   * @param {string} id - UUID del integrante.
+   */
   const handleDelete = async (id: string) => {
     if (!confirm('¿Estás seguro de que quieres eliminar a este integrante?')) return
     
@@ -71,11 +101,13 @@ export default function TeamManagementPage() {
     }
   }
 
+  /** Abre el formulario en modo edición para un miembro específico */
   const handleEdit = (member: Integrante) => {
     setEditingMember(member)
     setIsFormOpen(true)
   }
 
+  // Estado de carga inicial (pantalla completa)
   if (isLoading && members.length === 0) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
@@ -86,6 +118,7 @@ export default function TeamManagementPage() {
 
   return (
     <div className="space-y-10 pb-20">
+      {/* Cabecera del Panel de Equipo */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <p className="text-ipp-coral font-black uppercase tracking-widest text-xs mb-2">Página de Inicio</p>
@@ -107,6 +140,7 @@ export default function TeamManagementPage() {
         )}
       </header>
 
+      {/* Manejo de Errores de API */}
       {error && (
         <div className="bg-red-50 border-2 border-red-100 p-6 rounded-[2rem] flex items-center gap-4 text-red-600">
           <AlertCircle />
@@ -114,6 +148,7 @@ export default function TeamManagementPage() {
         </div>
       )}
 
+      {/* Vista Condicional: Formulario vs Listado */}
       {isFormOpen ? (
         <TeamMemberForm 
           member={editingMember} 
@@ -125,6 +160,7 @@ export default function TeamManagementPage() {
         />
       ) : (
         <div className="space-y-6">
+          {/* Barra de Búsqueda */}
           <div className="relative max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ipp-plum/20" size={20} />
             <input
@@ -136,6 +172,7 @@ export default function TeamManagementPage() {
             />
           </div>
 
+          {/* Listado de Miembros (Tabla Estilizada) */}
           <div className="bg-white rounded-[2.5rem] border border-ipp-plum/5 shadow-sm overflow-hidden">
             <div className="divide-y divide-ipp-plum/5">
               {filteredMembers.map((member) => (
@@ -144,6 +181,7 @@ export default function TeamManagementPage() {
                   className="flex flex-col sm:flex-row sm:items-center justify-between p-6 gap-6 hover:bg-ipp-cream/10 transition-colors group"
                 >
                   <div className="flex items-center gap-5 min-w-0">
+                    {/* Avatar / Foto */}
                     <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-ipp-paper shrink-0 border-2 border-white shadow-sm">
                       {member.photo_url ? (
                         <Image src={member.photo_url} alt={member.name} fill className="object-cover" />
@@ -157,6 +195,7 @@ export default function TeamManagementPage() {
                       )}
                     </div>
 
+                    {/* Información Principal */}
                     <div className="min-w-0">
                       <h3 className="font-black text-ipp-plum text-lg truncate group-hover:text-ipp-coral transition-colors">{member.name}</h3>
                       <div className="flex items-center gap-3 mt-0.5">
@@ -170,6 +209,7 @@ export default function TeamManagementPage() {
                     </div>
                   </div>
 
+                  {/* Acciones de Fila */}
                   <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-6 border-t sm:border-t-0 pt-4 sm:pt-0 border-ipp-plum/5">
                     <div className="flex items-center gap-2">
                       <button 
@@ -192,6 +232,7 @@ export default function TeamManagementPage() {
                 </div>
               ))}
 
+              {/* Manejo de Estado Vacío en Búsqueda */}
               {filteredMembers.length === 0 && (
                 <div className="p-20 text-center">
                   <Search className="h-12 w-12 text-ipp-plum/10 mx-auto mb-4" />
