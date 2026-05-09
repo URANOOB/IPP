@@ -1,3 +1,10 @@
+/**
+ * @file infoipp.tsx
+ * @description Componente de información detallada "Quiénes Somos".
+ * Presenta la misión del proyecto y sus principios fundamentales mediante tarjetas interactivas.
+ * Integra datos de 'lib/data' y mapea estilos personalizados desde 'lib/styles'.
+ */
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -8,18 +15,16 @@ import { principles, landingDefaults } from "@/lib/data"
 import { principleStyles } from "@/lib/styles"
 
 /**
- * @section COMPONENTE INFO - QUIÉNES SOMOS
+ * Componente de información institucional.
  * 
- * Este componente es un híbrido entre contenido estático y estilos configurables.
+ * Divide la vista en dos columnas principales:
+ * 1. Una imagen de impacto visual (Banner).
+ * 2. Textos descriptivos y un grid de tarjetas que representan los principios del proyecto.
  * 
- * ESTRUCTURA DE DATOS:
- * - Textos de la sección (Título/Desc): Se editan en @/lib/data.ts -> landingDefaults.info
- * - Imagen principal: Se configura en @/lib/data.ts -> landingDefaults.info.imageUrl
- * - Contenido de tarjetas: Se edita en @/lib/data.ts -> principles
- * - Estilos de tarjetas: Se configuran en @/lib/styles.ts -> principleStyles (mapeados por título)
+ * @returns {JSX.Element} Sección "Quiénes Somos" con tarjetas estilizadas dinámicamente.
  */
 export default function Info() {
-  // Extraemos los textos y la imagen base desde data.ts
+  // Extraemos la configuración de textos e imagen base
   const d = landingDefaults.info
 
   return (
@@ -28,11 +33,12 @@ export default function Info() {
       aria-labelledby="project-heading"
       className="relative bg-ipp-paper px-5 py-24 md:px-8"
     >
+      {/* Fondo decorativo con textura de papel (opacidad baja para sutileza) */}
       <div className="absolute inset-0 bg-paper opacity-0" aria-hidden="true" />
 
       <div className="relative mx-auto grid max-w-7xl gap-12 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] md:items-stretch">
         
-        {/* COLUMNA IZQUIERDA: Imagen de referencia (Configurable en data.ts) */}
+        {/* COLUMNA IZQUIERDA: Imagen de referencia decorativa */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,15 +48,15 @@ export default function Info() {
         >
           <Image
             src={d.imageUrl}
-            alt="Banner del proyecto Inglés pa' la Paz"
+            alt="Banner representativo del proyecto Inglés pa' la Paz"
             fill
             priority
-            className="rounded-[2rem] object-cover object-center"
+            className="rounded-[2rem] object-cover object-center shadow-xl shadow-ipp-plum/5"
             sizes="(min-width: 768px) 45vw, 100vw"
           />
         </motion.div>
 
-        {/* COLUMNA DERECHA: Textos y Principios */}
+        {/* COLUMNA DERECHA: Contenido textual y principios nucleares */}
         <div className="flex flex-col justify-center">
           <p className="section-kicker">Quiénes somos</p>
 
@@ -65,17 +71,17 @@ export default function Info() {
             {d.description}
           </p>
 
-          {/* GRID DE TARJETAS (Principios) */}
+          {/* GRID DE PRINCIPIOS: Muestra las tarjetas con estilos diferenciados */}
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
             {principles.map((item, index) => {
               /**
-               * LÓGICA DE ESTILOS DINÁMICOS:
-               * Buscamos en @/lib/styles.ts la configuración visual que coincida con el título del principio.
-               * Si no existe, aplicamos un fallback al primer estilo disponible.
+               * LÓGICA DE MAPEO DE ESTILOS:
+               * Se busca el estilo visual configurado para el título específico del principio.
+               * Permite que cada tarjeta tenga una identidad visual única (colores, iconos).
                */
               const s = principleStyles[item.title!] || principleStyles["Aprendemos desde lo que somos"]
               
-              // Inyectamos los estilos como variables CSS para mantener el componente limpio
+              // Inyección de variables CSS para control granular de colores en el componente
               const cardStyle = {
                 "--quote-card-surface": s.surface_color,
                 "--quote-card-ink": s.ink_color,
@@ -90,17 +96,18 @@ export default function Info() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.55, delay: index * 0.08 }}
                   viewport={{ once: true, amount: 0.35 }}
+                  // Efecto de inclinación aleatoria al pasar el ratón para sensación orgánica
                   whileHover={{ y: -8, rotate: index % 2 === 0 ? -1 : 1 }}
                   className="quote-story-card group relative min-h-[280px] overflow-hidden px-6 py-7 md:min-h-[320px] md:px-7 md:py-8"
                   style={cardStyle}
                 >
-                  {/* Decoraciones de fondo (Glows) */}
+                  {/* Decoraciones visuales de fondo (resplandores difusos) */}
                   <div className="absolute inset-0 opacity-90" aria-hidden="true">
                     <div className="absolute left-[-10%] top-[-18%] h-32 w-32 rounded-full bg-[var(--quote-card-glow)] blur-2xl" />
                     <div className="absolute bottom-[-16%] right-[-10%] h-28 w-28 rounded-full bg-black/5 blur-2xl" />
                   </div>
 
-                  {/* Icono de fondo decorativo (SVG de Comillas) */}
+                  {/* Icono de fondo decorativo (Marca de agua de comillas) */}
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center text-[color:var(--quote-card-ink)] transition-transform duration-500 group-hover:scale-105"
                     style={{ opacity: 0.10 }}
@@ -112,14 +119,14 @@ export default function Info() {
                   </div>
 
                   <div className="relative flex h-full flex-col">
-                    {/* Contenedor del Icono (Configurado en styles.ts) */}
+                    {/* Indicador visual de icono */}
                     <div className="flex items-start justify-end gap-4">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--quote-card-chip)] text-[color:var(--quote-card-ink)]">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--quote-card-chip)] text-[color:var(--quote-card-ink)] shadow-inner">
                         <DynamicIcon name={s.icon_name} className="h-5 w-5" aria-hidden="true" />
                       </div>
                     </div>
 
-                    {/* Título y Descripción (Configurados en data.ts) */}
+                    {/* Contenido textual del principio */}
                     <h3 className="mt-2 max-w-[14ch] font-display text-3xl font-black leading-[0.96] text-[color:var(--quote-card-ink)] md:text-[2.15rem]">
                       {item.title}
                     </h3>

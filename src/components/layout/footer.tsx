@@ -24,7 +24,7 @@ export default function Footer() {
       </h2>
 
       <div
-        className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-ipp-mint"
+        className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-ipp-cream"
         aria-hidden="true"
       />
 

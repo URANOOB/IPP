@@ -1,3 +1,9 @@
+/**
+ * @file integrantes.tsx
+ * @description Componente de carrusel interactivo para mostrar el equipo de trabajo.
+ * Utiliza Framer Motion para animaciones 3D y se integra con datos dinámicos de Supabase.
+ */
+
 "use client"
 
 import Image from "next/image"
@@ -12,19 +18,35 @@ import { DynamicIcon } from "@/components/ui/dynamic-icon"
 import { integrantes as staticIntegrantes, landingDefaults } from "@/lib/data"
 import type { Integrante as TeamMember } from "@/types/landing"
 
+/**
+ * Propiedades del componente Integrantes.
+ */
 interface IntegrantesProps {
+  /** Lista de integrantes obtenida del servidor (Server Action) */
   data: TeamMember[]
 }
 
+/**
+ * Calcula la posición relativa de un elemento en el carrusel circular.
+ * 
+ * @param {number} index - Índice del integrante actual.
+ * @param {number} activeIndex - Índice del integrante seleccionado.
+ * @param {number} total - Cantidad total de integrantes.
+ * @returns {number} Desplazamiento relativo (-2 a 2 para visualización).
+ */
 function getRelativePosition(index: number, activeIndex: number, total: number) {
   let offset = index - activeIndex
 
+  // Manejo de lógica circular para el carrusel
   if (offset > total / 2) offset -= total
   if (offset < -total / 2) offset += total
 
   return offset
 }
 
+/**
+ * Mapeo de estilos y posiciones para el efecto de profundidad 3D.
+ */
 const positionMap: Record<number, { x: string; y: number; rotate: number; scale: number; opacity: number }> = {
   [-2]: { x: "-96%", y: 40, rotate: -10, scale: 0.83, opacity: 0.2 },
   [-1]: { x: "-54%", y: 18, rotate: -6, scale: 0.91, opacity: 0.5 },
@@ -34,32 +56,34 @@ const positionMap: Record<number, { x: string; y: number; rotate: number; scale:
 }
 
 /**
- * @section GUÍA DE EDICIÓN RÁPIDA
+ * Componente principal de la sección de Equipo.
+ * Implementa un carrusel orgánico que muestra fotos o iconos de los integrantes.
  * 
- * 1. TEXTOS DE SECCIÓN: El título y descripción se editan en 'landingDefaults.integrantes' en @/lib/data.ts.
- * 2. DATOS DE INTEGRANTES: Se editan en la tabla 'team_members' de Supabase (Nombre, Rol, Focus).
- * 3. ESTILOS DE INTEGRANTE: Los colores e iconos se editan en 'teamStyles' en @/lib/styles.ts (mapeados por el nombre exacto del integrante).
- * 4. FOTOS: Si un integrante tiene 'photo_url' en la DB, se usa esa imagen. Si no, se usa el icono y colores definidos en styles.ts.
+ * @param {IntegrantesProps} props - Propiedades del componente.
+ * @returns {JSX.Element} Sección de integrantes con navegación interactiva.
  */
 export default function Integrantes({ data: initialData }: IntegrantesProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // Usar datos pasados o fallback a estáticos si no hay datos
+  // Selección de datos: prioridad a los dinámicos, fallback a estáticos locales
   const data = initialData && initialData.length > 0 ? initialData : staticIntegrantes
 
+  // Si no hay datos disponibles, no se renderiza la sección
   if (!data || data.length === 0) return null
 
   const activeIntegrante = data[activeIndex]
 
+  /** Navega al integrante anterior en el carrusel circular */
   const goToPrevious = () => {
     setActiveIndex((current) => (current - 1 + data.length) % data.length)
   }
 
+  /** Navega al siguiente integrante en el carrusel circular */
   const goToNext = () => {
     setActiveIndex((current) => (current + 1) % data.length)
   }
 
-  // Atajos para mayor legibilidad
+  // Textos predeterminados de la sección
   const d = landingDefaults.integrantes
 
   return (
@@ -68,12 +92,14 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
       aria-labelledby="integrantes-heading"
       className="relative overflow-hidden bg-ipp-mint px-5 py-24 md:px-8"
     >
+      {/* Efecto visual de borde de papel superior */}
       <div
         className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-ipp-paper"
         aria-hidden="true"
       />
 
       <div className="relative z-10 mx-auto max-w-7xl">
+        {/* Cabecera de la sección */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,17 +119,20 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
           </p>
         </motion.div>
 
+        {/* Contenedor principal del carrusel */}
         <div className="rounded-[2.4rem] border border-ipp-plum/10 bg-ipp-paper px-4 py-8 shadow-[16px_18px_0_rgba(96,48,72,0.08)] md:px-8 md:py-10">
           <div
             className="relative mx-auto flex max-w-6xl flex-col items-center gap-8"
             aria-roledescription="carousel"
             aria-label="Carrusel de integrantes"
           >
+            {/* Contenedor de las tarjetas animadas */}
             <div className="relative h-[430px] w-full overflow-hidden sm:h-[480px] lg:h-[510px]">
               {data.map((integrante, index) => {
                 const offset = getRelativePosition(index, activeIndex, data.length)
                 const placement = positionMap[offset]
 
+                // Solo mostramos los 5 elementos más cercanos para mantener el foco visual
                 if (!placement) return null
 
                 const isActive = offset === 0
@@ -140,6 +169,7 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
                         }`}
                       >
                         <div className="relative flex h-full flex-col items-center p-5 text-center sm:p-6">
+                          {/* Contenedor de Foto/Avatar */}
                           <div className="flex w-full justify-center">
                             <div
                               className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[2rem] border-4 sm:h-32 sm:w-32 ${
@@ -167,6 +197,7 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
                             </div>
                           </div>
 
+                          {/* Información básica del integrante */}
                           <div className="mt-7">
                             <p className="text-xs font-black uppercase tracking-[0.22em] text-ipp-coral">
                               {integrante.role}
@@ -193,6 +224,7 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
               })}
             </div>
 
+            {/* Panel de detalles del integrante seleccionado */}
               <div className="flex w-full flex-col items-center gap-5 text-center">
                 <div className="max-w-2xl">
                   <h3 className="mt-2 font-display text-4xl font-black leading-none text-ipp-plum md:text-5xl">
@@ -210,13 +242,14 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
                   </div>
                 </div>
 
-                {/* Pre-renderizar todos los iconos de los integrantes para evitar retrasos al cambiar */}
+                {/* Pre-renderización de iconos para evitar parpadeos visuales al navegar */}
                 <div className="hidden" aria-hidden="true">
                   {data.map((integrante) => (
                     <DynamicIcon key={`preload-${integrante.id}`} name={integrante.icon_name} />
                   ))}
                 </div>
 
+                {/* Controles de navegación */}
                 <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center gap-3">
                   <button
@@ -238,6 +271,7 @@ export default function Integrantes({ data: initialData }: IntegrantesProps) {
                   </button>
                 </div>
 
+                {/* Indicadores de paginación (dots) */}
                 <div className="flex max-w-full flex-wrap items-center justify-center gap-2">
                   {data.map((integrante, index) => {
                     const isActive = index === activeIndex

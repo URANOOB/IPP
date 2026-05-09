@@ -1,3 +1,10 @@
+/**
+ * @file process.tsx
+ * @description Componente de metodología (Proceso).
+ * Muestra las etapas del proyecto Inglés pa' la Paz mediante una interfaz de pestañas interactiva
+ * que simula una ventana de navegador u OS.
+ */
+
 "use client"
 
 import { useState } from "react"
@@ -10,17 +17,26 @@ import { DynamicIcon } from "@/components/ui/dynamic-icon"
 import { methodSteps, landingDefaults } from "@/lib/data"
 
 /**
- * @section COMPONENTE PROCESS (ESTÁTICO)
+ * Componente principal de la sección de Metodología.
+ * Permite navegar a través de los pasos del proceso pedagógico y social del proyecto.
  * 
- * Los datos se editan en:
- * - Textos Sección: @/lib/data.ts -> landingDefaults.process
- * - Pasos Metodología: @/lib/data.ts -> methodSteps
+ * ESTRUCTURA:
+ * - Una cabecera con textos descriptivos generales.
+ * - Un contenedor principal (Mockup de ventana) que alberga:
+ *   - Navegador lateral de pasos (Tabs).
+ *   - Panel de contenido dinámico con detalles de cada etapa.
+ * 
+ * @returns {JSX.Element} Sección interactiva de metodología.
  */
 export default function Process() {
+  // Estado para controlar el paso activo en la navegación
   const [activeStep, setActiveStep] = useState(0)
+  
+  // Datos configurables
   const d = landingDefaults.process
   const currentStep = methodSteps[activeStep]
 
+  // Validación de seguridad por si no existen pasos definidos
   if (!methodSteps || methodSteps.length === 0) return null
 
   return (
@@ -29,12 +45,14 @@ export default function Process() {
       aria-labelledby="method-heading"
       className="relative bg-ipp-paper px-5 py-24 md:px-8"
     >
+      {/* Efecto visual de borde de papel superior */}
       <div
         className="paper-edge absolute left-0 right-0 top-0 h-12 rotate-180 bg-ipp-mint"
         aria-hidden="true"
       />
 
       <div className="relative mx-auto max-w-7xl">
+        {/* Cabecera Informativa */}
         <div className="mx-auto mb-14 max-w-5xl text-center">
           <p className="section-kicker">Metodología</p>
 
@@ -50,6 +68,7 @@ export default function Process() {
           </p>
         </div>
 
+        {/* CONTENEDOR TIPO VENTANA (MOCKUP) */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -57,9 +76,11 @@ export default function Process() {
           viewport={{ once: true }}
           className="overflow-hidden rounded-[2.4rem] border border-ipp-plum/10 bg-ipp-paper shadow-[0_24px_55px_rgba(96,48,72,0.12)]"
         >
+          {/* Barra Superior de la Ventana (UI Mockup) */}
           <div className="border-b border-ipp-plum/10 bg-ipp-sky px-4 py-4 md:px-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-4">
+                {/* Botones de control decorativos */}
                 <div className="flex items-center gap-2" aria-hidden="true">
                   <span className="h-3.5 w-3.5 rounded-full bg-ipp-coral" />
                   <span className="h-3.5 w-3.5 rounded-full bg-ipp-yellow" />
@@ -72,23 +93,19 @@ export default function Process() {
                       Método
                     </span>
                   </div>
-
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-2xl border border-ipp-plum/10 bg-ipp-paper text-lg font-black leading-none text-ipp-coral"
-                    aria-hidden="true"
-                  >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-2xl border border-ipp-plum/10 bg-ipp-paper text-lg font-black leading-none text-ipp-coral">
                     +
                   </div>
                 </div>
               </div>
 
+              {/* Barra de direcciones / Ruta decorativa */}
               <div className="flex min-w-0 items-center justify-end lg:flex-1">
                 <div className="flex w-full items-center gap-3 rounded-full border border-ipp-plum/10 bg-ipp-paper px-4 py-3 sm:px-5 lg:max-w-[620px]">
                   <div className="flex items-center gap-2 text-ipp-plum/40" aria-hidden="true">
                     <ArrowLeft className="h-4 w-4" />
                     <ArrowRight className="h-4 w-4 opacity-50" />
                   </div>
-
                   <span className="truncate text-sm font-semibold text-ipp-black">
                     Ingles-Pa&apos;-la-Paz.Metodologia
                   </span>
@@ -97,18 +114,21 @@ export default function Process() {
             </div>
           </div>
 
+          {/* Cuerpo de la Ventana */}
           <div className="p-4 md:p-6">
+            {/* Resumen General de la Metodología */}
             <div className="mb-5 rounded-[1.7rem] px-4 py-5 sm:px-5">
               <h3 className="text-4xl font-black leading-tight text-ipp-plum">
                 {d.subtitle}
               </h3>
-
               <p className="mt-2 text-xl font-semibold leading-relaxed text-ipp-plum/65">
                 {d.summary}
               </p>
             </div>
 
+            {/* Grid Principal: Navegación lateral y Contenido */}
             <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
+              {/* LISTA DE PASOS (TABS) */}
               <aside
                 className="rounded-[1.8rem] border border-ipp-plum/10 bg-ipp-cream p-3"
                 role="tablist"
@@ -135,7 +155,7 @@ export default function Process() {
                         }}
                       >
                         <span
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full shadow-sm"
                           style={{ backgroundColor: step.color }}
                         >
                           <DynamicIcon name={step.icon_name} className="h-4 w-4 text-ipp-black" aria-hidden="true" />
@@ -154,6 +174,7 @@ export default function Process() {
                 </div>
               </aside>
 
+              {/* PANEL DE DETALLE DINÁMICO */}
               <motion.article
                 key={currentStep?.id}
                 id={`method-panel-${activeStep}`}
@@ -164,6 +185,7 @@ export default function Process() {
                 transition={{ duration: 0.25 }}
                 className="overflow-hidden rounded-[1.8rem] border border-ipp-plum/10 bg-ipp-paper"
               >
+                {/* Indicador visual de color del paso */}
                 <div
                   className="h-3 w-full"
                   style={{ backgroundColor: currentStep?.color }}
@@ -171,9 +193,10 @@ export default function Process() {
                 />
 
                 <div className="p-5 md:p-6">
+                  {/* Cabecera del Paso: Icono y Contador */}
                   <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
                     <div
-                      className="flex h-12 w-12 items-center justify-center rounded-full"
+                      className="flex h-12 w-12 items-center justify-center rounded-full shadow-inner"
                       style={{ backgroundColor: currentStep?.color }}
                     >
                       <DynamicIcon name={currentStep?.icon_name} className="h-5 w-5 text-ipp-black" aria-hidden="true" />
@@ -183,13 +206,13 @@ export default function Process() {
                       <span className="block text-[0.65rem] font-black uppercase tracking-[0.2em] text-ipp-plum/50">
                         Paso
                       </span>
-
                       <span className="block text-lg font-black text-ipp-plum">
                         0{activeStep + 1} / {methodSteps.length}
                       </span>
                     </div>
                   </div>
 
+                  {/* Título y Resumen del Paso */}
                   <h3 className="font-display text-[2rem] font-black leading-none text-ipp-plum md:text-5xl">
                     {currentStep?.title}
                   </h3>
@@ -198,28 +221,28 @@ export default function Process() {
                     {currentStep?.summary}
                   </p>
 
+                  {/* Lista de actividades/hitos */}
                   <div className="mt-8">
                     <h4 className="text-lg font-black text-ipp-plum md:text-2xl">
                       ¿Qué sucede aquí?
                     </h4>
-
                     <ul className="mt-3 space-y-2 pl-5 text-sm font-semibold leading-relaxed text-ipp-plum/80 md:text-xl">
                       {currentStep?.items?.map((item) => (
-                        <li key={item}>{item}</li>
+                        <li key={item} className="list-disc marker:text-ipp-coral">{item}</li>
                       ))}
                     </ul>
                   </div>
 
+                  {/* Palabras clave / Tags del paso */}
                   <div className="mt-8">
                     <h4 className="text-lg font-black text-ipp-plum md:text-2xl">
                       Claves del momento
                     </h4>
-
                     <div className="mt-3 flex flex-wrap gap-2">
                       {currentStep?.keywords?.map((keyword) => (
                         <span
                           key={keyword}
-                          className="rounded-full border border-ipp-plum/10 bg-ipp-cream px-3 py-1.5 text-sm font-semibold text-ipp-plum md:text-lg"
+                          className="rounded-full border border-ipp-plum/10 bg-ipp-cream px-3 py-1.5 text-sm font-semibold text-ipp-plum md:text-lg transition-colors hover:bg-ipp-sky"
                         >
                           {keyword}
                         </span>

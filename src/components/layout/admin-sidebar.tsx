@@ -8,13 +8,15 @@ import {
   Users, 
   LogOut,
   Shield,
-  ChevronRight
+  ChevronRight,
+  Mail
 } from 'lucide-react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 const menuItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Mensajes', href: '/admin/messages', icon: Mail },
   { name: 'Historias (Blog)', href: '/admin/blog', icon: BookOpen },
   { name: 'Equipo', href: '/admin/team', icon: Users },
   { name: 'Usuarios', href: '/admin/users', icon: Shield },

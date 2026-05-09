@@ -13,6 +13,7 @@ import Info from "@/features/landing/components/infoipp"
 import Experiences from "@/features/landing/components/experiences"
 import Integrantes from "@/features/landing/components/integrantes"
 import Process from "@/features/landing/components/process"
+import CTA from "@/features/landing/components/cta"
 import { getTeamMembers } from "@/features/landing/actions"
 
 export default async function Page() {
@@ -40,6 +41,9 @@ export default async function Page() {
       {/* Presentación del equipo (Única sección dinámica) */}
       <Integrantes data={team} />
       
+      {/* Llamado a la acción (Nueva sección) */}
+      <CTA />
+
       {/* Pie de página */}
       <Footer />
     </main>

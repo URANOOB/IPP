@@ -1,3 +1,9 @@
+/**
+ * @file hero.tsx
+ * @description Componente de la sección principal (Hero) de la landing page.
+ * Utiliza configuraciones dinámicas de textos y estilos definidos en la librería centralizada.
+ */
+
 "use client"
 
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
@@ -7,13 +13,17 @@ import { landingStyles } from "@/lib/styles"
 import { DynamicIcon } from "@/components/ui/dynamic-icon"
 
 /**
- * @section COMPONENTE HERO (ESTÁTICO)
+ * Componente Hero de la página de inicio.
+ * Presenta la propuesta de valor principal, una imagen destacada y accesos rápidos.
  * 
- * Los datos se editan en:
+ * La lógica de este componente es mayoritariamente declarativa, consumiendo datos de:
  * - Textos: @/lib/data.ts -> landingDefaults.hero
  * - Estilos: @/lib/styles.ts -> landingStyles.hero
+ * 
+ * @returns {JSX.Element} La sección de cabecera con animaciones y estilos orgánicos.
  */
 export default function Hero() {
+  // Desestructuración de datos y estilos para facilitar el acceso
   const d = landingDefaults.hero
   const s = landingStyles.hero
 
@@ -22,17 +32,19 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen overflow-hidden bg-ipp-sky text-ipp-plum pt-24 md:pt-32"
     >
-      {/* Fondo con imagen configurable desde data.ts */}
+      {/* Capa de fondo con imagen decorativa configurable */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('${d.bgImage}')` }}
         aria-hidden="true"
       />
+      {/* Superposición de color para asegurar legibilidad del texto */}
       <div className="absolute inset-0 bg-ipp-sky/68" aria-hidden="true" />
 
       <div className="relative z-20 mx-auto grid min-h-[calc(100vh-140px)] max-w-6xl items-center gap-12 px-5 pb-16 pt-8 md:grid-cols-[0.95fr_0.85fr] md:px-8">
         <div className="w-full max-w-[350px] min-w-0 sm:max-w-2xl">
           
+          {/* Subtítulo o Kicker */}
           <div className="mb-2">
             <p 
               style={{ fontSize: s.subtitleSize, color: s.subtitleColor }}
@@ -42,6 +54,7 @@ export default function Hero() {
             </p>
           </div>
 
+          {/* Título Principal */}
           <div className="mb-6">
             <h1 
               style={{ fontSize: s.titleSize, color: s.titleColor }}
@@ -51,6 +64,7 @@ export default function Hero() {
             </h1>
           </div>
 
+          {/* Descripción de la Propuesta */}
           <div className="mb-8">
             <p 
               style={{ fontSize: s.descriptionSize, color: s.descriptionColor }}
@@ -60,6 +74,7 @@ export default function Hero() {
             </p>
           </div>
 
+          {/* Acción Principal (CTA) */}
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <div className="w-full sm:w-auto">
               <LiquidButton
@@ -70,6 +85,7 @@ export default function Hero() {
                   boxShadow: s.buttonShadow
                 }}
                 onClick={() => {
+                  // Scroll suave hacia la sección del proyecto
                   const element = document.querySelector("#project")
                   if (element) {
                     element.scrollIntoView({ behavior: "smooth" })
@@ -81,7 +97,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Tarjetas informativas dinámicas desde data.ts */}
+          {/* Tarjetas informativas secundarias */}
           <div className="mt-10 grid gap-3 text-sm font-bold sm:grid-cols-3">
             {d.cards.map((card, i) => (
               <div 
@@ -96,7 +112,9 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* Columna de Imagen/Ilustración Destacada */}
         <div className="relative min-h-[250px] min-w-0">
+          {/* Efecto de resplandor de fondo */}
           <div
             className="absolute inset-x-10 top-12 h-72 rounded-full bg-white/28 blur-3xl"
             aria-hidden="true"
@@ -107,7 +125,7 @@ export default function Hero() {
           >
             <Image
               src={d.imageUrl}
-              alt=""
+              alt="Ilustración principal IPP"
               width={874}
               height={574}
               priority
@@ -117,6 +135,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Efecto visual de borde de papel al final de la sección */}
       <div className="paper-edge absolute bottom-0 left-0 right-0 z-20 h-10 bg-ipp-paper" aria-hidden="true" />
     </section>
   )
