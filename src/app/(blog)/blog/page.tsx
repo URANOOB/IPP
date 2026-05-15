@@ -95,7 +95,7 @@ export default async function PublicBlogPage() {
                         height={150} 
                         priority
                         className="opacity-10" 
-                        style={{ height: 'auto' }}
+                        style={{ width: '228px', height: 'auto' }}
                       />
                     </div>
                   )}

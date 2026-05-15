@@ -58,7 +58,7 @@ export function AdminSidebar({ userRole = 'viewer' }: { userRole?: string }) {
               width={48} 
               height={32} 
               priority
-              style={{ height: 'auto' }}
+              style={{ width: '48px', height: 'auto' }}
             />
           </div>
           <span className="text-white font-display font-black text-xl tracking-tight">ADMIN IPP</span>

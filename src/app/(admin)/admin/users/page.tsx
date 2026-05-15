@@ -7,8 +7,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getProfiles, updateUserRole, getCurrentProfile } from '@/features/admin/user-actions'
-import { getTeamMembersAdmin } from '@/features/admin/team-actions'
+import { getProfiles, updateUserRole, getCurrentProfile, type UserProfile } from '@/features/admin/users/actions'
+import { getTeamMembersAdmin } from '@/features/admin/team/actions'
+import type { Integrante } from '@/types/landing'
 import { UserRound, Mail, Loader2, Check, UserCheck, Search, X } from 'lucide-react'
 import Image from 'next/image'
 
@@ -20,9 +21,9 @@ import Image from 'next/image'
  */
 export default function UsersPage() {
   // --- Estados de Datos ---
-  const [profiles, setProfiles] = useState<any[]>([])
-  const [teamMembers, setTeamMembers] = useState<any[]>([])
-  const [currentUser, setCurrentUser] = useState<any>(null)
+  const [profiles, setProfiles] = useState<UserProfile[]>([])
+  const [teamMembers, setTeamMembers] = useState<Integrante[]>([])
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null)
   
   // --- Estados de UI ---
   const [isLoading, setIsLoading] = useState(true)
@@ -44,7 +45,7 @@ export default function UsersPage() {
 
     if (profilesRes.success) setProfiles(profilesRes.data || [])
     if (teamRes.success) setTeamMembers(teamRes.data || [])
-    if (currentRes.success) setCurrentUser(currentRes.data)
+    if (currentRes.success) setCurrentUser(currentRes.data ?? null)
     setIsLoading(false)
   }
 
@@ -63,7 +64,7 @@ export default function UsersPage() {
    * @param {string} userId - UUID del usuario a modificar.
    * @param {string} newRole - El nuevo identificador de rol.
    */
-  const handleRoleChange = async (userId: string, newRole: string) => {
+  const handleRoleChange = async (userId: string, newRole: UserProfile['role']) => {
     if (currentUser?.role !== 'admin') {
       alert('Solo los administradores pueden cambiar roles.')
       return
@@ -193,7 +194,7 @@ export default function UsersPage() {
                     <td className="px-8 py-6">
                       <select
                         value={profile.role || 'editor'}
-                        onChange={(e) => handleRoleChange(profile.id, e.target.value)}
+                        onChange={(e) => handleRoleChange(profile.id, e.target.value as UserProfile['role'])}
                         disabled={updatingId === profile.id || !isAdmin}
                         title={!isAdmin ? 'Solo los administradores pueden cambiar roles' : ''}
                         className="bg-ipp-sky/10 text-ipp-sky text-[0.65rem] font-black uppercase tracking-wider px-4 py-1.5 rounded-full border-none focus:ring-2 focus:ring-ipp-sky/20 outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"

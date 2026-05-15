@@ -4,7 +4,7 @@
  * Permite a los administradores leer, marcar como gestionados y eliminar las solicitudes recibidas.
  */
 
-import { getContactMessages, toggleMessageReadStatus, deleteMessage } from '@/features/admin/message-actions'
+import { getContactMessages, toggleMessageReadStatus, deleteMessage } from '@/features/admin/messages/actions'
 import { Mail, Calendar, User, Tag, Trash2, CheckCircle2, Circle } from 'lucide-react'
 
 /**

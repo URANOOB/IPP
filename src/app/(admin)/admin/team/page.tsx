@@ -8,7 +8,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getTeamMembersAdmin, upsertTeamMember, deleteTeamMember } from '@/features/admin/team-actions'
+import { getTeamMembersAdmin, upsertTeamMember, deleteTeamMember } from '@/features/admin/team/actions'
 import { Integrante } from '@/types/landing'
 import { TeamMemberForm } from '@/features/admin/components/team-member-form'
 import { 

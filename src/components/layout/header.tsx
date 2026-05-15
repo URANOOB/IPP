@@ -21,7 +21,7 @@ import Link from "next/link"
  * Componente Header.
  * 
  * IMPORTANTE: Si ves 'data-projection-id' en el Inspector al depurar, 
- * es un artefacto de Framer Motion; reiniciar el servidor 'npm run dev' suele limpiarlo.
+ * es un artefacto de Framer Motion; reiniciar el servidor de desarrollo suele limpiarlo.
  */
 export default function Header() {
   // Estado para controlar la apertura/cierre del menú en dispositivos móviles
@@ -109,7 +109,7 @@ export default function Header() {
         {/* Logo: Alineado a la izquierda (order-1) */}
         <Link
           href="/"
-          onClick={(e) => handleNavClick(e as any, "#hero")}
+          onClick={(e) => handleNavClick(e, "#hero")}
           className="order-1 flex items-center"
           aria-label="Ir al inicio"
         >
@@ -119,6 +119,7 @@ export default function Header() {
             width={120}
             height={48}
             className="h-12 w-auto object-contain rounded-lg"
+            style={{ width: 'auto' }}
           />
         </Link>
 

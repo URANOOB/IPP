@@ -10,7 +10,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { HandHeart, Users, Mail, CheckCircle2, Loader2 } from "lucide-react"
+import { HandHeart, Users, Mail, CheckCircle2, Loader2, type LucideIcon } from "lucide-react"
 import { sendContactMessage } from "../actions"
 
 /**
@@ -25,7 +25,7 @@ type InterestType = 'donacion' | 'voluntariado' | 'taller' | 'otro'
 interface InterestOption {
   id: InterestType
   title: string
-  icon: any
+  icon: LucideIcon
   color: string
 }
 

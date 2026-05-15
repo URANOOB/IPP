@@ -7,7 +7,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getBlogPosts, deleteBlogPost } from '@/features/blog/actions'
+import { deleteBlogPost, getBlogPostsAdmin } from '@/features/admin/blog/actions'
 import { Button } from '@/components/ui/button'
 import { Plus, Trash2, Edit3, Loader2, ExternalLink } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -41,7 +41,7 @@ export default function BlogListPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true)
-      const result = await getBlogPosts()
+      const result = await getBlogPostsAdmin()
       
       if (result.success) {
         setPosts(result.data || [])

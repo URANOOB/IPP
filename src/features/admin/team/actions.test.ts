@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getTeamMembersAdmin, upsertTeamMember, deleteTeamMember, updateTeamOrder } from './team-actions'
+import { getTeamMembersAdmin, upsertTeamMember, deleteTeamMember, updateTeamOrder } from './actions'
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 
@@ -10,6 +10,10 @@ vi.mock('@/lib/supabase/server', () => ({
 
 vi.mock('next/cache', () => ({
   revalidatePath: vi.fn(),
+}))
+
+vi.mock('@/features/admin/auth/permissions', () => ({
+  requireRole: vi.fn().mockResolvedValue({ success: true, userId: 'admin-id', role: 'admin' }),
 }))
 
 describe('Admin Team Actions', () => {

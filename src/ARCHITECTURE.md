@@ -3,32 +3,70 @@
 Todo lo importante está dentro de la carpeta `src/`.
 
 ## Lo básico
-- **Next.js 15:** Es el motor de todo.
-- **Tailwind:** Para que el sitio se vea bien sin sufrir con CSS puro.
-- **Supabase:** Ahí guardamos los datos y manejamos quién entra y quién no.
+
+- **Next.js 16:** motor principal de la aplicación.
+- **App Router:** rutas y layouts viven en `src/app`.
+- **Tailwind CSS:** estilos de la interfaz.
+- **Supabase:** base de datos, autenticación y sesiones.
+- **pnpm:** único gestor de paquetes del proyecto.
 
 ## ¿Qué hay en cada carpeta?
 
-### 1. `src/app` (Las Rutas)
-Aquí es donde Next.js arma las páginas. Hay carpetas con paréntesis como `(landing)` o `(admin)`. Eso solo es para organizar, no afecta la URL. 
-- Lo que ve todo el mundo está en `(landing)`.
-- El panel para nosotros está en `(admin)`.
-- Si se necesita crear un endpoint (tipo API), están en la carpeta `api`.
+### 1. `src/app` (Rutas)
 
-### 2. `src/features` (Donde vive la lógica)
-Esta es la parte más importante. En lugar de tener archivos regados, agrupamos todo por "qué hace". 
-- Si se va a tocar algo de la página principal, buscar en `landing`.
-- Si se va a meterle mano al panel, buscar en `admin`.
-- Dentro se va a ver archivos `actions.ts`. Esos son los que hablan con la base de datos de Supabase.
+Aquí Next.js arma las páginas. Las carpetas con paréntesis, como `(landing)` o `(admin)`, sirven para organizar y no afectan la URL.
 
-### 3. `src/components` (Cosas que se repiten)
-Aquí guardamos los botones, inputs y el diseño del Header/Footer. Si se va a crear un botón que se use en varios lados, ponerlo en `ui/`.
+- Lo público está en `(landing)`.
+- El panel administrativo está en `(admin)`.
+- Los endpoints están en `api`.
 
-### 4. `src/lib` (Configuraciones)
-Aquí está la conexión a Supabase (`supabase/`) y algunas funciones de ayuda en `utils.ts`.
+### 2. `src/features` (Lógica por funcionalidad)
 
-## El diseño
-Casi todo lo visual lo controlamos desde `src/app/globals.css`. Ahí están los colores principales. Si se quiere animar algo, usar **Framer Motion**, que ya está instalado.
+La lógica se agrupa por dominio o funcionalidad.
+
+- Cambios de la página principal: `src/features/landing`.
+- Cambios del panel: `src/features/admin`.
+- Cambios del blog: `src/features/blog`.
+- Los archivos `actions.ts` suelen contener Server Actions que hablan con Supabase.
+
+El panel administrativo se divide por dominio:
+
+```txt
+src/features/admin/
+  auth/
+    permissions.ts
+  blog/
+    actions.ts
+    actions.test.ts
+  messages/
+    actions.ts
+    actions.test.ts
+  team/
+    actions.ts
+    actions.test.ts
+  users/
+    actions.ts
+    actions.test.ts
+  components/
+```
+
+Las Server Actions administrativas deben validar permisos con `requireRole` aunque la ruta ya esté protegida por el layout de `/admin`.
+
+### 3. `src/components` (Componentes compartidos)
+
+Aquí viven componentes reutilizables, como botones, inputs, header, footer y navegación.
+
+- Componentes base de UI: `src/components/ui`.
+- Componentes de layout: `src/components/layout`.
+
+### 4. `src/lib` (Configuración y utilidades)
+
+Aquí está la conexión a Supabase (`src/lib/supabase`) y funciones auxiliares como `utils.ts`.
+
+## Diseño
+
+La base visual está en `src/app/globals.css` y `tailwind.config.ts`. Para animaciones, el proyecto ya incluye Framer Motion.
 
 ## Imágenes
-Las fotos y logos están en `public/images/ipp/`. Tenemos un truquito en `/api/experience-resources` para leer las carpetas de fotos automáticamente.
+
+Las fotos y logos están en `public/images/ipp/`. El endpoint `/api/experience-resources` lee carpetas de fotos automáticamente.

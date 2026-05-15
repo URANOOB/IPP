@@ -6,10 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextConfig = {
-  /* 
-     Le indicamos a Next.js que la raíz del proyecto es esta carpeta 
-     para evitar conflictos con otros archivos package-lock.json superiores.
-  */
+  /* Le indicamos a Next.js que la raíz del proyecto es esta carpeta. */
   outputFileTracingRoot: __dirname,
 
   images: {
