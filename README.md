@@ -4,6 +4,18 @@ Sitio web de Ingles pa' la Paz: una landing interactiva para presentar el proyec
 
 El proyecto esta construido con Next.js, React, Tailwind CSS y algunos componentes UI reutilizables. La pagina principal funciona como una experiencia de una sola pagina, con secciones conectadas por navegacion interna.
 
+![Vista principal de Inglés pa' la Paz](public/screenshots/landing-hero.png)
+
+## Lo que incluye
+
+- Una landing de una sola página con navegación interna y diseño responsivo.
+- Presentación del proyecto, sus principios y su enfoque de lectura, territorio y construcción de paz.
+- Experiencias, galerías de imágenes, metodología e integrantes.
+- Formulario de contacto y un chatbot con endpoint interno protegido.
+- Metadatos, `robots.txt`, sitemap y datos estructurados para SEO.
+
+**Capturas completas:** [escritorio](public/screenshots/landing.png) · [móvil](public/screenshots/landing-mobile.png)
+
 ## Como correrlo
 
 Requisitos recomendados:
